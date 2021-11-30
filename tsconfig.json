@@ -1,16 +1,13 @@
 {
   "compilerOptions": {
-    "outDir": "./public/",
-    "sourceMap": true,
-    "strict": true,
-    "noImplicitReturns": true,
-    "noImplicitAny": true,
-    "module": "es6",
-    "moduleResolution": "node",
-    "target": "es5",
-    "allowJs": true,
+    "esModuleInterop": true,
+    "jsx": "react",
+    "lib": ["ES2017", "ES7", "ES6", "DOM"],
+    "moduleResolution": "Node",
+    "strict": true
   },
-  "include": [
-    "./application/**/*"
+  "exclude": [
+    "public",
+    "node_modules",
   ]
 }
