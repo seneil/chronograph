@@ -1,8 +1,21 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import Application from './app';
+import Application from './components/application';
+
+export interface ElectronAPI {
+  getVersion: () => string,
+}
+
+declare global {
+  interface Window {
+    electronAPI: ElectronAPI
+  }
+}
 
 const mountNode = document.getElementById('root');
 
-ReactDOM.render(<Application name="Chronograph Electron Application"/>, mountNode);
+ReactDOM.render(<Application
+  name="Chronograph Electron Application"
+  version={window.electronAPI.getVersion()}
+/>, mountNode);
