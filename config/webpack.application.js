@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const root = path.join(__dirname, '../');
 
@@ -32,13 +33,18 @@ module.exports = {
     rules: [
       {
         test: /\.ts(x)?$/,
-        loader: 'ts-loader',
         exclude: /node_modules/,
+        use: [
+          { loader: 'babel-loader' },
+          { loader: '@linaria/webpack-loader' },
+        ],
       },
       {
-        test: /\.(js|jsx)$/,
-        use: 'babel-loader',
-        exclude: /node_modules/,
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+        ],
       },
     ],
   },
@@ -65,5 +71,8 @@ module.exports = {
       template: path.join(html, 'index.html'),
     }),
     new webpack.ProgressPlugin(),
+    new MiniCssExtractPlugin({
+      filename: 'styles-[contenthash].css',
+    }),
   ],
 };

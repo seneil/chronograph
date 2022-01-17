@@ -5,7 +5,8 @@
       "loose": true
     }],
     "@babel/preset-react",
-    "@babel/preset-typescript"
+    "@babel/preset-typescript",
+    "@linaria"
   ],
   "plugins": [
     "react-hot-loader/babel"
