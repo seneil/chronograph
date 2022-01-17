@@ -2,12 +2,11 @@
   "name": "chronograph-app",
   "version": "0.0.1",
   "description": "Chronograph Electron Application",
-  "main": "./application/index.ts",
+  "main": "./public/main.bundle.js",
   "scripts": {
     "lint": "eslint --cache -c .eslintrc.js --ext .tsx application",
-    "build": "webpack --config ./config/webpack.production.js --mode=production",
-    "watch": "webpack --watch --config ./config/webpack.development.js",
-    "dev": "webpack serve --config ./config/webpack.development.js",
+    "main": "webpack --watch --config ./config/webpack.main.js --mode=development",
+    "application": "webpack serve --config ./config/webpack.application.js --mode=development",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,7 +23,7 @@
   },
   "homepage": "https://github.com/seneil/chronograph#readme",
   "dependencies": {
-    "electron": "15.3.0",
+    "electron": "16.0.7",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-hot-loader": "4.13.0"
@@ -33,9 +32,10 @@
     "@babel/core": "7.16.0",
     "@babel/preset-env": "7.16.0",
     "@babel/preset-react": "7.16.0",
-    "@babel/preset-typescript": "^7.16.0",
+    "@babel/preset-typescript": "7.16.0",
     "@funboxteam/eslint-config": "6.0.1",
     "@hot-loader/react-dom": "17.0.1",
+    "@types/node": "16.11.12",
     "@types/react": "17.0.34",
     "@types/react-dom": "17.0.11",
     "@typescript-eslint/eslint-plugin": "5.3.0",
@@ -50,7 +50,8 @@
     "typescript": "4.4.4",
     "webpack": "5.60.0",
     "webpack-cli": "4.9.1",
-    "webpack-dev-server": "4.3.1"
+    "webpack-dev-server": "4.3.1",
+    "webpack-electron-reload": "1.0.1"
   },
   "husky": {
     "hooks": {
