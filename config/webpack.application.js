@@ -7,6 +7,8 @@ const root = path.join(__dirname, '../');
 
 const application = path.join(root, 'application');
 const html = path.join(application, 'html');
+const components = path.join(application, 'components');
+const assets = path.join(application, 'assets');
 const output = path.join(root, 'public');
 
 module.exports = {
@@ -20,7 +22,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-      application,
+      assets,
+      components,
       'react-dom': '@hot-loader/react-dom',
     },
     extensions: ['.tsx', '.ts', '.js'],
@@ -31,6 +34,10 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        type: 'asset/resource',
+      },
       {
         test: /\.ts(x)?$/,
         exclude: /node_modules/,

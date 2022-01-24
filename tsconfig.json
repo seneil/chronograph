@@ -4,7 +4,12 @@
     "jsx": "react",
     "lib": ["ES2017", "ES7", "ES6", "DOM"],
     "moduleResolution": "Node",
-    "strict": true
+    "strict": true,
+    "baseUrl": "./",
+    "paths": {
+      "components/*": ["application/components/*"],
+      "assets/*": ["application/assets/*"],
+    },
   },
   "exclude": [
     "public",
