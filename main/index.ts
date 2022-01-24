@@ -7,7 +7,7 @@ function createWindow() {
     height: 640,
     resizable: false,
     maximizable: false,
-    titleBarStyle: 'hiddenInset',
+    titleBarStyle: 'hidden',
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
