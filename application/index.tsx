@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Application from './components/application';
+import { Root } from 'components/root';
+import { Frame } from 'components/frame';
 
 export interface ElectronAPI {
   getVersion: () => string,
@@ -15,7 +16,14 @@ declare global {
 
 const mountNode = document.getElementById('root');
 
-ReactDOM.render(<Application
-  name="Chronograph Electron Application"
-  version={window.electronAPI.getVersion()}
-/>, mountNode);
+const RootComponent = (
+  <Root>
+    <Frame title="Chronograph">
+      <div>
+        {window.electronAPI?.getVersion()}
+      </div>
+    </Frame>
+  </Root>
+);
+
+ReactDOM.render(RootComponent, mountNode);

@@ -29,13 +29,16 @@ module.exports = {
     "react/jsx-filename-extension": ["error", { extensions: [".tsx"] }],
   },
   settings: {
-    "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
+    "import/extensions": [".js", ".jsx", ".ts", ".tsx", ".woff2", ".ttf"],
     "import/parsers": {
       "@typescript-eslint/parser": [".ts", ".tsx"]
     },
     "import/resolver": {
       "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        "extensions": [".js", ".jsx", ".ts", ".tsx", ".woff2", ".ttf"],
+      },
+      "webpack": {
+        "config": "config/webpack.application.js"
       }
     }
   },
