@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "jsx": "react",
+    "lib": ["ES2017", "ES7", "ES6", "DOM"],
+    "moduleResolution": "Node",
+    "outDir": "../public/application/",
+    "paths": {
+      "components/*": ["application/components/*"],
+      "assets/*": ["application/assets/*"],
+    },
+  },
+  "exclude": [
+    "node_modules",
+  ]
+}

@@ -1,10 +1,14 @@
 import path from 'path';
 import { app, BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
 
+import { connection } from '../storage';
+
 export class Chronograph {
   private window!: BrowserWindow | null;
 
   private isLocal: boolean;
+
+  private database: any;
 
   constructor() {
     this.isLocal = true;
@@ -12,12 +16,21 @@ export class Chronograph {
     app.commandLine.appendSwitch('ignore-certificate-errors');
 
     this.subscribeToAppEvents();
+
+    this.connectToDB()
+      .catch(error => {
+        throw error;
+      });
   }
 
   async mountMain() {
     await app.whenReady();
 
     this.createWindow();
+  }
+
+  async connectToDB() {
+    this.database = await connection;
   }
 
   createWindow() {
@@ -57,9 +70,7 @@ export class Chronograph {
     });
 
     app.on('window-all-closed', () => {
-      if (process.platform !== 'darwin') {
-        app.quit();
-      }
+      app.quit();
     });
   }
 }

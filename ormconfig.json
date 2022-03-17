@@ -1,0 +1,20 @@
+{
+  "type": "sqlite",
+  "database": "chronograph.sqlite",
+  "synchronize": true,
+  "logging": true,
+  "entities": [
+    "public/main/storage/entity/**/*.ts"
+  ],
+  "migrations": [
+    "public/main/storage/migration/**/*.ts"
+  ],
+  "subscribers": [
+    "public/main/storage/subscriber/**/*.ts"
+  ],
+  "cli": {
+    "entitiesDir": "public/main/storage/entity",
+    "migrationsDir": "public/main/storage/migration",
+    "subscribersDir": "public/main/storage/subscriber"
+  }
+}

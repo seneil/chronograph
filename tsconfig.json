@@ -1,18 +1,12 @@
 {
   "compilerOptions": {
     "esModuleInterop": true,
-    "jsx": "react",
     "lib": ["ES2017", "ES7", "ES6", "DOM"],
     "moduleResolution": "Node",
-    "strict": true,
-    "baseUrl": "./",
-    "paths": {
-      "components/*": ["application/components/*"],
-      "assets/*": ["application/assets/*"],
-    },
+    "outDir": "../public/main/"
   },
   "exclude": [
     "public",
-    "node_modules",
+    "node_modules"
   ]
 }

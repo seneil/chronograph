@@ -4,11 +4,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const root = path.join(__dirname, '../');
+const frontend = path.join(__dirname, './');
 
-const application = path.join(root, 'application');
+const application = path.join(frontend, 'application');
 const html = path.join(application, 'html');
 const components = path.join(application, 'components');
 const assets = path.join(application, 'assets');
+
 const output = path.join(root, 'public');
 
 module.exports = {
@@ -26,7 +28,7 @@ module.exports = {
       components,
       'react-dom': '@hot-loader/react-dom',
     },
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: ['.js', '.jsx', '.tsx', '.ts', '.ttf', '.woff2'],
   },
   output: {
     path: output,
@@ -57,7 +59,7 @@ module.exports = {
   },
   devtool: 'eval-source-map',
   watchOptions: {
-    ignored: ['**/main', '**/node_modules'],
+    ignored: ['**/node_modules'],
   },
   devServer: {
     hot: true,

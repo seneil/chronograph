@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "lib": ["ES2017", "ES7", "DOM"],
+    "module": "node12",
+    "moduleResolution": "Node",
+    "baseUrl": "../public/main/",
+    "outDir": "../public/main/"
+  },
+  "exclude": [
+    "public",
+    "node_modules",
+  ]
+}

@@ -21,20 +21,22 @@ module.exports = {
       "ignorePackages",
       {
         "ts": "never",
+        "tsx": "never",
       }
     ],
+    "react/jsx-filename-extension": ["error", { extensions: [".tsx"] }],
   },
   settings: {
-    "import/extensions": [".ts"],
+    "import/extensions": [".ts", ".tsx", ".woff2", ".ttf"],
     "import/parsers": {
-      "@typescript-eslint/parser": [".ts"]
+      "@typescript-eslint/parser": [".ts", ".tsx", ".woff2", ".ttf"]
     },
     "import/resolver": {
       "node": {
-        "extensions": [".ts"],
+        "extensions": [".ts", ".tsx", ".woff2", ".ttf"],
       },
       "webpack": {
-        "config": "webpack.main.js"
+        "config": "webpack.application.js"
       }
     }
   },
