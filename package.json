@@ -1,73 +1,45 @@
 {
   "name": "chronograph-app",
+  "productName": "chronograph-app",
   "version": "0.0.1",
   "description": "Chronograph Electron Application",
-  "main": "./public/main.bundle.js",
+  "private": true,
+  "main": ".webpack/main",
   "scripts": {
-    "lint": "eslint --cache -c .eslintrc.js --ext .tsx application",
-    "main": "webpack --watch --config ./config/webpack.main.js --mode=development",
-    "application": "webpack serve --config ./config/webpack.application.js --mode=development",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron-forge start --inspect-electron",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "eslint --ext .ts,.tsx ."
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/seneil/chronograph.git"
-  },
+  "keywords": [],
   "author": {
     "name": "Dmitry Shvalyov",
-    "url": "https://shvalyov.ru"
+    "email": "dmitry@shvalyov.ru"
   },
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/seneil/chronograph/issues"
-  },
-  "homepage": "https://github.com/seneil/chronograph#readme",
-  "dependencies": {
-    "electron": "16.0.7",
-    "react": "17.0.1",
-    "react-dom": "17.0.1",
-    "react-hot-loader": "4.13.0"
-  },
   "devDependencies": {
-    "@babel/core": "7.16.0",
-    "@babel/preset-env": "7.16.0",
-    "@babel/preset-react": "7.16.0",
-    "@babel/preset-typescript": "7.16.0",
-    "@funboxteam/eslint-config": "6.0.1",
-    "@hot-loader/react-dom": "17.0.1",
-    "@linaria/babel-preset": "3.0.0-beta.15",
-    "@linaria/core": "3.0.0-beta.15",
-    "@linaria/react": "3.0.0-beta.15",
-    "@linaria/shaker": "3.0.0-beta.15",
-    "@linaria/webpack-loader": "3.0.0-beta.16",
-    "@types/node": "16.11.12",
-    "@types/react": "17.0.34",
-    "@types/react-dom": "17.0.11",
-    "@typescript-eslint/eslint-plugin": "5.3.0",
-    "@typescript-eslint/parser": "5.3.0",
-    "babel-loader": "8.2.3",
-    "clean-webpack-plugin": "4.0.0",
-    "css-loader": "6.5.1",
-    "eslint": "7.32.0",
-    "html-webpack-plugin": "5.5.0",
-    "husky": "7.0.4",
-    "lint-staged": "11.2.6",
-    "mini-css-extract-plugin": "2.5.2",
-    "ts-loader": "9.2.6",
-    "typescript": "4.4.4",
-    "webpack": "5.60.0",
-    "webpack-cli": "4.9.1",
-    "webpack-dev-server": "4.3.1",
-    "webpack-electron-reload": "1.0.1"
+    "@electron-forge/cli": "^6.0.0",
+    "@electron-forge/maker-deb": "^6.0.0",
+    "@electron-forge/maker-rpm": "^6.0.0",
+    "@electron-forge/maker-squirrel": "^6.0.0",
+    "@electron-forge/maker-zip": "^6.0.0",
+    "@electron-forge/plugin-webpack": "^6.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.42.0",
+    "@typescript-eslint/parser": "^5.42.0",
+    "@vercel/webpack-asset-relocator-loader": "^1.7.3",
+    "css-loader": "^6.7.1",
+    "electron": "21.2.2",
+    "eslint": "^8.28.0",
+    "eslint-plugin-import": "^2.26.0",
+    "fork-ts-checker-webpack-plugin": "^7.2.13",
+    "node-loader": "^2.0.0",
+    "style-loader": "^3.3.1",
+    "ts-loader": "^9.4.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.5.5"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged -q"
-    }
-  },
-  "lint-staged": {
-    "lib/**/*.ts": [
-      "eslint --fix --cache -c .eslintrc.js"
-    ]
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0"
   }
 }
