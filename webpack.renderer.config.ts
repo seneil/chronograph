@@ -11,8 +11,7 @@ rules.push({
 export const rendererConfig: Configuration = {
   module: { rules },
   plugins,
-  devServer: {},
   resolve: {
-    extensions: ['.js', '.ts', '.jsx', '.tsx', '.css'],
+    extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.scss', '.sass'],
   },
 };
