@@ -1,4 +1,3 @@
-import './index.css';
-import './chronograph';
+import './chronograph.scss';
 
-console.log('👋 This message is being logged by "renderer.js", included via webpack');
+import './chronograph';
