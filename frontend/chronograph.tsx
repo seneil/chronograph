@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client';
 
 import { FocusStyleManager, Button } from "@blueprintjs/core";
 
+import { API_ENTRY } from './constants';
+
 const container = document.getElementById('root');
 const root = createRoot(container);
 
@@ -18,9 +20,11 @@ const Chronograph: React.FC<ApplicationProps> = ({ title }) => (
     <h2>{title}</h2>
     <Button
       icon="refresh"
-      text="Sample button"
-      onClick={event => {
-        console.log(event)
+      text="Versions"
+      onClick={() => {
+        console.log(
+          window[API_ENTRY].getVersion(),
+        )
       }}
     />
   </>
