@@ -12,7 +12,7 @@ export const mainConfig: Configuration = {
     {
       apply(compiler: Compiler): void  {
         compiler.hooks.compilation.tap('webpack-asset-relocator-loader', (compilation: Compilation) => {
-            relocateLoader.initAssetCache(compilation, '');
+            relocateLoader.initAssetCache(compilation, 'native_modules');
           },
         );
       },
