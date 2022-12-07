@@ -1,4 +1,4 @@
-import { contextBridge } from 'electron';
+import { contextBridge, ipcRenderer } from 'electron';
 
 import { IElectronGlobal } from './types';
 
@@ -8,4 +8,6 @@ contextBridge.exposeInMainWorld(API_ENTRY, <IElectronGlobal>{
   getVersion: () => ['chrome', 'node', 'electron']
     .map(platform => `${platform}: ${process.versions[platform]}`)
     .join(', '),
+
+  createActivityAppendWindow: () => ipcRenderer.invoke('create-activity-append-window'),
 });
