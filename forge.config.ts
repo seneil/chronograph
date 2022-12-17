@@ -19,9 +19,17 @@ const config: ForgeConfig = {
         config: rendererConfig,
         entryPoints: [
           {
-            html: './frontend/index.html',
-            js: './frontend/renderer.ts',
-            name: 'chronograph',
+            html: './frontend/chronography.html',
+            js: './frontend/views/chronography/index.ts',
+            name: 'chronography',
+            preload: {
+              js: './frontend/preload.ts',
+            },
+          },
+          {
+            html: './frontend/append-activity.html',
+            js: './frontend/views/append-activity/index.ts',
+            name: 'append_activity',
             preload: {
               js: './frontend/preload.ts',
             },

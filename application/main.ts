@@ -1,36 +1,25 @@
 import { app, BrowserWindow } from 'electron';
 
-declare const CHRONOGRAPH_WEBPACK_ENTRY: string;
-declare const CHRONOGRAPH_PRELOAD_WEBPACK_ENTRY: string;
+import { createChronographyWindow } from './routes';
 
 if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
-const createWindow = (): void => {
-  const mainWindow = new BrowserWindow({
-    width: 1024,
-    height: 768,
-    webPreferences: {
-      preload: CHRONOGRAPH_PRELOAD_WEBPACK_ENTRY,
-    },
-  });
+const initializeApplication = (): void => {
+  createChronographyWindow();
+}
 
-  mainWindow.loadURL(CHRONOGRAPH_WEBPACK_ENTRY);
+app.on('ready', initializeApplication);
 
-  mainWindow.webContents.openDevTools();
-};
-
-app.on('ready', createWindow);
+app.on('activate', () => {
+  if (BrowserWindow.getAllWindows().length === 0) {
+    initializeApplication();
+  }
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
-  }
-});
-
-app.on('activate', () => {
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
   }
 });
