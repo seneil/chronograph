@@ -1,6 +1,5 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-
 import { FocusStyleManager, Card, FormGroup, InputGroup } from '@blueprintjs/core';
 
 const container = document.getElementById('root');

@@ -1,9 +1,8 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-
 import { FocusStyleManager, Card, FormGroup, Button } from '@blueprintjs/core';
 
-import { API_ENTRY } from '../../constants';
+import { API_ENTRY } from '@constants';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -17,7 +16,7 @@ FocusStyleManager.onlyShowFocusOnTabs();
 
 class ChronographyView extends React.Component<ChronographyViewProps> {
   createActivityAppendWindow = () => {
-    window[API_ENTRY].createActivityAppendWindow();
+    window[API_ENTRY.SERVICE].createActivityAppendWindow();
   };
 
   render() {

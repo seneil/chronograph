@@ -3,7 +3,7 @@ import { join } from 'path';
 
 import type { Knex } from 'knex';
 
-import { USER_DATA_FOLDER } from './constants';
+import { USER_DATA_FOLDER } from '@constants';
 
 const config: { [key: string]: Knex.Config } = {
   development: {
@@ -24,4 +24,4 @@ const config: { [key: string]: Knex.Config } = {
   },
 };
 
-module.exports = config;
+export default config;

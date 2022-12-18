@@ -1,6 +1,5 @@
-import { Activity } from '../types';
-
-import { parseTimeString } from './utils/parse-time-string';
+import { Activity } from '@application/types';
+import { parseTimeString } from '@application/chronography/utils/parse-time-string';
 
 export const getActivity = (friendlyString: string): Activity => {
   const result: Activity = {
