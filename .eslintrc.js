@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const path = require('path');
+
 module.exports = {
   env: {
     browser: true,
@@ -12,5 +15,22 @@ module.exports = {
     "plugin:import/electron",
     "plugin:import/typescript"
   ],
-  parser: "@typescript-eslint/parser"
+  parser: "@typescript-eslint/parser",
+  plugins: ["import"],
+  settings: {
+    'import/resolver': {
+      webpack: {
+        config: {
+          resolve: {
+            alias: {
+              '@frontend': path.resolve(__dirname, './frontend'),
+              '@application': path.resolve(__dirname, './application'),
+              '@constants': path.resolve(__dirname, './constants'),
+            },
+            extensions: ['.ts', '.tsx'],
+          },
+        },
+      },
+    },
+  },
 };

@@ -7,16 +7,20 @@
     "esModuleInterop": true,
     "noImplicitAny": true,
     "sourceMap": true,
-    "baseUrl": ".",
+    "baseUrl": "./",
     "outDir": "out",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "jsx": "react-jsx",
     "paths": {
+      "@application/*": ["application/*"],
+      "@constants": ["constants", "constants/*"],
+      "@frontend/*": ["frontend/*"],
       "*": ["node_modules/*"]
     }
   },
   "include": [
-    "application/**/*"
-  ]
+    "application/**/*",
+    "frontend/**/*",
+  ],
 }
