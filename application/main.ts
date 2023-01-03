@@ -1,3 +1,4 @@
+import 'dayjs/locale/ru';
 import { app, BrowserWindow } from 'electron';
 
 import { createChronographyWindow } from '@application/routes';
