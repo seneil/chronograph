@@ -1,8 +1,8 @@
-import { Activity } from '@application/types';
+import { ActivityInput } from '@application/types';
 import { parseTimeString } from '@application/chronography/utils/parse-time-string';
 
-export const getActivity = (friendlyString: string): Activity => {
-  const result: Activity = {
+export const getActivity = (friendlyString: string): ActivityInput => {
+  const result: ActivityInput = {
     activity: friendlyString,
     category: null,
     endTime: null,

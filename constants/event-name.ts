@@ -1,8 +1,8 @@
 export const EVENT_NAME = {
   FETCHER: {
-    GET_CHRONOGRAPHY: 'getChronography',
+    FETCH_CHRONOGRAPHY: 'fetchChronography',
   },
   SERVICE: {
-    CREATE_ACTIVITY_APPEND_WINDOW: 'create-activity-append-window',
+    OPEN_ACTIVITY_APPEND_WINDOW: 'open-activity-append-window',
   },
-};
+} as const;
