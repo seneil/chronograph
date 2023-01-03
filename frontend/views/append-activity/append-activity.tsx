@@ -12,18 +12,16 @@ interface AppendActivityProps {
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
-class AppendActivityView extends React.Component<AppendActivityProps> {
-  render() {
-    return (
-      <Card>
-        <h2>{this.props.title}</h2>
+const AppendActivityView = ({ title }: AppendActivityProps) => {
+  return (
+    <Card>
+      <h2>{title}</h2>
 
-        <FormGroup>
-          <InputGroup large={true} autoFocus={true}/>
-        </FormGroup>
-      </Card>
-    );
-  }
+      <FormGroup>
+        <InputGroup large={true} autoFocus={true}/>
+      </FormGroup>
+    </Card>
+  );
 }
 
 root.render(<AppendActivityView title='Append activity'/>);

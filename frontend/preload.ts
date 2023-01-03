@@ -9,9 +9,9 @@ contextBridge.exposeInMainWorld(API_ENTRY.SERVICE, <ElectronGlobalService>{
     .map(platform => `${platform}: ${process.versions[platform]}`)
     .join(', '),
 
-  createActivityAppendWindow: () => ipcRenderer.invoke(EVENT_NAME.SERVICE.CREATE_ACTIVITY_APPEND_WINDOW),
+  openActivityAppendWindow: () => ipcRenderer.invoke(EVENT_NAME.SERVICE.OPEN_ACTIVITY_APPEND_WINDOW),
 });
 
 contextBridge.exposeInMainWorld(API_ENTRY.FETCHER, <ElectronGlobalFetcher>{
-  getChronography: () => ipcRenderer.invoke(EVENT_NAME.FETCHER.GET_CHRONOGRAPHY),
+  fetchChronography: () => ipcRenderer.invoke(EVENT_NAME.FETCHER.FETCH_CHRONOGRAPHY),
 });

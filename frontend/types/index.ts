@@ -1,12 +1,9 @@
-declare global {
-  interface Window { service: ElectronGlobalService; }
-}
+import { ActivityGroupView } from '@application/types/views/activity';
 
-export interface ElectronGlobalService {
-  getVersion: () => string,
-  createActivityAppendWindow: () => void,
-}
+export { ElectronGlobalService, ElectronGlobalFetcher } from './globals';
 
-export interface ElectronGlobalFetcher {
-  getChronography: () => void,
+export interface ActivityGroup {
+  date: string;
+  total: number;
+  activities: ActivityGroupView[];
 }
