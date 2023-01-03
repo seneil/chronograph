@@ -3,7 +3,7 @@ import { join } from 'path';
 
 import type { Knex } from 'knex';
 
-import { USER_DATA_FOLDER } from '@constants';
+const USER_DATA_FOLDER = '.chronography'
 
 const config: { [key: string]: Knex.Config } = {
   development: {

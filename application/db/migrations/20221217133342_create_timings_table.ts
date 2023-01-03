@@ -8,10 +8,10 @@ export async function up(knex: Knex): Promise<void> {
         .references('id')
         .inTable('activities')
         .onDelete('CASCADE');
-      table.timestamp('start_at').notNullable();
-      table.timestamp('end_at');
+      table.datetime('start_at').notNullable();
+      table.datetime('end_at');
       table.text('description');
-      table.timestamp('created_at').defaultTo(knex.fn.now());
+      table.datetime('created_at').defaultTo(knex.fn.now());
     });
 }
 
