@@ -1,4 +1,4 @@
-import { getActivity } from '../create-activity';
+import { getActivity } from '@application/chronography/create-activity';
 
 describe('Проверка парсинга строки активности', () => {
   it('Должна быть записана активность в поле `activity`', () => {
