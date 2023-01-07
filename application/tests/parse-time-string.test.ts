@@ -1,4 +1,4 @@
-import { parseTimeString } from '../utils/parse-time-string';
+import { parseTimeString } from '@application/chronography/utils/parse-time-string';
 
 const toLocal = (now: Date) => now.toString();
 

@@ -1,9 +1,10 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-
 import { FocusStyleManager, Card, FormGroup, Button } from '@blueprintjs/core';
 
-import { API_ENTRY } from '../../constants';
+import { openActivityAppendWindow } from '@frontend/controller';
+
+import { Chronography } from '@frontend/components/chronography';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -15,26 +16,26 @@ interface ChronographyViewProps {
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
-class ChronographyView extends React.Component<ChronographyViewProps> {
-  createActivityAppendWindow = () => {
-    window[API_ENTRY].createActivityAppendWindow();
+const ChronographyView = ({ title }: ChronographyViewProps) => {
+  const createActivityAppendWindow = () => {
+    openActivityAppendWindow();
   };
 
-  render() {
-    return (
-      <Card>
-        <h2>{this.props.title}</h2>
+  return (
+    <Card>
+      <h2>{title}</h2>
 
-        <FormGroup>
-          <Button
-            large={true}
-            icon='plus'
-            onClick={this.createActivityAppendWindow}
-          >Append activity</Button>
-        </FormGroup>
-      </Card>
-    );
-  }
-}
+      <FormGroup>
+        <Button
+          large={true}
+          icon='plus'
+          onClick={createActivityAppendWindow}
+        >Append activity</Button>
+      </FormGroup>
+
+      <Chronography/>
+    </Card>
+  );
+};
 
 root.render(<ChronographyView title='Hello from React 18'/>);

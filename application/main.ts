@@ -1,6 +1,7 @@
+import 'dayjs/locale/ru';
 import { app, BrowserWindow } from 'electron';
 
-import { createChronographyWindow } from './routes';
+import { createChronographyWindow } from '@application/routes';
 
 if (require('electron-squirrel-startup')) {
   app.quit();
