@@ -68,6 +68,13 @@ describe('Проверка парсинга строки активности', 
       .toHaveProperty('startTime', now);
   });
 
+  it('Должно быть записано текущее время в поле `startTime` при ошибке', () => {
+    const now: Date = new Date();
+
+    expect(getActivity('- CHRN-17'))
+      .toHaveProperty('startTime', now);
+  });
+
   it('Должно быть записано время 10:00 в поле `startTime`', () => {
     const now: Date = new Date();
 

@@ -14,6 +14,6 @@ export interface ActivityView extends ActivityBase {
 
 export interface ActivityGroupView extends ActivityBase {
   start_time_at: string;
-  end_time_at: string;
-  duration: number;
+  end_time_at: string | null;
+  duration: number | null;
 }
