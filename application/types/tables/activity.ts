@@ -1,7 +1,8 @@
 export interface ActivityTable {
   id: number;
   name: string;
-  created: string;
+  category_id: number;
+  created_at: string;
+  updated_at: string;
   description: string;
-  categoryId: number;
 }

@@ -1,8 +1,8 @@
 export interface TimingTable {
   id: number;
-  created: string;
-  startDate: string;
-  endDate: string;
+  activity_id: number;
   description: string;
-  activityId: number;
+  start_at: string;
+  end_at: string | null;
+  created_at: string;
 }
