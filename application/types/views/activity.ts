@@ -12,6 +12,10 @@ export interface ActivityView extends ActivityBase {
   end_at: Date | null;
 }
 
+export interface CurrentActivityView extends ActivityView {
+  duration: number;
+}
+
 export interface ActivityGroupView extends ActivityBase {
   start_time_at: string;
   end_time_at: string | null;

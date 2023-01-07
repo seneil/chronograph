@@ -1,1 +1,2 @@
-export { ActivityView } from './activity';
+export { ActivityView, CurrentActivityView } from './activity';
+export { activeTimingStart } from './timing';

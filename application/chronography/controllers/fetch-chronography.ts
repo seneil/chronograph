@@ -1,4 +1,5 @@
 import { knex } from '@application/connection';
+
 import { ActivityView } from '@application/types';
 
 export const fetchChronography = async () => (
