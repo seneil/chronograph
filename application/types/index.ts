@@ -1,7 +1,7 @@
 export { CategoryTable, ActivityTable, TimingTable } from './tables';
 export { ActivityView } from './views';
 
-export interface ActivityInput {
+export interface ActivityData {
   activity: string;
   category: string | null;
   startTime: Date;

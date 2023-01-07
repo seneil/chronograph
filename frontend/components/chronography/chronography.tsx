@@ -1,29 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { Timings } from '@frontend/components/timings';
-import { Chronography__Day } from './__day';
+import { Chronography__Day } from '@frontend/components/chronography';
 
-import { fetchChronography } from '@frontend/controller';
-import { groupActivities } from '@frontend/utils';
+import { ActivityGroup } from '@frontend/types';
 
-export const Chronography = () => {
-  const [activities, setActivities] = useState([]);
+interface ChronographyProps {
+  groups: ActivityGroup[],
+}
 
-  useEffect(() => {
-    const getChronography = async () => {
-      const activityGroups = groupActivities(await fetchChronography());
-
-      setActivities(activityGroups);
-    };
-
-    getChronography()
-      .catch(console.error);
-  }, []);
+export const Chronography = ({ groups }: ChronographyProps) => {
 
   return (
     <div className='chronography'>
       <Chronography__Day>
-        {activities.map(activity => (
+        {groups.map(activity => (
           <Timings key={activity.date} {...activity}/>
         ))}
       </Chronography__Day>
