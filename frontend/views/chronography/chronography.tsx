@@ -1,41 +1,50 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { FocusStyleManager, Card, FormGroup, Button } from '@blueprintjs/core';
 
-import { openActivityAppendWindow } from '@frontend/controller';
+import { fetchChronography, openActivityAppendWindow } from '@frontend/controller';
 
 import { Chronography } from '@frontend/components/chronography';
+import { groupActivities } from '@frontend/utils';
+
+import { ActivityGroup } from '@frontend/types';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
 
-interface ChronographyViewProps {
-  title: string;
-  children?: React.ReactNode;
-}
-
 FocusStyleManager.onlyShowFocusOnTabs();
 
-const ChronographyView = ({ title }: ChronographyViewProps) => {
-  const createActivityAppendWindow = () => {
-    openActivityAppendWindow();
+const ChronographyView = () => {
+  const [activities, setActivities] = useState<ActivityGroup[]>([]);
+
+  const getChronography = async () => {
+    const activityGroups = groupActivities(await fetchChronography());
+
+    setActivities(activityGroups);
+  };
+
+  useEffect(() => {
+    getChronography().catch(console.error);
+  }, []);
+
+  const createActivityAppendWindow = async () => {
+    await openActivityAppendWindow();
+    await getChronography();
   };
 
   return (
     <Card>
-      <h2>{title}</h2>
-
       <FormGroup>
         <Button
           large={true}
           icon='plus'
           onClick={createActivityAppendWindow}
-        >Append activity</Button>
+        >Активность</Button>
       </FormGroup>
 
-      <Chronography/>
+      <Chronography groups={activities}/>
     </Card>
   );
 };
 
-root.render(<ChronographyView title='Hello from React 18'/>);
+root.render(<ChronographyView/>);

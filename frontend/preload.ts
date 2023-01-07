@@ -14,4 +14,6 @@ contextBridge.exposeInMainWorld(API_ENTRY.SERVICE, <ElectronGlobalService>{
 
 contextBridge.exposeInMainWorld(API_ENTRY.FETCHER, <ElectronGlobalFetcher>{
   fetchChronography: () => ipcRenderer.invoke(EVENT_NAME.FETCHER.FETCH_CHRONOGRAPHY),
+  fetchActivityData: activityInput => ipcRenderer.invoke(EVENT_NAME.FETCHER.FETCH_ACTIVITY_DATA, activityInput),
+  fetchActivityInput: activityData => ipcRenderer.invoke(EVENT_NAME.FETCHER.FETCH_ACTIVITY_INPUT, activityData),
 });

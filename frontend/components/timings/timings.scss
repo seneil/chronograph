@@ -1,3 +1,7 @@
 .#{$b} {
   display: flex;
+
+  &:not(:last-child) {
+    margin-bottom: 15px;
+  }
 }

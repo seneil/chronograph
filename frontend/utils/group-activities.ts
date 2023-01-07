@@ -11,8 +11,8 @@ export const groupActivities = (activities: ActivityView[]): ActivityGroup[] => 
     const activity = {
       ...item,
       start_time_at: dayjs(start_at).format('HH:mm'),
-      end_time_at: dayjs(end_at).format('HH:mm'),
-      duration: dayjs(end_at).diff(dayjs(start_at), 'minute'),
+      end_time_at: end_at ? dayjs(end_at).format('HH:mm') : null,
+      duration: end_at ? dayjs(end_at).diff(dayjs(start_at), 'minute') : null,
     };
 
     if (activityIndex >= 0) {
@@ -31,4 +31,5 @@ export const groupActivities = (activities: ActivityView[]): ActivityGroup[] => 
       activities: [activity]
     }]
   }, [])
+    .sort((a, b) => (a.date > b.date) ? -1 : ((a.date < b.date) ? 1 : 0))
 );
