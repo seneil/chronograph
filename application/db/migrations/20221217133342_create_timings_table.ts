@@ -9,7 +9,7 @@ export async function up(knex: Knex): Promise<void> {
         .inTable('activities')
         .onDelete('CASCADE');
       table.datetime('start_at').notNullable();
-      table.datetime('end_at');
+      table.datetime('end_at').nullable();
       table.text('description');
       table.datetime('created_at').defaultTo(knex.fn.now());
     });
