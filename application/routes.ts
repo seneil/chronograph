@@ -3,30 +3,49 @@ import { BrowserWindow, ipcMain } from 'electron';
 import { getAppendActivityWindow } from '@application/views/append-activity';
 import { getChronographyWindow } from '@application/views/chronography';
 
-import { fetchChronography } from '@application/chronography/controllers/fetch-chronography';
+import { fetchChronography, fetchActivityData, fetchActivityInput } from '@application/chronography/controllers';
 
 import { EVENT_NAME } from '@constants';
+import { ActivityData } from '@application/types';
 
-export const createAppendActivityWindow = (): void => {
+let appendActivityWindow: BrowserWindow | null = null;
+
+export const createAppendActivityWindow = (): Promise<void> => new Promise(resolve => {
   const window = getAppendActivityWindow(BrowserWindow.getFocusedWindow());
 
+  appendActivityWindow = window;
+
   window.once('ready-to-show', () => {
+    // window.webContents.openDevTools();
+
     window.show();
   });
-};
+
+  window.once('closed', () => {
+    appendActivityWindow = null;
+
+    resolve();
+  })
+});
 
 export const createChronographyWindow = (): void => {
-  const window = getChronographyWindow();
-
-  window.webContents.openDevTools();
+  getChronographyWindow();
 };
 
-ipcMain.handle(EVENT_NAME.SERVICE.OPEN_ACTIVITY_APPEND_WINDOW, () => {
-  const childWindows = BrowserWindow.getFocusedWindow().getChildWindows();
-
-  if (!childWindows.length) createAppendActivityWindow();
+ipcMain.handle(EVENT_NAME.SERVICE.OPEN_ACTIVITY_APPEND_WINDOW, async () => {
+  if (!appendActivityWindow) await createAppendActivityWindow();
 });
 
 ipcMain.handle(EVENT_NAME.FETCHER.FETCH_CHRONOGRAPHY, async () => (
   fetchChronography()
 ));
+
+ipcMain.handle(EVENT_NAME.FETCHER.FETCH_ACTIVITY_DATA, async (event, activityInput: string) => (
+  fetchActivityData(activityInput)
+));
+
+ipcMain.handle(EVENT_NAME.FETCHER.FETCH_ACTIVITY_INPUT, async (event, activityData: ActivityData) => {
+  await fetchActivityInput(activityData);
+
+  appendActivityWindow.close();
+});

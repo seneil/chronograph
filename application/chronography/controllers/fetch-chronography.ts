@@ -16,6 +16,6 @@ export const fetchChronography = async () => (
     .join('activities', { 'timings.activity_id': 'activities.id' })
     .join('categories', { 'activities.category_id': 'categories.id' })
     .orderBy([
-      { column: 'timing_id', order: 'asc' },
+      { column: 'timings.start_at', order: 'asc' },
     ])
 );
