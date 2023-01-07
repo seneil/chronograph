@@ -11,10 +11,11 @@ import { ActivityGroupView } from '@application/types/views/activity';
 
 interface TimingsProps {
   date: string;
+  total: number;
   activities: ActivityGroupView[];
 }
 
-export const Timings = ({ date, activities }: TimingsProps) => (
+export const Timings = ({ date, total, activities }: TimingsProps) => (
   <div className='timings'>
     <Timings__Date date={date}/>
     <Timings__Activities>
@@ -40,6 +41,10 @@ export const Timings = ({ date, activities }: TimingsProps) => (
           </Activity>
         );
       })}
+
+      <Activity key={`${date}-total`} isTotal>
+        <Activity__Duration minutes={total}/>
+      </Activity>
     </Timings__Activities>
   </div>
 );

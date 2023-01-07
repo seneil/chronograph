@@ -1,5 +1,10 @@
+import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+
+import 'dayjs/locale/ru';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+
 import { FocusStyleManager, Card, FormGroup, ButtonGroup, Divider, Button } from '@blueprintjs/core';
 
 import { fetchChronography, fetchActiveTiming, stopTiming, openActivityAppendWindow } from '@frontend/controller';
@@ -9,6 +14,9 @@ import { groupActivities } from '@frontend/utils';
 
 import { ActivityGroup } from '@frontend/types';
 import { ActivityView } from '@application/types';
+
+dayjs.extend(localizedFormat);
+dayjs.locale('ru');
 
 const container = document.getElementById('root');
 const root = createRoot(container);
