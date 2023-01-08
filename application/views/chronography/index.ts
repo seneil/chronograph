@@ -7,6 +7,7 @@ declare const CHRONOGRAPHY_PRELOAD_WEBPACK_ENTRY: string;
 const chronographyWindow: BrowserWindowConstructorOptions = {
   width: 710,
   height: 550,
+  show: false,
   center: true,
   resizable: false,
   maximizable: false,

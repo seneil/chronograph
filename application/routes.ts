@@ -33,7 +33,11 @@ export const createAppendActivityWindow = (): Promise<void> => new Promise(resol
 });
 
 export const createChronographyWindow = (): void => {
-  getChronographyWindow();
+  const window = getChronographyWindow();
+
+  window.once('ready-to-show', () => {
+    window.show();
+  });
 };
 
 ipcMain.handle(EVENT_NAME.SERVICE.OPEN_ACTIVITY_APPEND_WINDOW, async () => {
