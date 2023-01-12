@@ -7,13 +7,15 @@ import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 import { FocusStyleManager, Card, FormGroup, ButtonGroup, Divider, Button } from '@blueprintjs/core';
 
+import { groupActivities } from '@frontend/utils';
+
 import { fetchChronography, fetchActiveTiming, stopTiming, openActivityAppendWindow } from '@frontend/controller';
 
 import { Chronography } from '@frontend/components/chronography';
-import { groupActivities } from '@frontend/utils';
+import { TimingInfo } from '@frontend/components/timing-info';
 
 import { ActivityGroup } from '@frontend/types';
-import { ActivityView } from '@application/types';
+import { CurrentActivityView } from '@application/types';
 
 dayjs.extend(localizedFormat);
 dayjs.locale('ru');
@@ -25,13 +27,13 @@ FocusStyleManager.onlyShowFocusOnTabs();
 
 const ChronographyView = () => {
   const [activities, setActivities] = useState<ActivityGroup[]>([]);
-  const [activeTiming, setActiveTiming] = useState<ActivityView>();
+  const [timingInfo, setTimingInfo] = useState<CurrentActivityView>();
 
   const getChronography = async () => {
     const activityGroups = groupActivities(await fetchChronography());
-    const [timing] = await fetchActiveTiming();
+    const timing = await fetchActiveTiming();
 
-    setActiveTiming(timing);
+    setTimingInfo(timing);
     setActivities(activityGroups);
   };
 
@@ -60,7 +62,7 @@ const ChronographyView = () => {
             onClick={createActivityAppendWindow}
           >Активность</Button>
 
-          {!!activeTiming && (
+          {!!timingInfo && (
             <>
               <Divider/>
 
@@ -71,6 +73,10 @@ const ChronographyView = () => {
                 title='Остановить'
                 onClick={stopActiveTiming}
               />
+
+              <Divider/>
+
+              <TimingInfo timing={timingInfo}/>
             </>
           )}
         </ButtonGroup>

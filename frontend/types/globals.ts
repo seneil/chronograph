@@ -1,4 +1,4 @@
-import { ActivityData, ActivityView } from '@application/types';
+import { ActivityData, ActivityView, CurrentActivityView } from '@application/types';
 
 declare global {
   interface Window {
@@ -14,7 +14,7 @@ export interface ElectronGlobalService {
 
 export interface ElectronGlobalFetcher {
   fetchChronography: () => Promise<ActivityView[]>;
-  fetchActiveTiming: () => Promise<ActivityView[]>;
+  fetchActiveTiming: () => Promise<CurrentActivityView>;
   stopTiming: () => Promise<void>;
   fetchActivityData: (activityInput: string) => Promise<ActivityData>;
   fetchActivityInput: (activityData: ActivityData) => Promise<void>;
