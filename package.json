@@ -42,7 +42,7 @@
     "@typescript-eslint/parser": "^5.42.0",
     "@vercel/webpack-asset-relocator-loader": "^1.7.3",
     "css-loader": "^6.7.1",
-    "electron": "21.2.2",
+    "electron": "22.0.0",
     "eslint": "^8.28.0",
     "eslint-import-resolver-webpack": "^0.13.2",
     "eslint-plugin-import": "^2.26.0",
@@ -61,6 +61,6 @@
     "better-sqlite3": "^8.0.0",
     "dayjs": "^1.11.7",
     "electron-squirrel-startup": "^1.0.0",
-    "knex": "^2.3.0"
+    "knex": "^2.4.0"
   }
 }

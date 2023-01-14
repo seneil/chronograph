@@ -3,14 +3,36 @@ import path from 'path';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const relocateLoader = require('@vercel/webpack-asset-relocator-loader');
 
+import { IgnorePlugin, NormalModuleReplacementPlugin } from 'webpack';
 import type { Compiler, Compilation, Configuration } from 'webpack';
 
 import { rules } from './webpack.rules';
+
+const IGNORE_RESOURCES = [
+  'pg',
+  'pg-native',
+  'pg-query-stream',
+  'oracledb',
+  'mysql2',
+  'mysql',
+  'tedious',
+  'sqlite3',
+  'nock',
+  'aws-sdk',
+  'mock-aws-s3',
+];
 
 export const mainConfig: Configuration = {
   entry: './application/main.ts',
   module: { rules },
   plugins: [
+    new IgnorePlugin({
+      checkResource(resource): boolean {
+        return IGNORE_RESOURCES.includes(resource);
+      },
+    }),
+    new NormalModuleReplacementPlugin(/\.\.\/migrations\/migrate\/Migrator/, '../util/noop.js'),
+    new NormalModuleReplacementPlugin(/\.\.\/migrations\/seed\/Seeder/, '../util/noop.js'),
     {
       apply(compiler: Compiler): void  {
         compiler.hooks.compilation.tap('webpack-asset-relocator-loader', (compilation: Compilation) => {

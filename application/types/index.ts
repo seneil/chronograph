@@ -1,5 +1,5 @@
 export { CategoryTable, ActivityTable, TimingTable } from './tables';
-export { ActivityView } from './views';
+export { ActivityView, activeTimingStart, CurrentActivityView } from './views';
 
 export interface ActivityData {
   activity: string;

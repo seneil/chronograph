@@ -15,6 +15,7 @@ import { fetchActivityData, fetchActivityInput } from '@frontend/controller/chro
 import { ActivityData } from '@application/types';
 
 dayjs.extend(localizedFormat);
+dayjs.locale('ru');
 
 const container = document.getElementById('root');
 const root = createRoot(container);

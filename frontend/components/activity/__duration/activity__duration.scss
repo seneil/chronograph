@@ -1,4 +1,12 @@
 .#{$b}__duration {
   width: 100px;
   text-align: right;
+  line-height: 25px;
+}
+
+.#{$b}_total {
+  .#{$b}__duration {
+    width: 100%;
+    font-weight: bold;
+  }
 }

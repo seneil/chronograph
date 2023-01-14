@@ -18,7 +18,7 @@ export const groupActivities = (activities: ActivityView[]): ActivityGroup[] => 
     if (activityIndex >= 0) {
       list[activityIndex] = {
         date: dateKey,
-        total: list[activityIndex].minutes + activity.duration,
+        total: list[activityIndex].total + (activity.duration || 0),
         activities: [...list[activityIndex].activities, activity]
       };
 
