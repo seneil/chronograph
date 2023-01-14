@@ -13,7 +13,8 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "plugin:import/recommended",
     "plugin:import/electron",
-    "plugin:import/typescript"
+    "plugin:import/typescript",
+    "plugin:react-hooks/recommended",
   ],
   parser: "@typescript-eslint/parser",
   plugins: ["import"],

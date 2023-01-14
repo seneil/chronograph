@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useInterval } from 'react-use';
 
 import { convertMinutesToTime } from '@frontend/utils';
 
@@ -16,18 +17,15 @@ const getDiffNow = (startAt: Date) => dayjs().diff(dayjs(startAt), 'minute');
 export const TimingInfo = ({ timing }: TimingInfoProps) => {
   const [timingDuration, setTimingDuration] = useState(getDiffNow(timing.start_at));
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTimingDuration(getDiffNow(timing.start_at));
-    }, UPDATE_INTERVAL);
-
-    return () => clearInterval(interval);
-  }, [timingDuration]);
+  useInterval(() => {
+    setTimingDuration(getDiffNow(timing.start_at));
+  }, UPDATE_INTERVAL);
 
   return (
     <div className="timing-info">
       <div className="timing-info__row">
-        <b>{convertMinutesToTime(timingDuration) || '0м'}</b>, за день {convertMinutesToTime(timing.duration + timingDuration)}
+        <b>{convertMinutesToTime(timingDuration) || '0м'}</b>, за
+        день {convertMinutesToTime(timing.duration + timingDuration)}
       </div>
       <div className="timing-info__row"><b>{timing.activity_name}</b> в категории {timing.category_name}</div>
     </div>

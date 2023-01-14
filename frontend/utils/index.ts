@@ -1,2 +1,2 @@
-export { groupActivities } from './group-activities';
+export { calendarizeActivities } from './calendarize-activities';
 export { convertMinutesToTime } from './convert-minutes-totime';

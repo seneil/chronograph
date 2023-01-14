@@ -7,12 +7,12 @@ import {
 
 import { Timings__Date, Timings__Activities } from '@frontend/components/timings';
 
-import { ActivityGroupView } from '@application/types/views/activity';
+import { ActivityCalendarView } from '@application/types/views/activity';
 
 interface TimingsProps {
   date: string;
   total: number;
-  activities: ActivityGroupView[];
+  activities: ActivityCalendarView[];
 }
 
 export const Timings = ({ date, total, activities }: TimingsProps) => (
