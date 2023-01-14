@@ -3,10 +3,10 @@ import React from 'react';
 import { Timings } from '@frontend/components/timings';
 import { Chronography__Day } from '@frontend/components/chronography';
 
-import { ActivityGroup } from '@frontend/types';
+import { ActivityCalendar } from '@frontend/types';
 
 interface ChronographyProps {
-  groups: ActivityGroup[],
+  groups: ActivityCalendar[],
 }
 
 export const Chronography = ({ groups }: ChronographyProps) => {

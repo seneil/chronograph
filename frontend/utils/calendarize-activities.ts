@@ -1,9 +1,9 @@
 import dayjs from 'dayjs';
 
 import { ActivityView } from '@application/types';
-import { ActivityGroup } from '@frontend/types';
+import { ActivityCalendar } from '@frontend/types';
 
-export const groupActivities = (activities: ActivityView[]): ActivityGroup[] => (
+export const calendarizeActivities = (activities: ActivityView[]): ActivityCalendar[] => (
   activities.reduce((list, { start_at, end_at, ...item }) => {
     const dateKey = dayjs(start_at).format('YYYY-MM-DD');
     const activityIndex = list.findIndex(item => item.date === dateKey);

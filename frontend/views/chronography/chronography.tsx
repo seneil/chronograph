@@ -7,14 +7,14 @@ import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 import { FocusStyleManager, Card, FormGroup, ButtonGroup, Divider, Button } from '@blueprintjs/core';
 
-import { groupActivities } from '@frontend/utils';
+import { calendarizeActivities } from '@frontend/utils';
 
 import { fetchChronography, fetchActiveTiming, stopTiming, openActivityAppendWindow } from '@frontend/controller';
 
 import { Chronography } from '@frontend/components/chronography';
 import { TimingInfo } from '@frontend/components/timing-info';
 
-import { ActivityGroup } from '@frontend/types';
+import { ActivityCalendar } from '@frontend/types';
 import { CurrentActivityView } from '@application/types';
 
 dayjs.extend(localizedFormat);
@@ -26,15 +26,15 @@ const root = createRoot(container);
 FocusStyleManager.onlyShowFocusOnTabs();
 
 const ChronographyView = () => {
-  const [activities, setActivities] = useState<ActivityGroup[]>([]);
+  const [activities, setActivities] = useState<ActivityCalendar[]>([]);
   const [timingInfo, setTimingInfo] = useState<CurrentActivityView>();
 
   const getChronography = async () => {
-    const activityGroups = groupActivities(await fetchChronography());
+    const activityCalendar = calendarizeActivities(await fetchChronography());
     const timing = await fetchActiveTiming();
 
     setTimingInfo(timing);
-    setActivities(activityGroups);
+    setActivities(activityCalendar);
   };
 
   useEffect(() => {

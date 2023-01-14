@@ -1,9 +1,9 @@
-import { ActivityGroupView } from '@application/types/views/activity';
+import { ActivityCalendarView } from '@application/types/views/activity';
 
 export { ElectronGlobalService, ElectronGlobalFetcher } from './globals';
 
-export interface ActivityGroup {
+export interface ActivityCalendar {
   date: string;
   total: number;
-  activities: ActivityGroupView[];
+  activities: ActivityCalendarView[];
 }
