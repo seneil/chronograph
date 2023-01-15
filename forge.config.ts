@@ -15,6 +15,7 @@ const config: ForgeConfig = {
   plugins: [
     new WebpackPlugin({
       mainConfig,
+      packageSourceMaps: true,
       renderer: {
         config: rendererConfig,
         entryPoints: [
