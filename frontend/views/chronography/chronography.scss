@@ -5,6 +5,6 @@
 @import '@blueprintjs/core/lib/scss/variables';
 
 body {
-  font-size: 16px;
+  font-size: $pt-font-size-large;
   background-color: $light-gray4;
 }
