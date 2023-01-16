@@ -5,6 +5,7 @@ export const EVENT_NAME = {
     STOP_TIMING: 'stopTiming',
     FETCH_ACTIVITY_DATA: 'fetchActivityData',
     FETCH_ACTIVITY_INPUT: 'fetchActivityInput',
+    REPEAT_TIMING: 'repeatTiming',
   },
   SERVICE: {
     OPEN_ACTIVITY_APPEND_WINDOW: 'open-activity-append-window',
