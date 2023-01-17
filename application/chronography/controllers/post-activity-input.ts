@@ -4,7 +4,7 @@ import { completeActiveTiming, insertTiming } from '@application/chronography/co
 
 import { ActivityData } from '@application/types';
 
-export const fetchActivityInput = async (activityData: ActivityData): Promise<void> => {
+export const postActivityInput = async (activityData: ActivityData): Promise<void> => {
   const { category: categoryName, activity: activityName, startTime, endTime } = activityData
 
   const startTimeString = new Date(startTime).toISOString();

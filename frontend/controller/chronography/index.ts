@@ -18,8 +18,8 @@ export const fetchActivityData = async (activityInput: string) => (
   await window[API_ENTRY.FETCHER].fetchActivityData(activityInput)
 );
 
-export const fetchActivityInput = async (activityData: ActivityData) => (
-  await window[API_ENTRY.FETCHER].fetchActivityInput(activityData)
+export const postActivityInput = async (activityData: ActivityData) => (
+  await window[API_ENTRY.FETCHER].postActivityInput(activityData)
 );
 
 export const repeatTiming = async (timingId: number) => (

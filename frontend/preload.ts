@@ -17,6 +17,6 @@ contextBridge.exposeInMainWorld(API_ENTRY.FETCHER, <ElectronGlobalFetcher>{
   fetchActiveTiming: () => ipcRenderer.invoke(EVENT_NAME.FETCHER.FETCH_ACTIVE_TIMING),
   stopTiming: () => ipcRenderer.invoke(EVENT_NAME.FETCHER.STOP_TIMING),
   fetchActivityData: activityInput => ipcRenderer.invoke(EVENT_NAME.FETCHER.FETCH_ACTIVITY_DATA, activityInput),
-  fetchActivityInput: activityData => ipcRenderer.invoke(EVENT_NAME.FETCHER.FETCH_ACTIVITY_INPUT, activityData),
+  postActivityInput: activityData => ipcRenderer.invoke(EVENT_NAME.FETCHER.POST_ACTIVITY_INPUT, activityData),
   repeatTiming: timingId => ipcRenderer.invoke(EVENT_NAME.FETCHER.REPEAT_TIMING, timingId),
 });

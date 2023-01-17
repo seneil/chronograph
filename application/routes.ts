@@ -4,7 +4,7 @@ import { getAppendActivityWindow } from '@application/views/append-activity';
 import { getChronographyWindow } from '@application/views/chronography';
 
 import { fetchActiveTiming, repeatTiming, stopTiming } from '@application/chronography/controllers/timings';
-import { fetchChronography, fetchActivityData, fetchActivityInput } from '@application/chronography/controllers';
+import { fetchChronography, fetchActivityData, postActivityInput } from '@application/chronography/controllers';
 
 import { ActivityData } from '@application/types';
 
@@ -56,8 +56,8 @@ ipcMain.handle(EVENT_NAME.FETCHER.FETCH_ACTIVITY_DATA, async (event, activityInp
   await fetchActivityData(activityInput)
 ));
 
-ipcMain.handle(EVENT_NAME.FETCHER.FETCH_ACTIVITY_INPUT, async (event, activityData: ActivityData) => {
-  await fetchActivityInput(activityData);
+ipcMain.handle(EVENT_NAME.FETCHER.POST_ACTIVITY_INPUT, async (event, activityData: ActivityData) => {
+  await postActivityInput(activityData);
 
   appendActivityWindow.close();
 });
