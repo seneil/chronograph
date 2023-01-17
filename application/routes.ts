@@ -9,6 +9,7 @@ import {
   fetchActivityInput,
   fetchActiveTiming,
   stopTiming,
+  repeatTiming,
 } from '@application/chronography/controllers';
 
 import { EVENT_NAME } from '@constants';
@@ -45,19 +46,19 @@ ipcMain.handle(EVENT_NAME.SERVICE.OPEN_ACTIVITY_APPEND_WINDOW, async () => {
 });
 
 ipcMain.handle(EVENT_NAME.FETCHER.FETCH_CHRONOGRAPHY, async () => (
-  fetchChronography()
+  await fetchChronography()
 ));
 
 ipcMain.handle(EVENT_NAME.FETCHER.FETCH_ACTIVE_TIMING, async () => (
-  fetchActiveTiming()
+  await fetchActiveTiming()
 ));
 
 ipcMain.handle(EVENT_NAME.FETCHER.STOP_TIMING, async () => (
-  stopTiming()
+  await stopTiming()
 ));
 
 ipcMain.handle(EVENT_NAME.FETCHER.FETCH_ACTIVITY_DATA, async (event, activityInput: string) => (
-  fetchActivityData(activityInput)
+  await fetchActivityData(activityInput)
 ));
 
 ipcMain.handle(EVENT_NAME.FETCHER.FETCH_ACTIVITY_INPUT, async (event, activityData: ActivityData) => {
@@ -65,3 +66,7 @@ ipcMain.handle(EVENT_NAME.FETCHER.FETCH_ACTIVITY_INPUT, async (event, activityDa
 
   appendActivityWindow.close();
 });
+
+ipcMain.handle(EVENT_NAME.FETCHER.REPEAT_TIMING, async (event, timingId: number) => (
+  await repeatTiming(timingId)
+));

@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import { useMount } from 'react-use';
 
 import 'dayjs/locale/ru';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
@@ -9,7 +10,13 @@ import { FocusStyleManager, Card, FormGroup, ButtonGroup, Divider, Button } from
 
 import { calendarizeActivities } from '@frontend/utils';
 
-import { fetchChronography, fetchActiveTiming, stopTiming, openActivityAppendWindow } from '@frontend/controller';
+import {
+  fetchChronography,
+  fetchActiveTiming,
+  stopTiming,
+  repeatTiming,
+  openActivityAppendWindow
+} from '@frontend/controller';
 
 import { Chronography } from '@frontend/components/chronography';
 import { TimingInfo } from '@frontend/components/timing-info';
@@ -37,9 +44,9 @@ const ChronographyView = () => {
     setActivities(activityCalendar);
   };
 
-  useEffect(() => {
+  useMount(() => {
     getChronography().catch(console.error);
-  }, []);
+  });
 
   const createActivityAppendWindow = async () => {
     await openActivityAppendWindow();
@@ -48,6 +55,13 @@ const ChronographyView = () => {
 
   const stopActiveTiming = async () => {
     await stopTiming();
+    await getChronography();
+  };
+
+  const repeatSelectedTiming = async (id: number) => {
+    setTimingInfo(null);
+
+    await repeatTiming(id);
     await getChronography();
   };
 
@@ -82,7 +96,10 @@ const ChronographyView = () => {
         </ButtonGroup>
       </FormGroup>
 
-      <Chronography groups={activities}/>
+      <Chronography
+        groups={activities}
+        onTimingRepeat={repeatSelectedTiming}
+      />
     </Card>
   );
 };
