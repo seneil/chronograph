@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 
 import { knex } from '@application/connection';
 
-import { CurrentActivityView, TimingTable, activeTimingStart } from '@application/types';
+import { activeTimingStart, CurrentActivityView, TimingTable } from '@application/types';
 
 const fetchTiming = async (timingId: number) => (
   await knex<TimingTable>('timings')

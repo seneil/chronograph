@@ -3,17 +3,12 @@ import { BrowserWindow, ipcMain } from 'electron';
 import { getAppendActivityWindow } from '@application/views/append-activity';
 import { getChronographyWindow } from '@application/views/chronography';
 
-import {
-  fetchChronography,
-  fetchActivityData,
-  fetchActivityInput,
-  fetchActiveTiming,
-  stopTiming,
-  repeatTiming,
-} from '@application/chronography/controllers';
+import { fetchActiveTiming, repeatTiming, stopTiming } from '@application/chronography/controllers/timings';
+import { fetchChronography, fetchActivityData, fetchActivityInput } from '@application/chronography/controllers';
+
+import { ActivityData } from '@application/types';
 
 import { EVENT_NAME } from '@constants';
-import { ActivityData } from '@application/types';
 
 let appendActivityWindow: BrowserWindow | null = null;
 

@@ -1,11 +1,6 @@
-import {
-  searchCategory,
-  insertCategory,
-  searchActivity,
-  insertActivity,
-  completeActiveTiming,
-  insertTiming,
-} from '@application/chronography/controllers';
+import { insertCategory, searchCategory } from '@application/chronography/controllers/categories';
+import { insertActivity, searchActivity } from '@application/chronography/controllers/activities';
+import { completeActiveTiming, insertTiming } from '@application/chronography/controllers/timings';
 
 import { ActivityData } from '@application/types';
 
