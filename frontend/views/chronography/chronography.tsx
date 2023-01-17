@@ -10,13 +10,8 @@ import { FocusStyleManager, Card, FormGroup, ButtonGroup, Divider, Button } from
 
 import { calendarizeActivities } from '@frontend/utils';
 
-import {
-  fetchChronography,
-  fetchActiveTiming,
-  stopTiming,
-  repeatTiming,
-  openActivityAppendWindow
-} from '@frontend/controller';
+import { openActivityAppendWindow } from '@frontend/controller/services';
+import { fetchActiveTiming, fetchChronography, repeatTiming, stopTiming } from '@frontend/controller/chronography';
 
 import { Chronography } from '@frontend/components/chronography';
 import { TimingInfo } from '@frontend/components/timing-info';

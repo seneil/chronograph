@@ -11,7 +11,6 @@ import { Section, Section__Row, Section__Text } from '@frontend/components/secti
 import { Form } from '@frontend/components/form';
 import { ActivityInfo } from '@frontend/components/activity-info';
 
-import { fetchActivityData, fetchActivityInput } from '@frontend/controller/chronography';
 import { ActivityData } from '@application/types';
 
 dayjs.extend(localizedFormat);
