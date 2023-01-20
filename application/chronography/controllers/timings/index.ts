@@ -1,6 +1,14 @@
-import { knex } from '@application/connection';
-import { CurrentActivityView, TimingTable, activeTimingStart } from '@application/types';
 import dayjs from 'dayjs';
+
+import { knex } from '@application/connection';
+
+import { activeTimingStart, CurrentActivityView, TimingTable } from '@application/types';
+
+const fetchTiming = async (timingId: number) => (
+  await knex<TimingTable>('timings')
+    .select('activity_id')
+    .where({ id: timingId })
+);
 
 export const completeActiveTiming = async (startTime: string) => (
   await knex<TimingTable>('timings')
@@ -8,12 +16,12 @@ export const completeActiveTiming = async (startTime: string) => (
     .update({ end_at: startTime })
 );
 
-export const insertTiming = async (activityId: number, startTime: string, endTime: string) => (
+export const insertTiming = async (activityId: number, startTime: string, endTime: string | null) => (
   await knex<TimingTable>('timings')
     .insert({ activity_id: activityId, start_at: startTime, end_at: endTime })
 );
 
-export const fetchActiveTiming = async () => {
+export const fetchActiveTiming = async (): Promise<CurrentActivityView | null> => {
   const [activeTimingDate] = await knex.raw<activeTimingStart[]>(`
     select
         date(timings.start_at) as start_date_at
@@ -59,3 +67,12 @@ export const fetchActiveTiming = async () => {
 export const stopTiming = async () => (
   await completeActiveTiming(new Date().toISOString())
 );
+
+export const repeatTiming = async (timingId: number) => {
+  const currentTime = new Date().toISOString();
+
+  const [timing] = await fetchTiming(timingId);
+
+  await completeActiveTiming(currentTime);
+  await insertTiming(timing.activity_id, currentTime, null);
+};

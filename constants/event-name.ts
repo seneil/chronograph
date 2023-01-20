@@ -4,7 +4,8 @@ export const EVENT_NAME = {
     FETCH_ACTIVE_TIMING: 'fetchActiveTiming',
     STOP_TIMING: 'stopTiming',
     FETCH_ACTIVITY_DATA: 'fetchActivityData',
-    FETCH_ACTIVITY_INPUT: 'fetchActivityInput',
+    POST_ACTIVITY_INPUT: 'postActivityInput',
+    REPEAT_TIMING: 'repeatTiming',
   },
   SERVICE: {
     OPEN_ACTIVITY_APPEND_WINDOW: 'open-activity-append-window',

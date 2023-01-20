@@ -17,5 +17,6 @@ export interface ElectronGlobalFetcher {
   fetchActiveTiming: () => Promise<CurrentActivityView>;
   stopTiming: () => Promise<void>;
   fetchActivityData: (activityInput: string) => Promise<ActivityData>;
-  fetchActivityInput: (activityData: ActivityData) => Promise<void>;
+  postActivityInput: (activityData: ActivityData) => Promise<void>;
+  repeatTiming: (timingId: number) => Promise<void>;
 }

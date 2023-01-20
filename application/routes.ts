@@ -3,16 +3,12 @@ import { BrowserWindow, ipcMain } from 'electron';
 import { getAppendActivityWindow } from '@application/views/append-activity';
 import { getChronographyWindow } from '@application/views/chronography';
 
-import {
-  fetchChronography,
-  fetchActivityData,
-  fetchActivityInput,
-  fetchActiveTiming,
-  stopTiming,
-} from '@application/chronography/controllers';
+import { fetchActiveTiming, repeatTiming, stopTiming } from '@application/chronography/controllers/timings';
+import { fetchChronography, fetchActivityData, postActivityInput } from '@application/chronography/controllers';
+
+import { ActivityData } from '@application/types';
 
 import { EVENT_NAME } from '@constants';
-import { ActivityData } from '@application/types';
 
 let appendActivityWindow: BrowserWindow | null = null;
 
@@ -45,23 +41,27 @@ ipcMain.handle(EVENT_NAME.SERVICE.OPEN_ACTIVITY_APPEND_WINDOW, async () => {
 });
 
 ipcMain.handle(EVENT_NAME.FETCHER.FETCH_CHRONOGRAPHY, async () => (
-  fetchChronography()
+  await fetchChronography()
 ));
 
 ipcMain.handle(EVENT_NAME.FETCHER.FETCH_ACTIVE_TIMING, async () => (
-  fetchActiveTiming()
+  await fetchActiveTiming()
 ));
 
 ipcMain.handle(EVENT_NAME.FETCHER.STOP_TIMING, async () => (
-  stopTiming()
+  await stopTiming()
 ));
 
 ipcMain.handle(EVENT_NAME.FETCHER.FETCH_ACTIVITY_DATA, async (event, activityInput: string) => (
-  fetchActivityData(activityInput)
+  await fetchActivityData(activityInput)
 ));
 
-ipcMain.handle(EVENT_NAME.FETCHER.FETCH_ACTIVITY_INPUT, async (event, activityData: ActivityData) => {
-  await fetchActivityInput(activityData);
+ipcMain.handle(EVENT_NAME.FETCHER.POST_ACTIVITY_INPUT, async (event, activityData: ActivityData) => {
+  await postActivityInput(activityData);
 
   appendActivityWindow.close();
 });
+
+ipcMain.handle(EVENT_NAME.FETCHER.REPEAT_TIMING, async (event, timingId: number) => (
+  await repeatTiming(timingId)
+));

@@ -6,6 +6,7 @@ import {
 } from '@frontend/components/activity';
 
 import { Timings__Date, Timings__Activities } from '@frontend/components/timings';
+import { TimingControls } from '@frontend/components/timing-controls';
 
 import { ActivityCalendarView } from '@application/types/views/activity';
 
@@ -13,9 +14,10 @@ interface TimingsProps {
   date: string;
   total: number;
   activities: ActivityCalendarView[];
+  onRepeat: (id: number) => Promise<void>;
 }
 
-export const Timings = ({ date, total, activities }: TimingsProps) => (
+export const Timings = ({ date, total, activities, onRepeat }: TimingsProps) => (
   <div className='timings'>
     <Timings__Date date={date}/>
     <Timings__Activities>
@@ -38,6 +40,10 @@ export const Timings = ({ date, total, activities }: TimingsProps) => (
             />
 
             <Activity__Duration minutes={timing.duration}/>
+
+            {timing.end_time_at && (
+              <TimingControls timingId={timing.timing_id} onRepeat={onRepeat}/>
+            )}
           </Activity>
         );
       })}

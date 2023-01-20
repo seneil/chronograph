@@ -1,4 +1,5 @@
 import { knex } from '@application/connection';
+
 import { ActivityTable } from '@application/types';
 
 export const getActivities = async () => (
