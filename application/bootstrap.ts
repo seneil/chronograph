@@ -4,6 +4,7 @@ import { existsSync, mkdirSync } from 'fs';
 
 import { knex } from '@application/connection';
 import { WebpackMigrationSource } from '@application/db/webpack-migration-source';
+import { WebpackSeedSource } from '@application/db/webpack-seed-source';
 
 import { FOLDER_NAME } from '@constants';
 
@@ -19,4 +20,10 @@ export const bootstrap = async () => {
       require.context('./db/migrations', false, /^\.\/.*\.ts$/)
     ),
   });
+
+  await knex.seed.run({
+    seedSource: new WebpackSeedSource(
+      require.context('./db/seeds', false, /^\.\/.*\.ts$/)
+    ),
+  })
 };
