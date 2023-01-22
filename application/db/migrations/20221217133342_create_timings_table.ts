@@ -2,7 +2,7 @@ import { Knex } from 'knex';
 
 export async function up(knex: Knex): Promise<void> {
   await knex.schema
-    .createTable('timings', table => {
+    .createTable('timings', (table: Knex.TableBuilder) => {
       table.increments('id');
       table.integer('activity_id')
         .references('id')
