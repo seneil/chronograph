@@ -16,7 +16,6 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "rebuild": "electron-rebuild -f -w sqlite3",
-    "migrate": "knex migrate:latest --knexfile ./application/knexfile.ts",
     "migrate:seed": "knex seed:run --knexfile ./application/knexfile.ts",
     "lint": "eslint --ext .ts,.tsx .",
     "test": "jest --collect-coverage"

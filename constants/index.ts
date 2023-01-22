@@ -1,3 +1,3 @@
 export { API_ENTRY } from './api-entry';
 export { EVENT_NAME } from './event-name';
-export { ENVIRONMENT } from './environments';
+export { ENVIRONMENT, FOLDER_NAME } from './environments';
