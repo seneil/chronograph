@@ -23,7 +23,7 @@ dayjs.extend(localizedFormat);
 dayjs.locale('ru');
 
 const container = document.getElementById('root');
-const root = createRoot(container);
+const view = createRoot(container);
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -99,4 +99,4 @@ const ChronographyView = () => {
   );
 };
 
-root.render(<ChronographyView/>);
+view.render(<ChronographyView/>);
