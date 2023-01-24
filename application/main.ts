@@ -4,6 +4,8 @@ import { app, BrowserWindow } from 'electron';
 import { bootstrap } from '@application/bootstrap';
 import { createChronographyWindow } from '@application/routes';
 
+app.disableHardwareAcceleration();
+
 if (require('electron-squirrel-startup')) {
   app.quit();
 }
