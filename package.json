@@ -16,8 +16,6 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "rebuild": "electron-rebuild -f -w sqlite3",
-    "migrate": "knex migrate:latest --knexfile ./application/knexfile.ts",
-    "migrate:seed": "knex seed:run --knexfile ./application/knexfile.ts",
     "lint": "eslint --ext .ts,.tsx .",
     "test": "jest --collect-coverage"
   },
@@ -38,6 +36,7 @@
     "@funboxteam/scss-vars-loader": "^2.2.0",
     "@types/jest": "^29.2.4",
     "@types/node": "^18.11.9",
+    "@types/webpack-env": "^1.18.0",
     "@typescript-eslint/eslint-plugin": "^5.42.0",
     "@typescript-eslint/parser": "^5.42.0",
     "@vercel/webpack-asset-relocator-loader": "^1.7.3",

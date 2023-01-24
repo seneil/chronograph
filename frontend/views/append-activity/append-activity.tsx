@@ -19,11 +19,7 @@ dayjs.extend(localizedFormat);
 dayjs.locale('ru');
 
 const container = document.getElementById('root');
-const root = createRoot(container);
-
-interface AppendActivityProps {
-  title: string;
-}
+const view = createRoot(container);
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -34,7 +30,7 @@ const defaultActivityData: ActivityData = {
   endTime: null,
 };
 
-const AppendActivityView = ({ title }: AppendActivityProps) => {
+const AppendActivityView = () => {
   const [activityInput, setActivityInput] = useState<string>('');
   const [activityData, setActivityData] = useState<ActivityData>(defaultActivityData);
   const [isLoading, setLoadingStatus] = useState(false);
@@ -64,8 +60,6 @@ const AppendActivityView = ({ title }: AppendActivityProps) => {
 
   return (
     <Card>
-      <h2>{title}</h2>
-
       <Section>
         <Form onSubmit={submitActivityInput}>
           <Section__Row>
@@ -103,4 +97,4 @@ const AppendActivityView = ({ title }: AppendActivityProps) => {
   );
 }
 
-root.render(<AppendActivityView title='Append activity'/>);
+view.render(<AppendActivityView/>);

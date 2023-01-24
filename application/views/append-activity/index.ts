@@ -11,7 +11,7 @@ const appendActivityWindow: BrowserWindowConstructorOptions = {
   center: true,
   resizable: false,
   maximizable: false,
-  title: 'Append activity',
+  title: 'Новая активность',
   autoHideMenuBar: true,
   backgroundColor: '#f6f5f4',
   webPreferences: {

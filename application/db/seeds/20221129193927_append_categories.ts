@@ -1,9 +1,9 @@
 import { Knex } from 'knex';
 
-export async function seed(knex: Knex): Promise<void> {
-  await knex('categories').truncate();
-
-  await knex('categories').insert([
+async function insertCategories(knex: Knex) {
+  await knex('categories')
+    .truncate()
+    .insert([
     {
       id: 1,
       name: 'Chronograph',
@@ -26,4 +26,10 @@ export async function seed(knex: Knex): Promise<void> {
       updated_at: knex.fn.now(),
     },
   ]);
+}
+
+export async function seed(knex: Knex): Promise<void> {
+  const [count] = await knex('categories').count('id as categories');
+
+  if (count.categories === 0) await insertCategories(knex);
 }
