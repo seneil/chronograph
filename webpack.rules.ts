@@ -16,6 +16,13 @@ export const rules: Required<ModuleOptions>['rules'] = [
     },
   },
   {
+    test: /\.(png|jpg|jpeg|gif|svg)$/,
+    type: 'asset/resource',
+    generator: {
+      filename: 'static/[hash][ext][query]',
+    },
+  },
+  {
     test: /\.tsx?$/,
     exclude: /(node_modules|\.webpack)/,
     use: {

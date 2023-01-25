@@ -1,5 +1,9 @@
+import path from 'path';
+
 import { BrowserWindow } from 'electron';
 import type { BrowserWindowConstructorOptions } from 'electron';
+
+import windowIcon from '@assets/favicons/png/128x128.png';
 
 declare const CHRONOGRAPHY_WEBPACK_ENTRY: string;
 declare const CHRONOGRAPHY_PRELOAD_WEBPACK_ENTRY: string;
@@ -13,6 +17,7 @@ const chronographyWindow: BrowserWindowConstructorOptions = {
   maximizable: false,
   autoHideMenuBar: true,
   backgroundColor: '#f6f5f4',
+  icon: path.join(__dirname, windowIcon),
   webPreferences: {
     preload: CHRONOGRAPHY_PRELOAD_WEBPACK_ENTRY,
   },
