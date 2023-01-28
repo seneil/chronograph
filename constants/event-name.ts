@@ -9,5 +9,6 @@ export const EVENT_NAME = {
   },
   SERVICE: {
     OPEN_ACTIVITY_APPEND_WINDOW: 'open-activity-append-window',
+    CLOSE_ACTIVITY_APPEND_WINDOW: 'close-activity-append-window',
   },
 } as const;

@@ -40,6 +40,10 @@ ipcMain.handle(EVENT_NAME.SERVICE.OPEN_ACTIVITY_APPEND_WINDOW, async () => {
   if (!appendActivityWindow) await createAppendActivityWindow();
 });
 
+ipcMain.handle(EVENT_NAME.SERVICE.CLOSE_ACTIVITY_APPEND_WINDOW, async () => {
+  if (appendActivityWindow) appendActivityWindow.close();
+});
+
 ipcMain.handle(EVENT_NAME.FETCHER.FETCH_CHRONOGRAPHY, async () => (
   await fetchChronography()
 ));

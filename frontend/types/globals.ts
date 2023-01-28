@@ -10,6 +10,7 @@ declare global {
 export interface ElectronGlobalService {
   getVersion: () => string;
   openActivityAppendWindow: () => Promise<void>;
+  closeActivityAppendWindow: () => void;
 }
 
 export interface ElectronGlobalFetcher {

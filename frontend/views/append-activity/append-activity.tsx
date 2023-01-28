@@ -10,8 +10,9 @@ import { FocusStyleManager, Card, FormGroup, InputGroup, Button } from '@bluepri
 import { Section, Section__Row, Section__Text } from '@frontend/components/section';
 import { Form } from '@frontend/components/form';
 import { ActivityInfo } from '@frontend/components/activity-info';
+import { ButtonsGroup } from '@frontend/components/buttons-group';
 
-import { fetchActivityData, postActivityInput } from '@frontend/controller/chronography';
+import { closeActivityAppendWindow, fetchActivityData, postActivityInput } from '@frontend/controller/chronography';
 
 import { ActivityData } from '@application/types';
 
@@ -46,14 +47,18 @@ const AppendActivityView = () => {
       .catch(console.error);
 
     setActivityInput(value);
-  }
+  };
 
   const submitActivityInput = async () => {
     setLoadingStatus(true);
 
     postActivityInput(activityData)
       .catch(console.error);
-  }
+  };
+
+  const closeAppendActivity = async () => (
+    await closeActivityAppendWindow()
+  );
 
   const isSubmitDisabled = !(activityData.category && activityData.activity && activityData.startTime);
   const submitButtonCaption = activityData.endTime ? 'Добавить' : 'Начать';
@@ -82,14 +87,23 @@ const AppendActivityView = () => {
           </Section__Text>
 
           <Section__Row>
-            <Button
-              type="submit"
-              intent="primary"
-              icon="plus"
-              large={true}
-              loading={isLoading}
-              disabled={isSubmitDisabled}
-            >{submitButtonCaption}</Button>
+            <ButtonsGroup>
+              <Button
+                type="submit"
+                intent="primary"
+                icon="plus"
+                large={true}
+                loading={isLoading}
+                disabled={isSubmitDisabled}
+              >{submitButtonCaption}</Button>
+
+              <Button
+                type="button"
+                large={true}
+                loading={isLoading}
+                onClick={closeAppendActivity}
+              >Отмена</Button>
+            </ButtonsGroup>
           </Section__Row>
         </Form>
       </Section>
