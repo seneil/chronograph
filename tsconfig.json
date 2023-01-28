@@ -16,6 +16,7 @@
       "@application/*": ["application/*"],
       "@constants": ["constants", "constants/*"],
       "@frontend/*": ["frontend/*"],
+      "@assets/*": ["assets/*"],
       "*": ["node_modules/*"]
     }
   },

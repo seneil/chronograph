@@ -44,6 +44,7 @@ export const mainConfig: Configuration = {
     alias: {
       '@application': path.resolve(__dirname, './application'),
       '@constants': path.resolve(__dirname, './constants'),
+      '@assets': path.resolve(__dirname, './assets'),
     },
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.scss', '.sass', '.json'],
   },
