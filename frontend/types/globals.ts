@@ -20,4 +20,5 @@ export interface ElectronGlobalFetcher {
   fetchActivityData: (activityInput: string) => Promise<ActivityData>;
   postActivityInput: (activityData: ActivityData) => Promise<void>;
   repeatTiming: (timingId: number) => Promise<void>;
+  deleteTiming: (timingId: number, details: string) => Promise<void>;
 }

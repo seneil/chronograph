@@ -76,3 +76,9 @@ export const repeatTiming = async (timingId: number) => {
   await completeActiveTiming(currentTime);
   await insertTiming(timing.activity_id, currentTime, null);
 };
+
+export const deleteTiming = async (timingId: number) => (
+  await knex<TimingTable>('timings')
+    .where({ id: timingId })
+    .delete()
+);

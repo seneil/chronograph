@@ -3,12 +3,13 @@ import { BrowserWindow, ipcMain } from 'electron';
 import { getAppendActivityWindow } from '@application/views/append-activity';
 import { getChronographyWindow } from '@application/views/chronography';
 
-import { fetchActiveTiming, repeatTiming, stopTiming } from '@application/chronography/controllers/timings';
+import { fetchActiveTiming, repeatTiming, stopTiming, deleteTiming } from '@application/chronography/controllers/timings';
 import { fetchChronography, fetchActivityData, postActivityInput } from '@application/chronography/controllers';
 
 import { ActivityData } from '@application/types';
 
 import { EVENT_NAME } from '@constants';
+import { showPromptBox } from '@application/utils/show-prompt-box';
 
 let appendActivityWindow: BrowserWindow | null = null;
 
@@ -69,3 +70,9 @@ ipcMain.handle(EVENT_NAME.FETCHER.POST_ACTIVITY_INPUT, async (event, activityDat
 ipcMain.handle(EVENT_NAME.FETCHER.REPEAT_TIMING, async (event, timingId: number) => (
   await repeatTiming(timingId)
 ));
+
+ipcMain.handle(EVENT_NAME.FETCHER.DELETE_TIMING, async (event, timingId: number, details: string) => {
+  const promptResult = await showPromptBox('Вы действительно хотите удалить тайминг?', details);
+
+  if (promptResult) await deleteTiming(timingId);
+});

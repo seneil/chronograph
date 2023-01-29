@@ -8,9 +8,10 @@ import { ActivityCalendar } from '@frontend/types';
 interface ChronographyProps {
   groups: ActivityCalendar[],
   onTimingRepeat: (id: number) => Promise<void>;
+  onTimingDelete: (id: number, details: string) => Promise<void>;
 }
 
-export const Chronography = ({ groups, onTimingRepeat }: ChronographyProps) => {
+export const Chronography = ({ groups, onTimingRepeat, onTimingDelete }: ChronographyProps) => {
 
   return (
     <div className='chronography'>
@@ -20,6 +21,7 @@ export const Chronography = ({ groups, onTimingRepeat }: ChronographyProps) => {
             key={activity.date}
             {...activity}
             onRepeat={onTimingRepeat}
+            onDelete={onTimingDelete}
           />
         ))}
       </Chronography__Day>

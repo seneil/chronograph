@@ -29,3 +29,7 @@ export const postActivityInput = async (activityData: ActivityData) => (
 export const repeatTiming = async (timingId: number) => (
   await window[API_ENTRY.FETCHER].repeatTiming(timingId)
 );
+
+export const deleteTiming = async (timingId: number, details: string) => (
+  await window[API_ENTRY.FETCHER].deleteTiming(timingId, details)
+);

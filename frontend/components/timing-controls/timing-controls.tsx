@@ -1,22 +1,33 @@
 import { Popover2 } from '@blueprintjs/popover2';
 import { Button, Menu, MenuDivider, MenuItem } from '@blueprintjs/core';
 
+import { ActivityCalendarView } from '@application/types/views/activity';
+
 interface TimingControlsProps {
-  timingId: number;
+  timing: ActivityCalendarView;
   onRepeat: (id: number) => Promise<void>;
+  onDelete: (id: number, details: string) => Promise<void>;
 }
 
-export const TimingControls = ({ timingId, onRepeat }: TimingControlsProps) => {
+const getTimingDetails = (timing: ActivityCalendarView) => (
+  `${timing.start_time_at}-${timing.end_time_at} ${timing.activity_name}@${timing.category_name}`
+);
+
+export const TimingControls = ({ timing, onRepeat, onDelete }: TimingControlsProps) => {
   const repeatTiming = async () => (
-    await onRepeat(timingId)
+    await onRepeat(timing.timing_id)
   );
+
+  const deleteTiming = async () => {
+    await onDelete(timing.timing_id, getTimingDetails(timing))
+  };
 
   const timingMenu = (
     <Menu>
       <MenuItem icon='repeat' text='Продолжить' onClick={repeatTiming}/>
       <MenuDivider/>
       <MenuItem disabled={true} icon='edit' text='Изменить'/>
-      <MenuItem disabled={true} icon='delete' text='Удалить'/>
+      <MenuItem icon='delete' text='Удалить' onClick={deleteTiming}/>
     </Menu>
   );
 
