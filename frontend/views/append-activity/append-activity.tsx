@@ -1,17 +1,19 @@
 import dayjs from 'dayjs';
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, KeyboardEvent } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import 'dayjs/locale/ru';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 
-import { FocusStyleManager, Card, FormGroup, InputGroup, Button } from '@blueprintjs/core';
+import { FocusStyleManager, FormGroup, InputGroup, Button } from '@blueprintjs/core';
 
 import { Section, Section__Row, Section__Text } from '@frontend/components/section';
 import { Form } from '@frontend/components/form';
 import { ActivityInfo } from '@frontend/components/activity-info';
+import { ButtonsGroup } from '@frontend/components/buttons-group';
+import { WindowCard } from '@frontend/components/window-card';
 
-import { fetchActivityData, postActivityInput } from '@frontend/controller/chronography';
+import { closeActivityAppendWindow, fetchActivityData, postActivityInput } from '@frontend/controller/chronography';
 
 import { ActivityData } from '@application/types';
 
@@ -46,20 +48,28 @@ const AppendActivityView = () => {
       .catch(console.error);
 
     setActivityInput(value);
-  }
+  };
 
   const submitActivityInput = async () => {
     setLoadingStatus(true);
 
     postActivityInput(activityData)
       .catch(console.error);
-  }
+  };
+
+  const closeAppendActivity = () => (
+    closeActivityAppendWindow()
+  );
+
+  const downKeyActivityInput = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.code === 'Escape') closeAppendActivity();
+  };
 
   const isSubmitDisabled = !(activityData.category && activityData.activity && activityData.startTime);
   const submitButtonCaption = activityData.endTime ? 'Добавить' : 'Начать';
 
   return (
-    <Card>
+    <WindowCard onPressESC={closeAppendActivity}>
       <Section>
         <Form onSubmit={submitActivityInput}>
           <Section__Row>
@@ -71,6 +81,7 @@ const AppendActivityView = () => {
                 value={activityInput}
                 disabled={isLoading}
                 onChange={changeActivityInput}
+                onKeyDown={downKeyActivityInput}
               />
             </FormGroup>
           </Section__Row>
@@ -82,18 +93,27 @@ const AppendActivityView = () => {
           </Section__Text>
 
           <Section__Row>
-            <Button
-              type="submit"
-              intent="primary"
-              icon="plus"
-              large={true}
-              loading={isLoading}
-              disabled={isSubmitDisabled}
-            >{submitButtonCaption}</Button>
+            <ButtonsGroup>
+              <Button
+                type="submit"
+                intent="primary"
+                icon="plus"
+                large={true}
+                loading={isLoading}
+                disabled={isSubmitDisabled}
+              >{submitButtonCaption}</Button>
+
+              <Button
+                type="button"
+                large={true}
+                loading={isLoading}
+                onClick={closeAppendActivity}
+              >Отмена</Button>
+            </ButtonsGroup>
           </Section__Row>
         </Form>
       </Section>
-    </Card>
+    </WindowCard>
   );
 }
 

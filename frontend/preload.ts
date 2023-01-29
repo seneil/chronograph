@@ -10,6 +10,7 @@ contextBridge.exposeInMainWorld(API_ENTRY.SERVICE, <ElectronGlobalService>{
     .join(', '),
 
   openActivityAppendWindow: () => ipcRenderer.invoke(EVENT_NAME.SERVICE.OPEN_ACTIVITY_APPEND_WINDOW),
+  closeActivityAppendWindow: () => ipcRenderer.invoke(EVENT_NAME.SERVICE.CLOSE_ACTIVITY_APPEND_WINDOW),
 });
 
 contextBridge.exposeInMainWorld(API_ENTRY.FETCHER, <ElectronGlobalFetcher>{

@@ -2,6 +2,10 @@ import { ActivityData } from '@application/types';
 
 import { API_ENTRY } from '@constants';
 
+export const closeActivityAppendWindow = () => (
+  window[API_ENTRY.SERVICE].closeActivityAppendWindow()
+);
+
 export const fetchChronography = async () => (
   await window[API_ENTRY.FETCHER].fetchChronography()
 );
