@@ -15,9 +15,10 @@ interface TimingsProps {
   total: number;
   activities: ActivityCalendarView[];
   onRepeat: (id: number) => Promise<void>;
+  onDelete: (id: number, details: string) => Promise<void>;
 }
 
-export const Timings = ({ date, total, activities, onRepeat }: TimingsProps) => (
+export const Timings = ({ date, total, activities, onRepeat, onDelete }: TimingsProps) => (
   <div className='timings'>
     <Timings__Date date={date}/>
     <Timings__Activities>
@@ -42,7 +43,11 @@ export const Timings = ({ date, total, activities, onRepeat }: TimingsProps) => 
             <Activity__Duration minutes={timing.duration}/>
 
             {timing.end_time_at && (
-              <TimingControls timingId={timing.timing_id} onRepeat={onRepeat}/>
+              <TimingControls
+                timing={timing}
+                onRepeat={onRepeat}
+                onDelete={onDelete}
+              />
             )}
           </Activity>
         );
