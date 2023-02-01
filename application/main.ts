@@ -2,7 +2,7 @@ import 'dayjs/locale/ru';
 import { app, BrowserWindow } from 'electron';
 
 import { bootstrap } from '@application/bootstrap';
-import { createChronographyWindow } from '@application/routes';
+import { createChronography, createChronographyWindow } from '@application/routes';
 
 app.disableHardwareAcceleration();
 
@@ -10,8 +10,8 @@ if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
-const initializeApplication = (): void=> {
-  createChronographyWindow();
+const initializeApplication = (): void => {
+  createChronography();
 }
 
 app.on('ready', async (): Promise<void> => {
@@ -22,12 +22,10 @@ app.on('ready', async (): Promise<void> => {
 
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
-    initializeApplication();
+    createChronographyWindow();
   }
 });
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
+app.on('window-all-closed', (event: Event) => {
+  event.preventDefault();
 });

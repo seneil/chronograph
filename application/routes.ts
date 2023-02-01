@@ -1,17 +1,25 @@
 import { BrowserWindow, ipcMain } from 'electron';
 
+import { createSystemTray } from '@application/tray';
 import { getAppendActivityWindow } from '@application/views/append-activity';
 import { getChronographyWindow } from '@application/views/chronography';
 
-import { fetchActiveTiming, repeatTiming, stopTiming, deleteTiming } from '@application/chronography/controllers/timings';
+import {
+  fetchActiveTiming,
+  repeatTiming,
+  stopTiming,
+  deleteTiming
+} from '@application/chronography/controllers/timings';
 import { fetchChronography, fetchActivityData, postActivityInput } from '@application/chronography/controllers';
+
+import { showPromptBox } from '@application/utils/show-prompt-box';
 
 import { ActivityData } from '@application/types';
 
-import { EVENT_NAME } from '@constants';
-import { showPromptBox } from '@application/utils/show-prompt-box';
+import { EVENT_NAME, TRAY_MENU } from '@constants';
 
 let appendActivityWindow: BrowserWindow | null = null;
+let chronographyWindow: BrowserWindow | null = null;
 
 export const createAppendActivityWindow = (): Promise<void> => new Promise(resolve => {
   const window = getAppendActivityWindow(BrowserWindow.getFocusedWindow());
@@ -25,16 +33,39 @@ export const createAppendActivityWindow = (): Promise<void> => new Promise(resol
   window.once('closed', () => {
     appendActivityWindow = null;
 
+    window.destroy();
     resolve();
-  })
+  });
 });
 
 export const createChronographyWindow = (): void => {
   const window = getChronographyWindow();
 
+  chronographyWindow = window;
+
   window.once('ready-to-show', () => {
     window.show();
   });
+
+  window.once('closed', () => {
+    chronographyWindow = null;
+
+    window.destroy();
+  });
+};
+
+export const createChronography = (): void => {
+  const trayMenu = createSystemTray();
+
+  trayMenu.getMenuItemById(TRAY_MENU.CHRONOGRAPHY).click = () => {
+    if (chronographyWindow) {
+      chronographyWindow.show();
+    } else {
+      createChronographyWindow();
+    }
+  }
+
+  createChronographyWindow();
 };
 
 ipcMain.handle(EVENT_NAME.SERVICE.OPEN_ACTIVITY_APPEND_WINDOW, async () => {
