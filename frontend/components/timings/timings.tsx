@@ -7,18 +7,21 @@ import {
 
 import { Timings__Date, Timings__Activities } from '@frontend/components/timings';
 import { TimingControls } from '@frontend/components/timing-controls';
+import { ActivitiesSummary } from '@frontend/components/activities-summary';
 
 import { ActivityCalendarView } from '@application/types/views/activity';
+import { CategorySummary } from '@frontend/types';
 
 interface TimingsProps {
   date: string;
   total: number;
+  summary: CategorySummary[];
   activities: ActivityCalendarView[];
   onRepeat: (id: number) => Promise<void>;
   onDelete: (id: number, details: string) => Promise<void>;
 }
 
-export const Timings = ({ date, total, activities, onRepeat, onDelete }: TimingsProps) => (
+export const Timings = ({ date, total, summary, activities, onRepeat, onDelete }: TimingsProps) => (
   <div className='timings'>
     <Timings__Date date={date}/>
     <Timings__Activities>
@@ -53,9 +56,12 @@ export const Timings = ({ date, total, activities, onRepeat, onDelete }: Timings
         );
       })}
 
-      <Activity key={`${date}-total`} isTotal>
-        <Activity__Duration minutes={total}/>
-      </Activity>
+      {!!total && (
+        <Activity key={`${date}-total`} isTotal>
+          <ActivitiesSummary summary={summary}/>
+          <Activity__Duration minutes={total}/>
+        </Activity>
+      )}
     </Timings__Activities>
   </div>
 );
