@@ -76,8 +76,8 @@ ipcMain.handle(EVENT_NAME.SERVICE.CLOSE_ACTIVITY_APPEND_WINDOW, async () => {
   if (appendActivityWindow) appendActivityWindow.close();
 });
 
-ipcMain.handle(EVENT_NAME.FETCHER.FETCH_CHRONOGRAPHY, async () => (
-  await fetchChronography()
+ipcMain.handle(EVENT_NAME.FETCHER.FETCH_CHRONOGRAPHY, async (event, dayStart?: string, dayEnd?: string) => (
+  await fetchChronography(dayStart, dayEnd)
 ));
 
 ipcMain.handle(EVENT_NAME.FETCHER.FETCH_ACTIVE_TIMING, async () => (

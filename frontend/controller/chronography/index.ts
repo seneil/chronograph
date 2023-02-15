@@ -6,8 +6,8 @@ export const closeActivityAppendWindow = () => (
   window[API_ENTRY.SERVICE].closeActivityAppendWindow()
 );
 
-export const fetchChronography = async () => (
-  await window[API_ENTRY.FETCHER].fetchChronography()
+export const fetchChronography = async (dayStart?: string, dayEnd?: string) => (
+  await window[API_ENTRY.FETCHER].fetchChronography(dayStart, dayEnd)
 );
 
 export const fetchActiveTiming = async () => (
