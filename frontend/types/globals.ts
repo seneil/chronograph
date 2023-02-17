@@ -14,8 +14,10 @@ export interface ElectronGlobalService {
 }
 
 export interface ElectronGlobalFetcher {
-  fetchChronography: (dayStart?: string, dayEnd?: string) => Promise<ActivityView[]>;
-  fetchActiveTiming: () => Promise<CurrentActivityView>;
+  fetchChronography: (dayStart?: string, dayEnd?: string) => Promise<{
+    chronography: ActivityView[],
+    timing: CurrentActivityView | null,
+  }>;
   stopTiming: () => Promise<void>;
   fetchActivityData: (activityInput: string) => Promise<ActivityData>;
   postActivityInput: (activityData: ActivityData) => Promise<void>;

@@ -11,7 +11,7 @@ import { FocusStyleManager, Card, FormGroup, ButtonGroup, Divider, Button } from
 import { calendarizeActivities } from '@frontend/utils';
 
 import { openActivityAppendWindow } from '@frontend/controller/services';
-import { fetchActiveTiming, fetchChronography, repeatTiming, stopTiming, deleteTiming } from '@frontend/controller/chronography';
+import { fetchChronography, repeatTiming, stopTiming, deleteTiming } from '@frontend/controller/chronography';
 
 import { Chronography } from '@frontend/components/chronography';
 import { TimingInfo } from '@frontend/components/timing-info';
@@ -32,8 +32,9 @@ const ChronographyView = () => {
   const [timingInfo, setTimingInfo] = useState<CurrentActivityView>();
 
   const getChronography = async () => {
-    const activityCalendar = calendarizeActivities(await fetchChronography());
-    const timing = await fetchActiveTiming();
+    const { chronography, timing } = await fetchChronography();
+
+    const activityCalendar = calendarizeActivities(chronography);
 
     setTimingInfo(timing);
     setActivities(activityCalendar);

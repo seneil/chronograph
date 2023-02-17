@@ -2,6 +2,8 @@ import dayjs from 'dayjs';
 
 import { knex } from '@application/connection';
 
+import { fetchActiveTiming } from '@application/chronography/controllers/timings';
+
 import { ActivityView } from '@application/types';
 
 import { FORMAT } from '@constants';
@@ -22,8 +24,7 @@ export const fetchChronography = async (dayStart?: string, dayEnd?: string) => {
     limit 1
   `);
 
-  return (
-    await knex.raw<ActivityView[]>(`
+  const chronography = await knex.raw<ActivityView[]>(`
     select
         timings.id as timing_id,
         categories.id as category_id,
@@ -39,6 +40,9 @@ export const fetchChronography = async (dayStart?: string, dayEnd?: string) => {
     left join main.categories on activities.category_id = categories.id
     where date(timings.start_at) between ? and ?
     order by timings.start_at asc;
-  `, [dayStart || activityDay || todayDay, dayEnd || activityDay || todayDay])
-  )
+  `, [dayStart || activityDay || todayDay, dayEnd || activityDay || todayDay]);
+
+  const timing = await fetchActiveTiming();
+
+  return { chronography, timing };
 };

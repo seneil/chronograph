@@ -5,7 +5,6 @@ import { getAppendActivityWindow } from '@application/views/append-activity';
 import { getChronographyWindow } from '@application/views/chronography';
 
 import {
-  fetchActiveTiming,
   repeatTiming,
   stopTiming,
   deleteTiming
@@ -78,10 +77,6 @@ ipcMain.handle(EVENT_NAME.SERVICE.CLOSE_ACTIVITY_APPEND_WINDOW, async () => {
 
 ipcMain.handle(EVENT_NAME.FETCHER.FETCH_CHRONOGRAPHY, async (event, dayStart?: string, dayEnd?: string) => (
   await fetchChronography(dayStart, dayEnd)
-));
-
-ipcMain.handle(EVENT_NAME.FETCHER.FETCH_ACTIVE_TIMING, async () => (
-  await fetchActiveTiming()
 ));
 
 ipcMain.handle(EVENT_NAME.FETCHER.STOP_TIMING, async () => (

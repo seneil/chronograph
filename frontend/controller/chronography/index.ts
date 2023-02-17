@@ -10,10 +10,6 @@ export const fetchChronography = async (dayStart?: string, dayEnd?: string) => (
   await window[API_ENTRY.FETCHER].fetchChronography(dayStart, dayEnd)
 );
 
-export const fetchActiveTiming = async () => (
-  await window[API_ENTRY.FETCHER].fetchActiveTiming()
-);
-
 export const stopTiming = async () => (
   await window[API_ENTRY.FETCHER].stopTiming()
 );

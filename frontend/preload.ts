@@ -15,7 +15,6 @@ contextBridge.exposeInMainWorld(API_ENTRY.SERVICE, <ElectronGlobalService>{
 
 contextBridge.exposeInMainWorld(API_ENTRY.FETCHER, <ElectronGlobalFetcher>{
   fetchChronography: (dayStart?: string, dayEnd?: string) => ipcRenderer.invoke(EVENT_NAME.FETCHER.FETCH_CHRONOGRAPHY, dayStart, dayEnd),
-  fetchActiveTiming: () => ipcRenderer.invoke(EVENT_NAME.FETCHER.FETCH_ACTIVE_TIMING),
   stopTiming: () => ipcRenderer.invoke(EVENT_NAME.FETCHER.STOP_TIMING),
   fetchActivityData: activityInput => ipcRenderer.invoke(EVENT_NAME.FETCHER.FETCH_ACTIVITY_DATA, activityInput),
   postActivityInput: activityData => ipcRenderer.invoke(EVENT_NAME.FETCHER.POST_ACTIVITY_INPUT, activityData),
