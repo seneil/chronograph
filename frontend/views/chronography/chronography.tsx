@@ -37,6 +37,7 @@ const ChronographyView = () => {
     const activityCalendar = calendarizeActivities(chronography);
 
     setTimingInfo(timing);
+    setTimingInfo(timing);
     setActivities(activityCalendar);
   };
 

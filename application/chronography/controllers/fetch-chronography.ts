@@ -2,15 +2,15 @@ import dayjs from 'dayjs';
 
 import { knex } from '@application/connection';
 
-import { fetchActiveTiming } from '@application/chronography/controllers/timings';
+import {
+  fetchActiveTiming,
+  getNextActivityDay,
+  getPreviousActivityDay
+} from '@application/chronography/controllers/timings';
 
-import { ActivityView } from '@application/types';
+import { ActivityDay, ActivityView } from '@application/types';
 
 import { FORMAT } from '@constants';
-
-interface ActivityDay {
-  activityDay: string;
-}
 
 export const fetchChronography = async (dayStart?: string, dayEnd?: string) => {
   const todayDay = dayjs().format(FORMAT.SQL_DAY);
@@ -23,6 +23,9 @@ export const fetchChronography = async (dayStart?: string, dayEnd?: string) => {
     order by timings.start_at desc
     limit 1
   `);
+
+  const activityDayStart = dayStart || activityDay || todayDay;
+  const activityDayEnd = dayEnd || activityDay || todayDay;
 
   const chronography = await knex.raw<ActivityView[]>(`
     select
@@ -40,9 +43,17 @@ export const fetchChronography = async (dayStart?: string, dayEnd?: string) => {
     left join main.categories on activities.category_id = categories.id
     where date(timings.start_at) between ? and ?
     order by timings.start_at asc;
-  `, [dayStart || activityDay || todayDay, dayEnd || activityDay || todayDay]);
+  `, [activityDayStart, activityDayEnd]);
 
   const timing = await fetchActiveTiming();
 
-  return { chronography, timing };
+  const [previousActivityDay] = await getPreviousActivityDay(activityDayStart);
+  const [nextActivityDay] = await getNextActivityDay(activityDayEnd);
+
+  return {
+    chronography,
+    timing,
+    ...previousActivityDay && { previousActivityDay: previousActivityDay.activityDay },
+    ...nextActivityDay && { nextActivityDay: nextActivityDay.activityDay },
+  };
 };
