@@ -31,14 +31,17 @@ const ChronographyView = () => {
   const [activities, setActivities] = useState<ActivityCalendar[]>([]);
   const [timingInfo, setTimingInfo] = useState<CurrentActivityView>();
 
-  const getChronography = async () => {
-    const { chronography, timing } = await fetchChronography();
+  const [previousDay, setPreviousDay] = useState<string>();
+  const [nextDay, setNextDay] = useState<string>();
 
+  const getChronography = async (day?: string) => {
+    const { chronography, timing, previousActivityDay, nextActivityDay } = await fetchChronography(day, day);
     const activityCalendar = calendarizeActivities(chronography);
 
     setTimingInfo(timing);
-    setTimingInfo(timing);
     setActivities(activityCalendar);
+    setPreviousDay(previousActivityDay);
+    setNextDay(nextActivityDay);
   };
 
   useMount(() => {
@@ -67,6 +70,14 @@ const ChronographyView = () => {
     await getChronography();
   };
 
+  const fetchPreviousDay = async () => (
+    await getChronography(previousDay)
+  );
+
+  const fetchNextDay = async () => (
+    await getChronography(nextDay)
+  );
+
   return (
     <Card>
       <FormGroup>
@@ -77,6 +88,26 @@ const ChronographyView = () => {
             intent='none'
             onClick={createActivityAppendWindow}
           >Активность</Button>
+
+          <Divider/>
+
+          <Button
+            large={true}
+            icon='caret-left'
+            intent='none'
+            disabled={!previousDay}
+            onClick={fetchPreviousDay}
+          />
+
+          <Divider/>
+
+          <Button
+            large={true}
+            icon='caret-right'
+            intent='none'
+            disabled={!nextDay}
+            onClick={fetchNextDay}
+          />
 
           {!!timingInfo && (
             <>
