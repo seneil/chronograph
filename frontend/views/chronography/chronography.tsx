@@ -15,6 +15,7 @@ import { fetchChronography, repeatTiming, stopTiming, deleteTiming } from '@fron
 
 import { Chronography } from '@frontend/components/chronography';
 import { TimingInfo } from '@frontend/components/timing-info';
+import { ActivitiesCalendar } from '@frontend/components/activities-calendar';
 
 import { ActivityCalendar } from '@frontend/types';
 import { CurrentActivityView } from '@application/types';
@@ -70,14 +71,6 @@ const ChronographyView = () => {
     await getChronography();
   };
 
-  const fetchPreviousDay = async () => (
-    await getChronography(previousDay)
-  );
-
-  const fetchNextDay = async () => (
-    await getChronography(nextDay)
-  );
-
   return (
     <Card>
       <FormGroup>
@@ -91,22 +84,10 @@ const ChronographyView = () => {
 
           <Divider/>
 
-          <Button
-            large={true}
-            icon='caret-left'
-            intent='none'
-            disabled={!previousDay}
-            onClick={fetchPreviousDay}
-          />
-
-          <Divider/>
-
-          <Button
-            large={true}
-            icon='caret-right'
-            intent='none'
-            disabled={!nextDay}
-            onClick={fetchNextDay}
+          <ActivitiesCalendar
+            previousDay={previousDay}
+            nextDay={nextDay}
+            onGetChronography={getChronography}
           />
 
           {!!timingInfo && (
