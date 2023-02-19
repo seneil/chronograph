@@ -1,5 +1,11 @@
 .#{$b} {
-  > button:not(:first-child) {
+  display: inline-flex;
+
+  > .bp4-button:not(:first-child) {
     margin-left: 5px;
   }
+}
+
+.bp4-popover2-content {
+  max-width: 710px !important;
 }

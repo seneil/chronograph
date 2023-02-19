@@ -1,13 +1,15 @@
 import { ActivityData } from '@application/types';
 
+import { DayRange } from '@frontend/types';
+
 import { API_ENTRY } from '@constants';
 
 export const closeActivityAppendWindow = () => (
   window[API_ENTRY.SERVICE].closeActivityAppendWindow()
 );
 
-export const fetchChronography = async (dayStart?: string, dayEnd?: string) => (
-  await window[API_ENTRY.FETCHER].fetchChronography(dayStart, dayEnd)
+export const fetchChronography = async (dayRange: DayRange) => (
+  await window[API_ENTRY.FETCHER].fetchChronography(dayRange)
 );
 
 export const stopTiming = async () => (

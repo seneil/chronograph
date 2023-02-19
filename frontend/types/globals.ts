@@ -1,4 +1,5 @@
 import { ActivityData, ActivityView, CurrentActivityView } from '@application/types';
+import { DayRange } from '@frontend/types';
 
 declare global {
   interface Window {
@@ -14,7 +15,7 @@ export interface ElectronGlobalService {
 }
 
 export interface ElectronGlobalFetcher {
-  fetchChronography: (dayStart?: string, dayEnd?: string) => Promise<{
+  fetchChronography: (dayRange: DayRange) => Promise<{
     chronography: ActivityView[],
     timing: CurrentActivityView | null,
     previousActivityDay?: string,

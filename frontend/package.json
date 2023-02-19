@@ -12,6 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "@blueprintjs/core": "^4.12.0",
+    "@blueprintjs/datetime": "^4.4.18",
     "@blueprintjs/popover2": "^1.11.1",
     "bem-react-helper": "^1.2.2",
     "normalize.css": "^8.0.1",

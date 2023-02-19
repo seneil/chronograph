@@ -13,3 +13,5 @@ export interface ActivityCalendar {
   summary: CategorySummary[];
   activities: ActivityCalendarView[];
 }
+
+export type DayRange = [string | null, string | null];

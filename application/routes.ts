@@ -14,6 +14,7 @@ import { fetchChronography, fetchActivityData, postActivityInput } from '@applic
 import { showPromptBox } from '@application/utils/show-prompt-box';
 
 import { ActivityData } from '@application/types';
+import { DayRange } from '@frontend/types';
 
 import { EVENT_NAME, TRAY_MENU } from '@constants';
 
@@ -75,8 +76,8 @@ ipcMain.handle(EVENT_NAME.SERVICE.CLOSE_ACTIVITY_APPEND_WINDOW, async () => {
   if (appendActivityWindow) appendActivityWindow.close();
 });
 
-ipcMain.handle(EVENT_NAME.FETCHER.FETCH_CHRONOGRAPHY, async (event, dayStart?: string, dayEnd?: string) => (
-  await fetchChronography(dayStart, dayEnd)
+ipcMain.handle(EVENT_NAME.FETCHER.FETCH_CHRONOGRAPHY, async (event, dayRange: DayRange) => (
+  await fetchChronography(dayRange)
 ));
 
 ipcMain.handle(EVENT_NAME.FETCHER.STOP_TIMING, async () => (

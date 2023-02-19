@@ -9,10 +9,13 @@ import {
 } from '@application/chronography/controllers/timings';
 
 import { ActivityDay, ActivityView } from '@application/types';
+import { DayRange } from '@frontend/types';
 
 import { FORMAT } from '@constants';
 
-export const fetchChronography = async (dayStart?: string, dayEnd?: string) => {
+export const fetchChronography = async (dayRange: DayRange) => {
+  const [dayStart, dayEnd] = dayRange || [];
+
   const todayDay = dayjs().format(FORMAT.SQL_DAY);
 
   const [{ activityDay }] = await knex.raw<ActivityDay[]>(`

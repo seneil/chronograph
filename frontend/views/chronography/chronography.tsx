@@ -17,7 +17,7 @@ import { Chronography } from '@frontend/components/chronography';
 import { TimingInfo } from '@frontend/components/timing-info';
 import { ActivitiesCalendar } from '@frontend/components/activities-calendar';
 
-import { ActivityCalendar } from '@frontend/types';
+import { ActivityCalendar, DayRange } from '@frontend/types';
 import { CurrentActivityView } from '@application/types';
 
 dayjs.extend(localizedFormat);
@@ -35,8 +35,8 @@ const ChronographyView = () => {
   const [previousDay, setPreviousDay] = useState<string>();
   const [nextDay, setNextDay] = useState<string>();
 
-  const getChronography = async (day?: string) => {
-    const { chronography, timing, previousActivityDay, nextActivityDay } = await fetchChronography(day, day);
+  const getChronography = async (dayRange?: DayRange) => {
+    const { chronography, timing, previousActivityDay, nextActivityDay } = await fetchChronography(dayRange);
     const activityCalendar = calendarizeActivities(chronography);
 
     setTimingInfo(timing);
