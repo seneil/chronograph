@@ -11,20 +11,17 @@ interface ChronographyProps {
   onTimingDelete: (id: number, details: string) => Promise<void>;
 }
 
-export const Chronography = ({ groups, onTimingRepeat, onTimingDelete }: ChronographyProps) => {
-
-  return (
-    <div className='chronography'>
-      <Chronography__Day>
-        {groups.map(activity => (
-          <Timings
-            key={activity.date}
-            {...activity}
-            onRepeat={onTimingRepeat}
-            onDelete={onTimingDelete}
-          />
-        ))}
-      </Chronography__Day>
-    </div>
-  );
-};
+export const Chronography = ({ groups, onTimingRepeat, onTimingDelete }: ChronographyProps) => (
+  <div className='chronography'>
+    <Chronography__Day>
+      {groups.map(activity => (
+        <Timings
+          key={activity.date}
+          {...activity}
+          onRepeat={onTimingRepeat}
+          onDelete={onTimingDelete}
+        />
+      ))}
+    </Chronography__Day>
+  </div>
+);

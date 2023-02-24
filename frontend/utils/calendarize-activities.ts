@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 
 import { ActivityView } from '@application/types';
-import { ActivityCalendar, CategorySummary } from '@frontend/types';
+import { ActivityCalendar } from '@frontend/types';
 
 export const calendarizeActivities = (activities: ActivityView[]): ActivityCalendar[] => (
   activities.reduce((list, { start_at, end_at, ...item }) => {
@@ -31,22 +31,5 @@ export const calendarizeActivities = (activities: ActivityView[]): ActivityCalen
       activities: [activity]
     }]
   }, [])
-    .map((day: ActivityCalendar) => ({
-      ...day,
-      summary: day.activities.reduce((summary: CategorySummary[], { category_name, duration }) => {
-        const index = summary.findIndex(item => item.categoryName === category_name);
-
-        if (index >= 0) {
-          summary[index] = {
-            categoryName: category_name,
-            total: summary[index].total + duration,
-          };
-
-          return [...summary];
-        }
-
-        return [...summary, { categoryName: category_name, total: duration }];
-      }, []),
-    }))
     .sort((a, b) => (a.date > b.date) ? -1 : ((a.date < b.date) ? 1 : 0))
 );
