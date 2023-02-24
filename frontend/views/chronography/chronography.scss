@@ -6,6 +6,11 @@
 @import '@blueprintjs/core/lib/scss/variables';
 
 body {
+  overflow: hidden;
   font-size: $pt-font-size-large;
   background-color: $light-gray4;
+}
+
+#root {
+  height: 540px;
 }

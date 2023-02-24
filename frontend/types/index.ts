@@ -8,4 +8,9 @@ export interface ActivityCalendar {
   activities: ActivityCalendarView[];
 }
 
+export interface ActivitySummary {
+  categoryName: string;
+  total: number | null;
+}
+
 export type DayRange = [string | null, string | null];

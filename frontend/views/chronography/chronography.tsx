@@ -6,18 +6,21 @@ import { useMount } from 'react-use';
 import 'dayjs/locale/ru';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 
-import { FocusStyleManager, Card, FormGroup, ButtonGroup, Divider, Button } from '@blueprintjs/core';
+import { FocusStyleManager, FormGroup, ButtonGroup, Divider, Button } from '@blueprintjs/core';
 
-import { calendarizeActivities } from '@frontend/utils';
+import { calendarizeActivities, summarizeActivities } from '@frontend/utils';
 
 import { openActivityAppendWindow } from '@frontend/controller/services';
 import { fetchChronography, repeatTiming, stopTiming, deleteTiming } from '@frontend/controller/chronography';
 
-import { Chronography } from '@frontend/components/chronography';
-import { TimingInfo } from '@frontend/components/timing-info';
+import { Main } from '@frontend/components/main';
+import { ChronographyControls } from '@frontend/components/chronography-controls';
 import { ActivitiesCalendar } from '@frontend/components/activities-calendar';
+import { Chronography } from '@frontend/components/chronography';
+import { ChronographySummary } from '@frontend/components/chronography-summary';
+import { TimingInfo } from '@frontend/components/timing-info';
 
-import { ActivityCalendar, DayRange } from '@frontend/types';
+import { ActivityCalendar, ActivitySummary, DayRange } from '@frontend/types';
 import { CurrentActivityView } from '@application/types';
 
 dayjs.extend(localizedFormat);
@@ -31,6 +34,7 @@ FocusStyleManager.onlyShowFocusOnTabs();
 const ChronographyView = () => {
   const [activities, setActivities] = useState<ActivityCalendar[]>([]);
   const [timingInfo, setTimingInfo] = useState<CurrentActivityView>();
+  const [summary, setSummary] = useState<ActivitySummary[]>([]);
 
   const [previousDay, setPreviousDay] = useState<string>();
   const [nextDay, setNextDay] = useState<string>();
@@ -38,9 +42,11 @@ const ChronographyView = () => {
   const getChronography = async (dayRange?: DayRange) => {
     const { chronography, timing, previousActivityDay, nextActivityDay } = await fetchChronography(dayRange);
     const activityCalendar = calendarizeActivities(chronography);
+    const activitySummary = summarizeActivities(chronography);
 
     setTimingInfo(timing);
     setActivities(activityCalendar);
+    setSummary(activitySummary);
     setPreviousDay(previousActivityDay);
     setNextDay(nextActivityDay);
   };
@@ -72,50 +78,54 @@ const ChronographyView = () => {
   };
 
   return (
-    <Card>
-      <FormGroup>
-        <ButtonGroup>
-          <Button
-            large={true}
-            icon='plus'
-            intent='none'
-            onClick={createActivityAppendWindow}
-          >Активность</Button>
+    <Main>
+      <ChronographyControls>
+        <FormGroup>
+          <ButtonGroup>
+            <Button
+              large={true}
+              icon='plus'
+              intent='none'
+              onClick={createActivityAppendWindow}
+            >Активность</Button>
 
-          <Divider/>
+            <Divider/>
 
-          <ActivitiesCalendar
-            previousDay={previousDay}
-            nextDay={nextDay}
-            onGetChronography={getChronography}
-          />
+            <ActivitiesCalendar
+              previousDay={previousDay}
+              nextDay={nextDay}
+              onGetChronography={getChronography}
+            />
 
-          {!!timingInfo && (
-            <>
-              <Divider/>
+            {!!timingInfo && (
+              <>
+                <Divider/>
 
-              <Button
-                large={true}
-                icon='stop'
-                intent='danger'
-                title='Остановить'
-                onClick={stopActiveTiming}
-              />
+                <Button
+                  large={true}
+                  icon='stop'
+                  intent='danger'
+                  title='Остановить'
+                  onClick={stopActiveTiming}
+                />
 
-              <Divider/>
+                <Divider/>
 
-              <TimingInfo timing={timingInfo}/>
-            </>
-          )}
-        </ButtonGroup>
-      </FormGroup>
+                <TimingInfo timing={timingInfo}/>
+              </>
+            )}
+          </ButtonGroup>
+        </FormGroup>
+      </ChronographyControls>
 
       <Chronography
         groups={activities}
         onTimingRepeat={repeatSelectedTiming}
         onTimingDelete={deleteSelectedTiming}
       />
-    </Card>
+
+      <ChronographySummary summary={summary}/>
+    </Main>
   );
 };
 
