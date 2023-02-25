@@ -5,9 +5,14 @@ import { Button } from '@blueprintjs/core';
 import { Classes, Popover2 } from '@blueprintjs/popover2';
 import { DateRangePicker } from '@blueprintjs/datetime';
 import { DateRange } from '@blueprintjs/datetime/src/common/dateRange';
+
+import { getCalendarLocaleUtils } from '@frontend/utils/get-calendar-locale-utils';
+
 import { DayRange } from '@frontend/types';
 
 import { FORMAT } from '@constants';
+import { LocaleUtils } from 'react-day-picker';
+import { getCalendarShortcuts } from '@frontend/utils/get-calendar-shortcuts';
 
 interface ActivitiesCalendarProps {
   previousDay: string;
@@ -65,9 +70,8 @@ export const ActivitiesCalendar = ({ previousDay, nextDay, onGetChronography }: 
             highlightCurrentDay={true}
             singleMonthOnly={true}
             allowSingleDayRange={true}
-            footerElement={
-              <div>Footer</div>
-            }
+            localeUtils={getCalendarLocaleUtils() as LocaleUtils}
+            shortcuts={getCalendarShortcuts()}
             onChange={setDayRange}
           />
         }
