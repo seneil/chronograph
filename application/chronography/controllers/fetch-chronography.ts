@@ -56,6 +56,7 @@ export const fetchChronography = async (dayRange: DayRange) => {
   return {
     chronography,
     timing,
+    dayRange: [dayjs(activityDayStart).toDate(), dayjs(activityDayEnd).toDate()],
     ...previousActivityDay && { previousActivityDay: previousActivityDay.activityDay },
     ...nextActivityDay && { nextActivityDay: nextActivityDay.activityDay },
   };

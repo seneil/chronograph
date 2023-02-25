@@ -3,24 +3,24 @@ import dayjs from 'dayjs';
 
 import { Button } from '@blueprintjs/core';
 import { Classes, Popover2 } from '@blueprintjs/popover2';
-import { DateRangePicker } from '@blueprintjs/datetime';
-import { DateRange } from '@blueprintjs/datetime/src/common/dateRange';
+import { DateRangePicker, DateRange } from '@blueprintjs/datetime';
 
 import { getCalendarLocaleUtils } from '@frontend/utils/get-calendar-locale-utils';
+import { getCalendarShortcuts } from '@frontend/utils/get-calendar-shortcuts';
 
+import type { LocaleUtils } from 'react-day-picker';
 import { DayRange } from '@frontend/types';
 
 import { FORMAT } from '@constants';
-import { LocaleUtils } from 'react-day-picker';
-import { getCalendarShortcuts } from '@frontend/utils/get-calendar-shortcuts';
 
 interface ActivitiesCalendarProps {
   previousDay: string;
   nextDay: string;
+  calendarValue: DateRange;
   onGetChronography: (dayRange: DayRange) => Promise<void>
 }
 
-export const ActivitiesCalendar = ({ previousDay, nextDay, onGetChronography }: ActivitiesCalendarProps) => {
+export const ActivitiesCalendar = ({ previousDay, nextDay, calendarValue, onGetChronography }: ActivitiesCalendarProps) => {
   const [isCalendarOpen, toggleCalendar] = useState<boolean>(false);
 
   const fetchPreviousDay = async () => (
@@ -38,14 +38,12 @@ export const ActivitiesCalendar = ({ previousDay, nextDay, onGetChronography }: 
   const setDayRange = async (dayRange: DateRange) => {
     const [startDay, endDay] = dayRange;
 
-    if (startDay && endDay) {
-      await onGetChronography([
-        dayjs(startDay).format(FORMAT.SQL_DAY),
-        dayjs(endDay).format(FORMAT.SQL_DAY),
-      ]);
+    await onGetChronography([
+      startDay ? dayjs(startDay).format(FORMAT.SQL_DAY) : null,
+      endDay ? dayjs(endDay).format(FORMAT.SQL_DAY) : null,
+    ]);
 
-      toggleCalendar(false);
-    }
+    if (startDay && endDay) toggleCalendar(false);
   }
 
   return (
@@ -72,6 +70,7 @@ export const ActivitiesCalendar = ({ previousDay, nextDay, onGetChronography }: 
             allowSingleDayRange={true}
             localeUtils={getCalendarLocaleUtils() as LocaleUtils}
             shortcuts={getCalendarShortcuts()}
+            value={calendarValue}
             onChange={setDayRange}
           />
         }

@@ -22,6 +22,7 @@ import { TimingInfo } from '@frontend/components/timing-info';
 
 import { ActivityCalendar, ActivitySummary, DayRange } from '@frontend/types';
 import { CurrentActivityView } from '@application/types';
+import { DateRange } from '@blueprintjs/datetime';
 
 dayjs.extend(localizedFormat);
 dayjs.locale('ru');
@@ -38,17 +39,37 @@ const ChronographyView = () => {
 
   const [previousDay, setPreviousDay] = useState<string>();
   const [nextDay, setNextDay] = useState<string>();
+  const [dayRangeValue, setDayRangeValue] = useState<DateRange>([null, null]);
 
   const getChronography = async (dayRange?: DayRange) => {
-    const { chronography, timing, previousActivityDay, nextActivityDay } = await fetchChronography(dayRange);
-    const activityCalendar = calendarizeActivities(chronography);
-    const activitySummary = summarizeActivities(chronography);
+    const [startDay, endDay] = dayRange || [];
 
-    setTimingInfo(timing);
-    setActivities(activityCalendar);
-    setSummary(activitySummary);
-    setPreviousDay(previousActivityDay);
-    setNextDay(nextActivityDay);
+    if (startDay && endDay || !dayRange) {
+      const {
+        chronography,
+        timing,
+        dayRange: calendarDayRange,
+        previousActivityDay,
+        nextActivityDay
+      } = await fetchChronography(dayRange);
+
+      const activityCalendar = calendarizeActivities(chronography);
+      const activitySummary = summarizeActivities(chronography);
+
+      setTimingInfo(timing);
+      setActivities(activityCalendar);
+      setSummary(activitySummary);
+      setPreviousDay(previousActivityDay);
+      setNextDay(nextActivityDay);
+      setDayRangeValue(calendarDayRange);
+
+      return;
+    }
+
+    setDayRangeValue([
+      startDay ? dayjs(startDay).toDate() : null,
+      endDay ? dayjs(endDay).toDate() : null,
+    ]);
   };
 
   useMount(() => {
@@ -94,6 +115,7 @@ const ChronographyView = () => {
             <ActivitiesCalendar
               previousDay={previousDay}
               nextDay={nextDay}
+              calendarValue={dayRangeValue}
               onGetChronography={getChronography}
             />
 
