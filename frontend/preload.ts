@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer } from 'electron';
 
-import { ElectronGlobalFetcher, ElectronGlobalService } from '@frontend/types';
+import { DayRange, ElectronGlobalFetcher, ElectronGlobalService } from '@frontend/types';
 
 import { API_ENTRY, EVENT_NAME } from '@constants';
 
@@ -14,8 +14,7 @@ contextBridge.exposeInMainWorld(API_ENTRY.SERVICE, <ElectronGlobalService>{
 });
 
 contextBridge.exposeInMainWorld(API_ENTRY.FETCHER, <ElectronGlobalFetcher>{
-  fetchChronography: () => ipcRenderer.invoke(EVENT_NAME.FETCHER.FETCH_CHRONOGRAPHY),
-  fetchActiveTiming: () => ipcRenderer.invoke(EVENT_NAME.FETCHER.FETCH_ACTIVE_TIMING),
+  fetchChronography: (dayRange: DayRange) => ipcRenderer.invoke(EVENT_NAME.FETCHER.FETCH_CHRONOGRAPHY, dayRange),
   stopTiming: () => ipcRenderer.invoke(EVENT_NAME.FETCHER.STOP_TIMING),
   fetchActivityData: activityInput => ipcRenderer.invoke(EVENT_NAME.FETCHER.FETCH_ACTIVITY_DATA, activityInput),
   postActivityInput: activityData => ipcRenderer.invoke(EVENT_NAME.FETCHER.POST_ACTIVITY_INPUT, activityData),

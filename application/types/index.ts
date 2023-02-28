@@ -7,3 +7,7 @@ export interface ActivityData {
   startTime: Date;
   endTime: Date | null;
 }
+
+export interface ActivityDay {
+  activityDay: string;
+}

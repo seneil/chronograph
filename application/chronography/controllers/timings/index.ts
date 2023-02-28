@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 
 import { knex } from '@application/connection';
 
-import { activeTimingStart, CurrentActivityView, TimingTable } from '@application/types';
+import { activeTimingStart, ActivityDay, CurrentActivityView, TimingTable } from '@application/types';
 
 const fetchTiming = async (timingId: number) => (
   await knex<TimingTable>('timings')
@@ -82,3 +82,25 @@ export const deleteTiming = async (timingId: number) => (
     .where({ id: timingId })
     .delete()
 );
+
+export const getPreviousActivityDay = async (dayStart: string) => (
+  await knex.raw<ActivityDay[]>(`select
+        date(timings.start_at) as activityDay
+    from
+        main.timings
+    where date(timings.start_at) < ?
+    group by activityDay
+    order by timings.start_at desc
+    limit 1;`, [dayStart])
+  );
+
+export const getNextActivityDay = async (dayEnd: string) => (
+  await knex.raw<ActivityDay[]>(`select
+    date(timings.start_at) as activityDay
+    from
+        main.timings
+    where date(timings.start_at) > ?
+    group by activityDay
+    order by timings.start_at asc
+    limit 1;`, [dayEnd])
+  );

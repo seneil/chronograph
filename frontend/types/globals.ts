@@ -1,4 +1,6 @@
 import { ActivityData, ActivityView, CurrentActivityView } from '@application/types';
+import { DayRange } from '@frontend/types';
+import { DateRange } from '@blueprintjs/datetime';
 
 declare global {
   interface Window {
@@ -14,8 +16,13 @@ export interface ElectronGlobalService {
 }
 
 export interface ElectronGlobalFetcher {
-  fetchChronography: () => Promise<ActivityView[]>;
-  fetchActiveTiming: () => Promise<CurrentActivityView>;
+  fetchChronography: (dayRange: DayRange) => Promise<{
+    chronography: ActivityView[],
+    timing: CurrentActivityView | null,
+    dayRange: DateRange,
+    previousActivityDay?: string,
+    nextActivityDay?: string,
+  }>;
   stopTiming: () => Promise<void>;
   fetchActivityData: (activityInput: string) => Promise<ActivityData>;
   postActivityInput: (activityData: ActivityData) => Promise<void>;

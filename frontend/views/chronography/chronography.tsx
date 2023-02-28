@@ -6,18 +6,23 @@ import { useMount } from 'react-use';
 import 'dayjs/locale/ru';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 
-import { FocusStyleManager, Card, FormGroup, ButtonGroup, Divider, Button } from '@blueprintjs/core';
+import { FocusStyleManager, FormGroup, ButtonGroup, Divider, Button } from '@blueprintjs/core';
 
-import { calendarizeActivities } from '@frontend/utils';
+import { calendarizeActivities, summarizeActivities } from '@frontend/utils';
 
 import { openActivityAppendWindow } from '@frontend/controller/services';
-import { fetchActiveTiming, fetchChronography, repeatTiming, stopTiming, deleteTiming } from '@frontend/controller/chronography';
+import { fetchChronography, repeatTiming, stopTiming, deleteTiming } from '@frontend/controller/chronography';
 
+import { Main } from '@frontend/components/main';
+import { ChronographyControls } from '@frontend/components/chronography-controls';
+import { ActivitiesCalendar } from '@frontend/components/activities-calendar';
 import { Chronography } from '@frontend/components/chronography';
+import { ChronographySummary } from '@frontend/components/chronography-summary';
 import { TimingInfo } from '@frontend/components/timing-info';
 
-import { ActivityCalendar } from '@frontend/types';
+import { ActivityCalendar, ActivitySummary, DayRange } from '@frontend/types';
 import { CurrentActivityView } from '@application/types';
+import { DateRange } from '@blueprintjs/datetime';
 
 dayjs.extend(localizedFormat);
 dayjs.locale('ru');
@@ -30,13 +35,41 @@ FocusStyleManager.onlyShowFocusOnTabs();
 const ChronographyView = () => {
   const [activities, setActivities] = useState<ActivityCalendar[]>([]);
   const [timingInfo, setTimingInfo] = useState<CurrentActivityView>();
+  const [summary, setSummary] = useState<ActivitySummary[]>([]);
 
-  const getChronography = async () => {
-    const activityCalendar = calendarizeActivities(await fetchChronography());
-    const timing = await fetchActiveTiming();
+  const [previousDay, setPreviousDay] = useState<string>();
+  const [nextDay, setNextDay] = useState<string>();
+  const [dayRangeValue, setDayRangeValue] = useState<DateRange>([null, null]);
 
-    setTimingInfo(timing);
-    setActivities(activityCalendar);
+  const getChronography = async (dayRange?: DayRange) => {
+    const [startDay, endDay] = dayRange || [];
+
+    if (startDay && endDay || !dayRange) {
+      const {
+        chronography,
+        timing,
+        dayRange: calendarDayRange,
+        previousActivityDay,
+        nextActivityDay
+      } = await fetchChronography(dayRange);
+
+      const activityCalendar = calendarizeActivities(chronography);
+      const activitySummary = summarizeActivities(chronography);
+
+      setTimingInfo(timing);
+      setActivities(activityCalendar);
+      setSummary(activitySummary);
+      setPreviousDay(previousActivityDay);
+      setNextDay(nextActivityDay);
+      setDayRangeValue(calendarDayRange);
+
+      return;
+    }
+
+    setDayRangeValue([
+      startDay ? dayjs(startDay).toDate() : null,
+      endDay ? dayjs(endDay).toDate() : null,
+    ]);
   };
 
   useMount(() => {
@@ -66,42 +99,55 @@ const ChronographyView = () => {
   };
 
   return (
-    <Card>
-      <FormGroup>
-        <ButtonGroup>
-          <Button
-            large={true}
-            icon='plus'
-            intent='none'
-            onClick={createActivityAppendWindow}
-          >Активность</Button>
+    <Main>
+      <ChronographyControls>
+        <FormGroup>
+          <ButtonGroup>
+            <Button
+              large={true}
+              icon='plus'
+              intent='none'
+              onClick={createActivityAppendWindow}
+            >Активность</Button>
 
-          {!!timingInfo && (
-            <>
-              <Divider/>
+            <Divider/>
 
-              <Button
-                large={true}
-                icon='stop'
-                intent='danger'
-                title='Остановить'
-                onClick={stopActiveTiming}
-              />
+            <ActivitiesCalendar
+              previousDay={previousDay}
+              nextDay={nextDay}
+              calendarValue={dayRangeValue}
+              onGetChronography={getChronography}
+            />
 
-              <Divider/>
+            {!!timingInfo && (
+              <>
+                <Divider/>
 
-              <TimingInfo timing={timingInfo}/>
-            </>
-          )}
-        </ButtonGroup>
-      </FormGroup>
+                <Button
+                  large={true}
+                  icon='stop'
+                  intent='danger'
+                  title='Остановить'
+                  onClick={stopActiveTiming}
+                />
+
+                <Divider/>
+
+                <TimingInfo timing={timingInfo}/>
+              </>
+            )}
+          </ButtonGroup>
+        </FormGroup>
+      </ChronographyControls>
 
       <Chronography
         groups={activities}
         onTimingRepeat={repeatSelectedTiming}
         onTimingDelete={deleteSelectedTiming}
       />
-    </Card>
+
+      <ChronographySummary summary={summary}/>
+    </Main>
   );
 };
 

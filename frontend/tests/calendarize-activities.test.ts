@@ -17,12 +17,11 @@ describe('Группировка списка активностей по кал
     expect(calendar.map(day => day.date).length).toBe(4);
   });
 
-  it('Должны быть поля `date`, `total`, `activities`, `summary`', () => {
+  it('Должны быть поля `date`, `total`, `activities`', () => {
     expect(Object.keys(day)).toEqual([
       'date',
       'total',
       'activities',
-      'summary',
     ]);
   });
 
@@ -41,21 +40,5 @@ describe('Группировка списка активностей по кал
 
   it('Должно быть 5 активностей за день', () => {
     expect(day.activities.length).toBe(5);
-  });
-
-  it('Должно быть 3 учтённых категории за день', () => {
-    expect(day.summary.length).toBe(3);
-  });
-
-  it('Должна быть категория `Chronograph` с 300 учтённых минут', () => {
-    expect(day.summary).toContainEqual({ categoryName: 'Chronograph', total: 300 });
-  });
-
-  it('Должна быть категория `Досуг` с 60 учтённых минут', () => {
-    expect(day.summary).toContainEqual({ categoryName: 'Досуг', total: 60 });
-  });
-
-  it('Должна быть категория `Образование` с 120 учтённых минут', () => {
-    expect(day.summary).toContainEqual({ categoryName: 'Образование', total: 120 });
   });
 });

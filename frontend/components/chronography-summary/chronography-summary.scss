@@ -1,0 +1,8 @@
+@import '@blueprintjs/core/lib/scss/variables';
+
+.#{$b} {
+  margin-top: 10px;
+  padding: 5px 15px;
+  min-height: 50px;
+  background-color: $light-gray2;
+}
