@@ -11,7 +11,14 @@ import { FocusStyleManager, FormGroup, ButtonGroup, Divider, Button } from '@blu
 import { calendarizeActivities, summarizeActivities } from '@frontend/utils';
 
 import { openActivityAppendWindow } from '@frontend/controller/services';
-import { fetchChronography, repeatTiming, stopTiming, deleteTiming } from '@frontend/controller/chronography';
+
+import {
+  deleteTiming,
+  fetchActiveTiming,
+  fetchChronography,
+  repeatTiming,
+  stopTiming,
+} from '@frontend/controller/chronography';
 
 import { Main } from '@frontend/components/main';
 import { ChronographyControls } from '@frontend/components/chronography-controls';
@@ -47,11 +54,12 @@ const ChronographyView = () => {
     if ((startDay && endDay) || !dayRange) {
       const {
         chronography,
-        timing,
         dayRange: calendarDayRange,
         previousActivityDay,
         nextActivityDay
       } = await fetchChronography(dayRange);
+
+      const timing = await fetchActiveTiming();
 
       const activityCalendar = calendarizeActivities(chronography);
       const activitySummary = summarizeActivities(chronography);

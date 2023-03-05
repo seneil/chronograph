@@ -1,5 +1,5 @@
 import path from 'path';
-import { app, nativeImage, Tray, screen } from 'electron';
+import { nativeImage, Tray, screen } from 'electron';
 import { menubar, Menubar } from 'menubar';
 
 import { menuBarWindowConstructorOptions } from '@application/views/menubar';
@@ -27,16 +27,13 @@ export const createSystemTray = (): SystemTray => {
   });
 
   trayMenuBar.on('show', () => {
-    const isUnity = app.isUnityRunning();
     const { x: pointerXPosition } = screen.getCursorScreenPoint();
 
-    if (isUnity) {
-      trayMenuBar.setOption('browserWindow', {
-        ...menuBarWindowConstructorOptions,
-        y: 35,
-        x: pointerXPosition - (menuBarWindowConstructorOptions.width / 1.5),
-      });
-    }
+    trayMenuBar.setOption('browserWindow', {
+      ...menuBarWindowConstructorOptions,
+      y: 30,
+      x: pointerXPosition - (menuBarWindowConstructorOptions.width / 1.5),
+    });
   });
 
   return { tray, trayMenuBar };

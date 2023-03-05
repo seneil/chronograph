@@ -2,11 +2,7 @@ import dayjs from 'dayjs';
 
 import { knex } from '@application/connection';
 
-import {
-  fetchActiveTiming,
-  getNextActivityDay,
-  getPreviousActivityDay
-} from '@application/chronography/controllers/timings';
+import { getNextActivityDay, getPreviousActivityDay } from '@application/chronography/controllers/timings';
 
 import { ActivityDay, ActivityView } from '@application/types';
 import { DayRange } from '@frontend/types';
@@ -48,14 +44,11 @@ export const fetchChronography = async (dayRange: DayRange) => {
     order by timings.start_at asc;
   `, [activityDayStart, activityDayEnd]);
 
-  const timing = await fetchActiveTiming();
-
   const [previousActivityDay] = await getPreviousActivityDay(activityDayStart);
   const [nextActivityDay] = await getNextActivityDay(activityDayEnd);
 
   return {
     chronography,
-    timing,
     dayRange: [dayjs(activityDayStart).toDate(), dayjs(activityDayEnd).toDate()],
     ...previousActivityDay && { previousActivityDay: previousActivityDay.activityDay },
     ...nextActivityDay && { nextActivityDay: nextActivityDay.activityDay },
