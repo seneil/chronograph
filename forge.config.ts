@@ -62,6 +62,14 @@ const config: ForgeConfig = {
               js: './frontend/preload.ts',
             },
           },
+          {
+            html: './frontend/menubar.html',
+            js: './frontend/views/menubar/index.ts',
+            name: 'menubar',
+            preload: {
+              js: './frontend/preload.ts',
+            },
+          },
         ],
       },
     }),

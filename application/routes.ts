@@ -4,11 +4,7 @@ import { createSystemTray } from '@application/tray';
 import { getAppendActivityWindow } from '@application/views/append-activity';
 import { getChronographyWindow } from '@application/views/chronography';
 
-import {
-  repeatTiming,
-  stopTiming,
-  deleteTiming
-} from '@application/chronography/controllers/timings';
+import { repeatTiming, stopTiming, deleteTiming } from '@application/chronography/controllers/timings';
 import { fetchChronography, fetchActivityData, postActivityInput } from '@application/chronography/controllers';
 
 import { showPromptBox } from '@application/utils/show-prompt-box';
@@ -16,7 +12,7 @@ import { showPromptBox } from '@application/utils/show-prompt-box';
 import { ActivityData } from '@application/types';
 import { DayRange } from '@frontend/types';
 
-import { EVENT_NAME, TRAY_MENU } from '@constants';
+import { EVENT_NAME } from '@constants';
 
 let appendActivityWindow: BrowserWindow | null = null;
 let chronographyWindow: BrowserWindow | null = null;
@@ -55,17 +51,11 @@ export const createChronographyWindow = (): void => {
 };
 
 export const createChronography = (): void => {
-  const trayMenu = createSystemTray();
+  const { trayMenuBar } = createSystemTray();
 
-  trayMenu.getMenuItemById(TRAY_MENU.CHRONOGRAPHY).click = () => {
-    if (chronographyWindow) {
-      chronographyWindow.show();
-    } else {
-      createChronographyWindow();
-    }
-  }
-
-  createChronographyWindow();
+  trayMenuBar.on('ready', () => {
+    createChronographyWindow();
+  });
 };
 
 ipcMain.handle(EVENT_NAME.SERVICE.OPEN_ACTIVITY_APPEND_WINDOW, async () => {
