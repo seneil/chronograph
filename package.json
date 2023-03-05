@@ -1,31 +1,33 @@
 {
   "name": "chronograph-app",
-  "productName": "chronograph-app",
   "version": "0.0.1",
-  "description": "Chronograph Electron Application",
-  "engines": {
-    "node": "14.18.0",
-    "npm": ">=6.14.15-fb <7.0.0"
-  },
   "private": true,
-  "main": ".webpack/main",
-  "scripts": {
-    "start": "electron-forge start",
-    "start:inspect": "electron-forge start --inspect-electron",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish",
-    "rebuild": "electron-rebuild -f -w sqlite3",
-    "lint": "eslint --ext .ts,.tsx .; npm run check-types",
-    "check-types": "tsc --noemit",
-    "test": "jest --collect-coverage"
-  },
+  "description": "Chronograph Electron Application",
   "keywords": [],
+  "license": "MIT",
   "author": {
     "name": "Dmitry Shvalyov",
     "email": "dmitry@shvalyov.ru"
   },
-  "license": "MIT",
+  "main": ".webpack/main",
+  "scripts": {
+    "make": "electron-forge make",
+    "package": "electron-forge package",
+    "publish": "electron-forge publish",
+    "rebuild": "electron-rebuild -f -w sqlite3",
+    "start": "electron-forge start",
+    "start:inspect": "electron-forge start --inspect-electron",
+    "lint": "eslint --ext .ts,.tsx .; npm run check-types",
+    "check-types": "tsc --noemit",
+    "test": "jest --collect-coverage"
+  },
+  "dependencies": {
+    "menubar": "9.3.0",
+    "better-sqlite3": "8.0.0",
+    "dayjs": "1.11.7",
+    "electron-squirrel-startup": "1.0.0",
+    "knex": "2.4.0"
+  },
   "devDependencies": {
     "@electron-forge/cli": "6.0.0",
     "@electron-forge/maker-deb": "6.0.0",
@@ -59,10 +61,9 @@
     "ts-node": "10.9.1",
     "typescript": "4.5.5"
   },
-  "dependencies": {
-    "better-sqlite3": "8.0.0",
-    "dayjs": "1.11.7",
-    "electron-squirrel-startup": "1.0.0",
-    "knex": "2.4.0"
-  }
+  "engines": {
+    "node": "14.18.0",
+    "npm": ">=6.14.15-fb <7.0.0"
+  },
+  "productName": "chronograph-app"
 }
