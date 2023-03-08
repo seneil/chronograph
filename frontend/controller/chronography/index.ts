@@ -16,8 +16,8 @@ export const fetchActiveTiming = async () => (
   await window[API_ENTRY.FETCHER].fetchActiveTiming()
 );
 
-export const subscribeTimerEvent = (callback: { (): void; }) => (
-  window[API_ENTRY.LISTENER].subscribeTimerEvent(callback)
+export const subscribeTimerRefreshEvent = (callback: () => void) => (
+  window[API_ENTRY.LISTENER].subscribeTimerRefreshEvent(callback)
 );
 
 export const stopTiming = async () => (

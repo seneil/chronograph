@@ -10,14 +10,16 @@ contextBridge.exposeInMainWorld(API_ENTRY.SERVICE, <ElectronGlobalService>{
     .map(platform => `${platform}: ${process.versions[platform]}`)
     .join(', '),
 
+  openChronographyWindow: () => ipcRenderer.invoke(EVENT_NAME[API_ENTRY.SERVICE].OPEN_CHRONOGRAPHY_WINDOW),
   openActivityAppendWindow: () => ipcRenderer.invoke(EVENT_NAME[API_ENTRY.SERVICE].OPEN_ACTIVITY_APPEND_WINDOW),
   closeActivityAppendWindow: () => ipcRenderer.invoke(EVENT_NAME[API_ENTRY.SERVICE].CLOSE_ACTIVITY_APPEND_WINDOW),
+  quitApplication: () => ipcRenderer.invoke(EVENT_NAME[API_ENTRY.SERVICE].QUIT_APPLICATION),
 });
 
 contextBridge.exposeInMainWorld(API_ENTRY.LISTENER, <ElectronGlobalListener>{
-  subscribeTimerEvent: callback => {
+  subscribeTimerRefreshEvent: callback => (
     ipcRenderer.on(EVENT_NAME[API_ENTRY.LISTENER].REFRESH_ACTIVE_TIMING, callback)
-  },
+  ),
 });
 
 contextBridge.exposeInMainWorld(API_ENTRY.FETCHER, <ElectronGlobalFetcher>{

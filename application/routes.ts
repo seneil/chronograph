@@ -1,4 +1,4 @@
-import { BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 
 import { createSystemTray } from '@application/tray';
 import { getAppendActivityWindow } from '@application/views/append-activity';
@@ -67,6 +67,14 @@ export const createChronography = (): void => {
   });
 };
 
+ipcMain.handle(EVENT_NAME[API_ENTRY.SERVICE].OPEN_CHRONOGRAPHY_WINDOW, async () => {
+  if (chronographyWindow) {
+    chronographyWindow.show();
+  } else {
+    createChronographyWindow();
+  }
+});
+
 ipcMain.handle(EVENT_NAME[API_ENTRY.SERVICE].OPEN_ACTIVITY_APPEND_WINDOW, async () => {
   if (!appendActivityWindow) await createAppendActivityWindow();
 });
@@ -74,6 +82,10 @@ ipcMain.handle(EVENT_NAME[API_ENTRY.SERVICE].OPEN_ACTIVITY_APPEND_WINDOW, async 
 ipcMain.handle(EVENT_NAME[API_ENTRY.SERVICE].CLOSE_ACTIVITY_APPEND_WINDOW, () => {
   if (appendActivityWindow) appendActivityWindow.close();
 });
+
+ipcMain.handle(EVENT_NAME[API_ENTRY.SERVICE].QUIT_APPLICATION, () => (
+  app.quit()
+));
 
 ipcMain.handle(EVENT_NAME[API_ENTRY.FETCHER].FETCH_CHRONOGRAPHY, async (event, dayRange: DayRange) => (
   await fetchChronography(dayRange)

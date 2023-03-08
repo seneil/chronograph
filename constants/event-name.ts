@@ -11,8 +11,10 @@ export const EVENT_NAME = {
     DELETE_TIMING: 'deleteTiming',
   },
   [API_ENTRY.SERVICE]: {
+    OPEN_CHRONOGRAPHY_WINDOW: 'openChronographyWindow',
     OPEN_ACTIVITY_APPEND_WINDOW: 'openActivityAppendWindow',
     CLOSE_ACTIVITY_APPEND_WINDOW: 'closeActivityAppendWindow',
+    QUIT_APPLICATION: 'quitApplication',
   },
   [API_ENTRY.LISTENER]: {
     REFRESH_ACTIVE_TIMING: 'refreshActiveTiming',

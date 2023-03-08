@@ -12,8 +12,10 @@ declare global {
 
 export interface ElectronGlobalService {
   getVersion: () => string;
+  openChronographyWindow: () => Promise<void>;
   openActivityAppendWindow: () => Promise<void>;
   closeActivityAppendWindow: () => void;
+  quitApplication: () => void;
 }
 
 export interface ElectronGlobalFetcher {
@@ -32,5 +34,5 @@ export interface ElectronGlobalFetcher {
 }
 
 export interface ElectronGlobalListener {
-  subscribeTimerEvent: (callback: { (): void; }) => void,
+  subscribeTimerRefreshEvent: (callback: () => void) => void,
 }

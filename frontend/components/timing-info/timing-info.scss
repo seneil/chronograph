@@ -1,3 +1,8 @@
 .#{$b} {
   font-size: 15px;
+
+  &_widget {
+    flex-grow: 1;
+    padding: 10px 15px;
+  }
 }
