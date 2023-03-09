@@ -1,8 +1,17 @@
 .#{$b} {
+  display: flex;
   font-size: 15px;
+
+  .#{$b}:not(&_widget) {
+    margin-left: 10px;
+  }
+
+  &__control {
+    margin-right: 10px;
+  }
 
   &_widget {
     flex-grow: 1;
-    padding: 10px 15px;
+    padding: 10px;
   }
 }

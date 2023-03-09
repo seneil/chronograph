@@ -133,21 +133,18 @@ const ChronographyView = () => {
             />
 
             {!!timingInfo && (
-              <>
-                <Divider/>
-
-                <Button
-                  large={true}
-                  icon="stop"
-                  intent="danger"
-                  title="Остановить"
-                  onClick={stopActiveTiming}
-                />
-
-                <Divider/>
-
-                <TimingInfo timing={timingInfo}/>
-              </>
+              <TimingInfo
+                timing={timingInfo}
+                stopButton={(
+                  <Button
+                    large={true}
+                    icon="stop"
+                    intent="danger"
+                    title="Остановить"
+                    onClick={stopActiveTiming}
+                  />
+                )}
+              />
             )}
           </ButtonGroup>
         </FormGroup>

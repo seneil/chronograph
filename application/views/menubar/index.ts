@@ -8,7 +8,7 @@ export const menuBarWindowConstructorOptions: BrowserWindowConstructorOptions = 
   closable: false,
   frame: false,
   hasShadow: false,
-  height: 150,
+  height: 170,
   maximizable: false,
   minimizable: false,
   movable: false,
