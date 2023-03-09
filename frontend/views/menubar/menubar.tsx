@@ -7,6 +7,7 @@ import { Button, Divider, FocusStyleManager } from '@blueprintjs/core';
 import { MenuBar } from '@frontend/components/menu-bar';
 import { TimingInfo } from '@frontend/components/timing-info';
 import { ButtonsGroup } from '@frontend/components/buttons-group';
+import { TimingEmpty } from '@frontend/components/timing-empty';
 
 import { fetchActiveTiming, stopTiming, subscribeTimerRefreshEvent } from '@frontend/controller/chronography';
 import { openActivityAppendWindow, openChronographyWindow, quitApplication } from '@frontend/controller/services';
@@ -47,6 +48,7 @@ const MenuBarView = () => {
 
   const stopActiveTiming = async () => {
     await stopTiming();
+    await openChronographyWindow();
   };
 
   return (
@@ -65,6 +67,12 @@ const MenuBarView = () => {
             />
           )}
         />
+      )}
+
+      {!timingInfo && (
+        <TimingEmpty>
+          Нет активной задачи
+        </TimingEmpty>
       )}
 
       <ButtonsGroup mods={{ vertical: true }}>
