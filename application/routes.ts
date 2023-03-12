@@ -72,7 +72,7 @@ ipcMain.handle(EVENT_NAME.SERVICE.OPEN_ACTIVITY_APPEND_WINDOW, async () => {
   if (!appendActivityWindow) await createAppendActivityWindow();
 });
 
-ipcMain.handle(EVENT_NAME.SERVICE.CLOSE_ACTIVITY_APPEND_WINDOW, async () => {
+ipcMain.handle(EVENT_NAME.SERVICE.CLOSE_ACTIVITY_APPEND_WINDOW, () => {
   if (appendActivityWindow) appendActivityWindow.close();
 });
 
@@ -84,8 +84,8 @@ ipcMain.handle(EVENT_NAME.FETCHER.STOP_TIMING, async () => (
   await stopTiming()
 ));
 
-ipcMain.handle(EVENT_NAME.FETCHER.FETCH_ACTIVITY_DATA, async (event, activityInput: string) => (
-  await fetchActivityData(activityInput)
+ipcMain.handle(EVENT_NAME.FETCHER.FETCH_ACTIVITY_DATA, (event, activityInput: string) => (
+  fetchActivityData(activityInput)
 ));
 
 ipcMain.handle(EVENT_NAME.FETCHER.POST_ACTIVITY_INPUT, async (event, activityData: ActivityData) => {

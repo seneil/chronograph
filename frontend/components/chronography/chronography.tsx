@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Timings } from '@frontend/components/timings';
 import { Chronography__Day } from '@frontend/components/chronography';
 
@@ -12,7 +10,7 @@ interface ChronographyProps {
 }
 
 export const Chronography = ({ groups, onTimingRepeat, onTimingDelete }: ChronographyProps) => (
-  <div className='chronography'>
+  <div className="chronography">
     <Chronography__Day>
       {groups.map(activity => (
         <Timings

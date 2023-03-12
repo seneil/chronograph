@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import dayjs from 'dayjs';
 
 import { Button } from '@blueprintjs/core';
@@ -47,21 +47,21 @@ export const ActivitiesCalendar = ({ previousDay, nextDay, calendarValue, onGetC
   }
 
   return (
-    <div className='activities-calendar'>
+    <div className="activities-calendar">
       <Button
         large={true}
-        icon='caret-left'
-        intent='none'
+        icon="caret-left"
+        intent="none"
         disabled={!previousDay}
-        title='Предыдущий день'
+        title="Предыдущий день"
         onClick={fetchPreviousDay}
       />
 
       <Popover2
         isOpen={isCalendarOpen}
-        placement='bottom-end'
+        placement="bottom-end"
         popoverClassName={Classes.POPOVER2_CONTENT_SIZING}
-        positioningStrategy='fixed'
+        positioningStrategy="fixed"
         onInteraction={interactCalendar}
         content={
           <DateRangePicker
@@ -79,19 +79,19 @@ export const ActivitiesCalendar = ({ previousDay, nextDay, calendarValue, onGetC
             {...targetProps}
             elementRef={ref}
             large={true}
-            icon='calendar'
-            intent='none'
-            title='Календарь'
+            icon="calendar"
+            intent="none"
+            title="Календарь"
           />
         )}
       />
 
       <Button
         large={true}
-        icon='caret-right'
-        intent='none'
+        icon="caret-right"
+        intent="none"
         disabled={!nextDay}
-        title='Следующий день'
+        title="Следующий день"
         onClick={fetchNextDay}
       />
     </div>

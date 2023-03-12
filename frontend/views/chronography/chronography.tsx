@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { useMount } from 'react-use';
 
@@ -44,7 +44,7 @@ const ChronographyView = () => {
   const getChronography = async (dayRange?: DayRange) => {
     const [startDay, endDay] = dayRange || [];
 
-    if (startDay && endDay || !dayRange) {
+    if ((startDay && endDay) || !dayRange) {
       const {
         chronography,
         timing,
@@ -72,8 +72,13 @@ const ChronographyView = () => {
     ]);
   };
 
-  useMount(() => {
-    getChronography().catch(console.error);
+  useMount(async () => {
+    try {
+      await getChronography();
+    } catch(error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
   });
 
   const createActivityAppendWindow = async () => {
@@ -105,8 +110,8 @@ const ChronographyView = () => {
           <ButtonGroup>
             <Button
               large={true}
-              icon='plus'
-              intent='none'
+              icon="plus"
+              intent="none"
               onClick={createActivityAppendWindow}
             >Активность</Button>
 
@@ -125,9 +130,9 @@ const ChronographyView = () => {
 
                 <Button
                   large={true}
-                  icon='stop'
-                  intent='danger'
-                  title='Остановить'
+                  icon="stop"
+                  intent="danger"
+                  title="Остановить"
                   onClick={stopActiveTiming}
                 />
 

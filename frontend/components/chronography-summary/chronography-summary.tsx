@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { convertMinutesToTime } from '@frontend/utils';
 
 import { ActivitySummary } from '@frontend/types';

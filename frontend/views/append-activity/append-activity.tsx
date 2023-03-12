@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import React, { useState, FormEvent, KeyboardEvent } from 'react';
+import { useState, FormEvent, KeyboardEvent } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import 'dayjs/locale/ru';
@@ -45,6 +45,7 @@ const AppendActivityView = () => {
     };
 
     getActivityData()
+      // eslint-disable-next-line no-console
       .catch(console.error);
 
     setActivityInput(value);
@@ -53,7 +54,8 @@ const AppendActivityView = () => {
   const submitActivityInput = async () => {
     setLoadingStatus(true);
 
-    postActivityInput(activityData)
+    await postActivityInput(activityData)
+      // eslint-disable-next-line no-console
       .catch(console.error);
   };
 
