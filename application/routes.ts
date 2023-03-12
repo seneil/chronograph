@@ -7,6 +7,7 @@ import { getChronographyWindow } from '@application/views/chronography';
 import { fetchActiveTiming, repeatTiming, stopTiming, deleteTiming } from '@application/chronography/controllers/timings';
 import { fetchChronography, fetchActivityData, postActivityInput } from '@application/chronography/controllers';
 
+import { sendRefreshChronographyMessage, sendRefreshTimingMessage } from '@application/ipc-events';
 import { showPromptBox } from '@application/utils/show-prompt-box';
 
 import { ActivityData } from '@application/types';
@@ -18,10 +19,17 @@ let appendActivityWindow: BrowserWindow | null = null;
 let chronographyWindow: BrowserWindow | null = null;
 let menuBarWindow: BrowserWindow | null = null;
 
-const sendRefreshActiveTimingEvent = () => {
-  if (menuBarWindow) {
-    menuBarWindow.webContents.send(EVENT_NAME[API_ENTRY.LISTENER].REFRESH_ACTIVE_TIMING);
-  }
+const refreshActiveTiming = () => {
+  sendRefreshTimingMessage([
+    ...menuBarWindow ? [menuBarWindow] : [],
+    ...chronographyWindow ? [chronographyWindow] : [],
+  ]);
+};
+
+const refreshChronographyTiming = () => {
+  sendRefreshChronographyMessage([
+    ...chronographyWindow ? [chronographyWindow] : [],
+  ]);
 };
 
 export const createAppendActivityWindow = (): Promise<void> => new Promise(resolve => {
@@ -98,7 +106,8 @@ ipcMain.handle(EVENT_NAME[API_ENTRY.FETCHER].FETCH_ACTIVE_TIMING, async () => (
 ipcMain.handle(EVENT_NAME[API_ENTRY.FETCHER].STOP_TIMING, async () => {
   await stopTiming();
 
-  sendRefreshActiveTimingEvent();
+  refreshActiveTiming();
+  refreshChronographyTiming();
 });
 
 ipcMain.handle(EVENT_NAME[API_ENTRY.FETCHER].FETCH_ACTIVITY_DATA, (event, activityInput: string) => (
@@ -108,18 +117,26 @@ ipcMain.handle(EVENT_NAME[API_ENTRY.FETCHER].FETCH_ACTIVITY_DATA, (event, activi
 ipcMain.handle(EVENT_NAME[API_ENTRY.FETCHER].POST_ACTIVITY_INPUT, async (event, activityData: ActivityData) => {
   await postActivityInput(activityData);
 
-  sendRefreshActiveTimingEvent();
+  refreshActiveTiming();
+  refreshChronographyTiming();
+
   appendActivityWindow.close();
 });
 
 ipcMain.handle(EVENT_NAME[API_ENTRY.FETCHER].REPEAT_TIMING, async (event, timingId: number) => {
   await repeatTiming(timingId);
 
-  sendRefreshActiveTimingEvent();
+  refreshActiveTiming();
+  refreshChronographyTiming();
 });
 
 ipcMain.handle(EVENT_NAME[API_ENTRY.FETCHER].DELETE_TIMING, async (event, timingId: number, details: string) => {
   const promptResult = await showPromptBox('Вы действительно хотите удалить тайминг?', details);
 
-  if (promptResult) await deleteTiming(timingId);
+  if (promptResult) {
+    await deleteTiming(timingId);
+
+    refreshActiveTiming();
+    refreshChronographyTiming();
+  }
 });

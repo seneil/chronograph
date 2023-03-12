@@ -20,6 +20,10 @@ export const subscribeTimerRefreshEvent = (callback: () => void) => (
   window[API_ENTRY.LISTENER].subscribeTimerRefreshEvent(callback)
 );
 
+export const subscribeChronographyRefreshEvent = (callback: () => void) => (
+  window[API_ENTRY.LISTENER].subscribeChronographyRefreshEvent(callback)
+);
+
 export const stopTiming = async () => (
   await window[API_ENTRY.FETCHER].stopTiming()
 );

@@ -20,6 +20,9 @@ contextBridge.exposeInMainWorld(API_ENTRY.LISTENER, <ElectronGlobalListener>{
   subscribeTimerRefreshEvent: callback => (
     ipcRenderer.on(EVENT_NAME[API_ENTRY.LISTENER].REFRESH_ACTIVE_TIMING, callback)
   ),
+  subscribeChronographyRefreshEvent: callback => (
+    ipcRenderer.on(EVENT_NAME[API_ENTRY.LISTENER].REFRESH_CHRONOGRAPHY, callback)
+  ),
 });
 
 contextBridge.exposeInMainWorld(API_ENTRY.FETCHER, <ElectronGlobalFetcher>{

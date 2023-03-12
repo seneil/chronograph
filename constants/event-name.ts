@@ -18,5 +18,6 @@ export const EVENT_NAME = {
   },
   [API_ENTRY.LISTENER]: {
     REFRESH_ACTIVE_TIMING: 'refreshActiveTiming',
+    REFRESH_CHRONOGRAPHY: 'refreshChronography',
   },
 } as const;

@@ -18,6 +18,7 @@ import {
   fetchChronography,
   repeatTiming,
   stopTiming,
+  subscribeChronographyRefreshEvent,
 } from '@frontend/controller/chronography';
 
 import { Main } from '@frontend/components/main';
@@ -83,6 +84,10 @@ const ChronographyView = () => {
   useMount(async () => {
     try {
       await getChronography();
+
+      subscribeChronographyRefreshEvent(async () => {
+        await getChronography();
+      });
     } catch(error) {
       // eslint-disable-next-line no-console
       console.error(error);
@@ -91,24 +96,20 @@ const ChronographyView = () => {
 
   const createActivityAppendWindow = async () => {
     await openActivityAppendWindow();
-    await getChronography();
   };
 
   const stopActiveTiming = async () => {
     await stopTiming();
-    await getChronography();
   };
 
   const repeatSelectedTiming = async (id: number) => {
     setTimingInfo(null);
 
     await repeatTiming(id);
-    await getChronography();
   };
 
   const deleteSelectedTiming = async (id: number, details: string) => {
     await deleteTiming(id, details);
-    await getChronography();
   };
 
   return (

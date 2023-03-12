@@ -35,4 +35,5 @@ export interface ElectronGlobalFetcher {
 
 export interface ElectronGlobalListener {
   subscribeTimerRefreshEvent: (callback: () => void) => void,
+  subscribeChronographyRefreshEvent: (callback: () => void) => void,
 }
