@@ -13,7 +13,7 @@ import { showPromptBox } from '@application/utils/show-prompt-box';
 import { ActivityData } from '@application/types';
 import { DayRange } from '@frontend/types';
 
-import { API_ENTRY, EVENT_NAME } from '@constants';
+import { FETCHER_EVENT, SERVICE_EVENT } from '@constants';
 
 let appendActivityWindow: BrowserWindow | null = null;
 let chronographyWindow: BrowserWindow | null = null;
@@ -75,7 +75,7 @@ export const createChronography = (): void => {
   });
 };
 
-ipcMain.handle(EVENT_NAME[API_ENTRY.SERVICE].OPEN_CHRONOGRAPHY_WINDOW, async () => {
+ipcMain.handle(SERVICE_EVENT.OPEN_CHRONOGRAPHY_WINDOW, async () => {
   if (chronographyWindow) {
     chronographyWindow.show();
   } else {
@@ -83,38 +83,38 @@ ipcMain.handle(EVENT_NAME[API_ENTRY.SERVICE].OPEN_CHRONOGRAPHY_WINDOW, async () 
   }
 });
 
-ipcMain.handle(EVENT_NAME[API_ENTRY.SERVICE].OPEN_ACTIVITY_APPEND_WINDOW, async () => {
+ipcMain.handle(SERVICE_EVENT.OPEN_ACTIVITY_APPEND_WINDOW, async () => {
   if (!appendActivityWindow) await createAppendActivityWindow();
 });
 
-ipcMain.handle(EVENT_NAME[API_ENTRY.SERVICE].CLOSE_ACTIVITY_APPEND_WINDOW, () => {
+ipcMain.handle(SERVICE_EVENT.CLOSE_ACTIVITY_APPEND_WINDOW, () => {
   if (appendActivityWindow) appendActivityWindow.close();
 });
 
-ipcMain.handle(EVENT_NAME[API_ENTRY.SERVICE].QUIT_APPLICATION, () => (
+ipcMain.handle(SERVICE_EVENT.QUIT_APPLICATION, () => (
   app.quit()
 ));
 
-ipcMain.handle(EVENT_NAME[API_ENTRY.FETCHER].FETCH_CHRONOGRAPHY, async (event, dayRange: DayRange) => (
+ipcMain.handle(FETCHER_EVENT.FETCH_CHRONOGRAPHY, async (event, dayRange: DayRange) => (
   await fetchChronography(dayRange)
 ));
 
-ipcMain.handle(EVENT_NAME[API_ENTRY.FETCHER].FETCH_ACTIVE_TIMING, async () => (
+ipcMain.handle(FETCHER_EVENT.FETCH_ACTIVE_TIMING, async () => (
   await fetchActiveTiming()
 ));
 
-ipcMain.handle(EVENT_NAME[API_ENTRY.FETCHER].STOP_TIMING, async () => {
+ipcMain.handle(FETCHER_EVENT.STOP_TIMING, async () => {
   await stopTiming();
 
   refreshActiveTiming();
   refreshChronographyTiming();
 });
 
-ipcMain.handle(EVENT_NAME[API_ENTRY.FETCHER].FETCH_ACTIVITY_DATA, (event, activityInput: string) => (
+ipcMain.handle(FETCHER_EVENT.FETCH_ACTIVITY_DATA, (event, activityInput: string) => (
   fetchActivityData(activityInput)
 ));
 
-ipcMain.handle(EVENT_NAME[API_ENTRY.FETCHER].POST_ACTIVITY_INPUT, async (event, activityData: ActivityData) => {
+ipcMain.handle(FETCHER_EVENT.POST_ACTIVITY_INPUT, async (event, activityData: ActivityData) => {
   await postActivityInput(activityData);
 
   refreshActiveTiming();
@@ -123,14 +123,14 @@ ipcMain.handle(EVENT_NAME[API_ENTRY.FETCHER].POST_ACTIVITY_INPUT, async (event, 
   appendActivityWindow.close();
 });
 
-ipcMain.handle(EVENT_NAME[API_ENTRY.FETCHER].REPEAT_TIMING, async (event, timingId: number) => {
+ipcMain.handle(FETCHER_EVENT.REPEAT_TIMING, async (event, timingId: number) => {
   await repeatTiming(timingId);
 
   refreshActiveTiming();
   refreshChronographyTiming();
 });
 
-ipcMain.handle(EVENT_NAME[API_ENTRY.FETCHER].DELETE_TIMING, async (event, timingId: number, details: string) => {
+ipcMain.handle(FETCHER_EVENT.DELETE_TIMING, async (event, timingId: number, details: string) => {
   const promptResult = await showPromptBox('Вы действительно хотите удалить тайминг?', details);
 
   if (promptResult) {

@@ -2,7 +2,7 @@ import { contextBridge, ipcRenderer } from 'electron';
 
 import { DayRange, ElectronGlobalFetcher, ElectronGlobalService } from '@frontend/types';
 
-import { API_ENTRY, EVENT_NAME } from '@constants';
+import { API_ENTRY, FETCHER_EVENT, LISTENER_EVENT, SERVICE_EVENT } from '@constants';
 import { ElectronGlobalListener } from '@frontend/types/globals';
 
 contextBridge.exposeInMainWorld(API_ENTRY.SERVICE, <ElectronGlobalService>{
@@ -10,27 +10,27 @@ contextBridge.exposeInMainWorld(API_ENTRY.SERVICE, <ElectronGlobalService>{
     .map(platform => `${platform}: ${process.versions[platform]}`)
     .join(', '),
 
-  openChronographyWindow: () => ipcRenderer.invoke(EVENT_NAME[API_ENTRY.SERVICE].OPEN_CHRONOGRAPHY_WINDOW),
-  openActivityAppendWindow: () => ipcRenderer.invoke(EVENT_NAME[API_ENTRY.SERVICE].OPEN_ACTIVITY_APPEND_WINDOW),
-  closeActivityAppendWindow: () => ipcRenderer.invoke(EVENT_NAME[API_ENTRY.SERVICE].CLOSE_ACTIVITY_APPEND_WINDOW),
-  quitApplication: () => ipcRenderer.invoke(EVENT_NAME[API_ENTRY.SERVICE].QUIT_APPLICATION),
+  openChronographyWindow: () => ipcRenderer.invoke(SERVICE_EVENT.OPEN_CHRONOGRAPHY_WINDOW),
+  openActivityAppendWindow: () => ipcRenderer.invoke(SERVICE_EVENT.OPEN_ACTIVITY_APPEND_WINDOW),
+  closeActivityAppendWindow: () => ipcRenderer.invoke(SERVICE_EVENT.CLOSE_ACTIVITY_APPEND_WINDOW),
+  quitApplication: () => ipcRenderer.invoke(SERVICE_EVENT.QUIT_APPLICATION),
 });
 
 contextBridge.exposeInMainWorld(API_ENTRY.LISTENER, <ElectronGlobalListener>{
   subscribeTimerRefreshEvent: callback => (
-    ipcRenderer.on(EVENT_NAME[API_ENTRY.LISTENER].REFRESH_ACTIVE_TIMING, callback)
+    ipcRenderer.on(LISTENER_EVENT.REFRESH_ACTIVE_TIMING, callback)
   ),
   subscribeChronographyRefreshEvent: callback => (
-    ipcRenderer.on(EVENT_NAME[API_ENTRY.LISTENER].REFRESH_CHRONOGRAPHY, callback)
+    ipcRenderer.on(LISTENER_EVENT.REFRESH_CHRONOGRAPHY, callback)
   ),
 });
 
 contextBridge.exposeInMainWorld(API_ENTRY.FETCHER, <ElectronGlobalFetcher>{
-  fetchChronography: (dayRange: DayRange) => ipcRenderer.invoke(EVENT_NAME[API_ENTRY.FETCHER].FETCH_CHRONOGRAPHY, dayRange),
-  fetchActiveTiming: () => ipcRenderer.invoke(EVENT_NAME[API_ENTRY.FETCHER].FETCH_ACTIVE_TIMING),
-  stopTiming: () => ipcRenderer.invoke(EVENT_NAME[API_ENTRY.FETCHER].STOP_TIMING),
-  fetchActivityData: activityInput => ipcRenderer.invoke(EVENT_NAME[API_ENTRY.FETCHER].FETCH_ACTIVITY_DATA, activityInput),
-  postActivityInput: activityData => ipcRenderer.invoke(EVENT_NAME[API_ENTRY.FETCHER].POST_ACTIVITY_INPUT, activityData),
-  repeatTiming: timingId => ipcRenderer.invoke(EVENT_NAME[API_ENTRY.FETCHER].REPEAT_TIMING, timingId),
-  deleteTiming: (timingId, details) => ipcRenderer.invoke(EVENT_NAME[API_ENTRY.FETCHER].DELETE_TIMING, timingId, details),
+  fetchChronography: (dayRange: DayRange) => ipcRenderer.invoke(FETCHER_EVENT.FETCH_CHRONOGRAPHY, dayRange),
+  fetchActiveTiming: () => ipcRenderer.invoke(FETCHER_EVENT.FETCH_ACTIVE_TIMING),
+  stopTiming: () => ipcRenderer.invoke(FETCHER_EVENT.STOP_TIMING),
+  fetchActivityData: activityInput => ipcRenderer.invoke(FETCHER_EVENT.FETCH_ACTIVITY_DATA, activityInput),
+  postActivityInput: activityData => ipcRenderer.invoke(FETCHER_EVENT.POST_ACTIVITY_INPUT, activityData),
+  repeatTiming: timingId => ipcRenderer.invoke(FETCHER_EVENT.REPEAT_TIMING, timingId),
+  deleteTiming: (timingId, details) => ipcRenderer.invoke(FETCHER_EVENT.DELETE_TIMING, timingId, details),
 });
