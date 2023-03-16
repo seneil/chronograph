@@ -1,25 +1,36 @@
-import { BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 
 import { createSystemTray } from '@application/tray';
 import { getAppendActivityWindow } from '@application/views/append-activity';
 import { getChronographyWindow } from '@application/views/chronography';
 
-import {
-  repeatTiming,
-  stopTiming,
-  deleteTiming
-} from '@application/chronography/controllers/timings';
+import { fetchActiveTiming, repeatTiming, stopTiming, deleteTiming } from '@application/chronography/controllers/timings';
 import { fetchChronography, fetchActivityData, postActivityInput } from '@application/chronography/controllers';
 
+import { sendRefreshChronographyMessage, sendRefreshTimingMessage } from '@application/ipc-events';
 import { showPromptBox } from '@application/utils/show-prompt-box';
 
 import { ActivityData } from '@application/types';
 import { DayRange } from '@frontend/types';
 
-import { EVENT_NAME, TRAY_MENU } from '@constants';
+import { FETCHER_EVENT, SERVICE_EVENT } from '@constants';
 
 let appendActivityWindow: BrowserWindow | null = null;
 let chronographyWindow: BrowserWindow | null = null;
+let menuBarWindow: BrowserWindow | null = null;
+
+const refreshActiveTiming = () => {
+  sendRefreshTimingMessage([
+    ...menuBarWindow ? [menuBarWindow] : [],
+    ...chronographyWindow ? [chronographyWindow] : [],
+  ]);
+};
+
+const refreshChronographyTiming = () => {
+  sendRefreshChronographyMessage([
+    ...chronographyWindow ? [chronographyWindow] : [],
+  ]);
+};
 
 export const createAppendActivityWindow = (): Promise<void> => new Promise(resolve => {
   const window = getAppendActivityWindow(BrowserWindow.getFocusedWindow());
@@ -55,51 +66,77 @@ export const createChronographyWindow = (): void => {
 };
 
 export const createChronography = (): void => {
-  const trayMenu = createSystemTray();
+  const { trayMenuBar } = createSystemTray();
 
-  trayMenu.getMenuItemById(TRAY_MENU.CHRONOGRAPHY).click = () => {
-    if (chronographyWindow) {
-      chronographyWindow.show();
-    } else {
-      createChronographyWindow();
-    }
-  }
+  trayMenuBar.on('ready', () => {
+    menuBarWindow = trayMenuBar.window;
 
-  createChronographyWindow();
+    createChronographyWindow();
+  });
 };
 
-ipcMain.handle(EVENT_NAME.SERVICE.OPEN_ACTIVITY_APPEND_WINDOW, async () => {
+ipcMain.handle(SERVICE_EVENT.OPEN_CHRONOGRAPHY_WINDOW, () => {
+  if (chronographyWindow) {
+    chronographyWindow.show();
+  } else {
+    createChronographyWindow();
+  }
+});
+
+ipcMain.handle(SERVICE_EVENT.OPEN_ACTIVITY_APPEND_WINDOW, async () => {
   if (!appendActivityWindow) await createAppendActivityWindow();
 });
 
-ipcMain.handle(EVENT_NAME.SERVICE.CLOSE_ACTIVITY_APPEND_WINDOW, () => {
+ipcMain.handle(SERVICE_EVENT.CLOSE_ACTIVITY_APPEND_WINDOW, () => {
   if (appendActivityWindow) appendActivityWindow.close();
 });
 
-ipcMain.handle(EVENT_NAME.FETCHER.FETCH_CHRONOGRAPHY, async (event, dayRange: DayRange) => (
+ipcMain.handle(SERVICE_EVENT.QUIT_APPLICATION, () => (
+  app.quit()
+));
+
+ipcMain.handle(FETCHER_EVENT.FETCH_CHRONOGRAPHY, async (event, dayRange: DayRange) => (
   await fetchChronography(dayRange)
 ));
 
-ipcMain.handle(EVENT_NAME.FETCHER.STOP_TIMING, async () => (
-  await stopTiming()
+ipcMain.handle(FETCHER_EVENT.FETCH_ACTIVE_TIMING, async () => (
+  await fetchActiveTiming()
 ));
 
-ipcMain.handle(EVENT_NAME.FETCHER.FETCH_ACTIVITY_DATA, (event, activityInput: string) => (
+ipcMain.handle(FETCHER_EVENT.STOP_TIMING, async () => {
+  await stopTiming();
+
+  refreshActiveTiming();
+  refreshChronographyTiming();
+});
+
+ipcMain.handle(FETCHER_EVENT.FETCH_ACTIVITY_DATA, (event, activityInput: string) => (
   fetchActivityData(activityInput)
 ));
 
-ipcMain.handle(EVENT_NAME.FETCHER.POST_ACTIVITY_INPUT, async (event, activityData: ActivityData) => {
+ipcMain.handle(FETCHER_EVENT.POST_ACTIVITY_INPUT, async (event, activityData: ActivityData) => {
   await postActivityInput(activityData);
+
+  refreshActiveTiming();
+  refreshChronographyTiming();
 
   appendActivityWindow.close();
 });
 
-ipcMain.handle(EVENT_NAME.FETCHER.REPEAT_TIMING, async (event, timingId: number) => (
-  await repeatTiming(timingId)
-));
+ipcMain.handle(FETCHER_EVENT.REPEAT_TIMING, async (event, timingId: number) => {
+  await repeatTiming(timingId);
 
-ipcMain.handle(EVENT_NAME.FETCHER.DELETE_TIMING, async (event, timingId: number, details: string) => {
+  refreshActiveTiming();
+  refreshChronographyTiming();
+});
+
+ipcMain.handle(FETCHER_EVENT.DELETE_TIMING, async (event, timingId: number, details: string) => {
   const promptResult = await showPromptBox('Вы действительно хотите удалить тайминг?', details);
 
-  if (promptResult) await deleteTiming(timingId);
+  if (promptResult) {
+    await deleteTiming(timingId);
+
+    refreshActiveTiming();
+    refreshChronographyTiming();
+  }
 });

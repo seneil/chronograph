@@ -1,5 +1,16 @@
 .#{$b} {
-  button:not(:first-child) {
-    margin-left: 20px;
+  &:not(&_vertical) {
+    .bp4-button:not(:first-child) {
+      margin-left: 20px;
+    }
+  }
+
+  &_vertical {
+    display: flex;
+    flex-direction: column;
+
+    .bp4-button {
+      margin: 0;
+    }
   }
 }

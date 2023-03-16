@@ -1,24 +1,40 @@
 import path from 'path';
+import { nativeImage, Tray, screen } from 'electron';
+import { menubar, Menubar } from 'menubar';
 
-import { nativeImage, Tray, Menu, MenuItem } from 'electron';
+import { menuBarWindowConstructorOptions } from '@application/views/menubar';
 
 import trayIcon from '@assets/favicons/png/16x16.png';
 
-import { TRAY_MENU } from '@constants';
+declare const MENUBAR_WEBPACK_ENTRY: string;
 
-export const createSystemTray = (): Menu => {
+interface SystemTray {
+  tray: Tray;
+  trayMenuBar: Menubar;
+}
+
+export const createSystemTray = (): SystemTray => {
   const icon = nativeImage.createFromPath(path.join(__dirname, trayIcon as string));
-
-  const trayMenu = Menu.buildFromTemplate([
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    new MenuItem({ id: TRAY_MENU.CHRONOGRAPHY as string, label: 'Хронограф' }),
-    new MenuItem({ type: 'separator' }),
-    new MenuItem({ role: 'quit', label: 'Выход' }),
-  ]);
 
   const tray = new Tray(icon);
 
-  tray.setContextMenu(trayMenu);
+  const trayMenuBar = menubar({
+    tray,
+    preloadWindow: true,
+    index: MENUBAR_WEBPACK_ENTRY,
+    browserWindow: menuBarWindowConstructorOptions,
+    windowPosition: 'center',
+  });
 
-  return trayMenu;
+  trayMenuBar.on('show', () => {
+    const { x: pointerXPosition } = screen.getCursorScreenPoint();
+
+    trayMenuBar.setOption('browserWindow', {
+      ...menuBarWindowConstructorOptions,
+      y: 30,
+      x: pointerXPosition - (menuBarWindowConstructorOptions.width / 1.5),
+    });
+  });
+
+  return { tray, trayMenuBar };
 };

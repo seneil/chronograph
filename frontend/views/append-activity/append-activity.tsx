@@ -44,9 +44,12 @@ const AppendActivityView = () => {
       setActivityData(await fetchActivityData(value));
     };
 
-    getActivityData()
+    try {
+      void getActivityData();
+    } catch (error) {
       // eslint-disable-next-line no-console
-      .catch(console.error);
+      console.error(error);
+    }
 
     setActivityInput(value);
   };
@@ -54,9 +57,12 @@ const AppendActivityView = () => {
   const submitActivityInput = async () => {
     setLoadingStatus(true);
 
-    await postActivityInput(activityData)
+    try {
+      await postActivityInput(activityData)
+    } catch (error) {
       // eslint-disable-next-line no-console
-      .catch(console.error);
+      console.error(error);
+    }
   };
 
   const closeAppendActivity = () => (

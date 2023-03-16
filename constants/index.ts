@@ -1,5 +1,4 @@
 export { API_ENTRY } from './api-entry';
-export { EVENT_NAME } from './event-name';
+export { FETCHER_EVENT, SERVICE_EVENT, LISTENER_EVENT } from './event-name';
 export { ENVIRONMENT, FOLDER_NAME } from './environments';
-export { TRAY_MENU } from './tray-menu';
 export { FORMAT } from './formats';

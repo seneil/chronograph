@@ -11,7 +11,15 @@ import { FocusStyleManager, FormGroup, ButtonGroup, Divider, Button } from '@blu
 import { calendarizeActivities, summarizeActivities } from '@frontend/utils';
 
 import { openActivityAppendWindow } from '@frontend/controller/services';
-import { fetchChronography, repeatTiming, stopTiming, deleteTiming } from '@frontend/controller/chronography';
+
+import {
+  deleteTiming,
+  fetchActiveTiming,
+  fetchChronography,
+  repeatTiming,
+  stopTiming,
+  subscribeChronographyRefreshEvent,
+} from '@frontend/controller/chronography';
 
 import { Main } from '@frontend/components/main';
 import { ChronographyControls } from '@frontend/components/chronography-controls';
@@ -47,11 +55,12 @@ const ChronographyView = () => {
     if ((startDay && endDay) || !dayRange) {
       const {
         chronography,
-        timing,
         dayRange: calendarDayRange,
         previousActivityDay,
         nextActivityDay
       } = await fetchChronography(dayRange);
+
+      const timing = await fetchActiveTiming();
 
       const activityCalendar = calendarizeActivities(chronography);
       const activitySummary = summarizeActivities(chronography);
@@ -75,6 +84,10 @@ const ChronographyView = () => {
   useMount(async () => {
     try {
       await getChronography();
+
+      subscribeChronographyRefreshEvent(async () => {
+        await getChronography();
+      });
     } catch(error) {
       // eslint-disable-next-line no-console
       console.error(error);
@@ -83,24 +96,20 @@ const ChronographyView = () => {
 
   const createActivityAppendWindow = async () => {
     await openActivityAppendWindow();
-    await getChronography();
   };
 
   const stopActiveTiming = async () => {
     await stopTiming();
-    await getChronography();
   };
 
   const repeatSelectedTiming = async (id: number) => {
     setTimingInfo(null);
 
     await repeatTiming(id);
-    await getChronography();
   };
 
   const deleteSelectedTiming = async (id: number, details: string) => {
     await deleteTiming(id, details);
-    await getChronography();
   };
 
   return (
@@ -125,21 +134,18 @@ const ChronographyView = () => {
             />
 
             {!!timingInfo && (
-              <>
-                <Divider/>
-
-                <Button
-                  large={true}
-                  icon="stop"
-                  intent="danger"
-                  title="Остановить"
-                  onClick={stopActiveTiming}
-                />
-
-                <Divider/>
-
-                <TimingInfo timing={timingInfo}/>
-              </>
+              <TimingInfo
+                timing={timingInfo}
+                stopButton={(
+                  <Button
+                    large={true}
+                    icon="stop"
+                    intent="danger"
+                    title="Остановить"
+                    onClick={stopActiveTiming}
+                  />
+                )}
+              />
             )}
           </ButtonGroup>
         </FormGroup>
