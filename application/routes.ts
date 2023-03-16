@@ -75,7 +75,7 @@ export const createChronography = (): void => {
   });
 };
 
-ipcMain.handle(SERVICE_EVENT.OPEN_CHRONOGRAPHY_WINDOW, async () => {
+ipcMain.handle(SERVICE_EVENT.OPEN_CHRONOGRAPHY_WINDOW, () => {
   if (chronographyWindow) {
     chronographyWindow.show();
   } else {
