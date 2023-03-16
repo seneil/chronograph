@@ -19,7 +19,7 @@ interface TimingsProps {
 }
 
 export const Timings = ({ date, total, activities, onRepeat, onDelete }: TimingsProps) => (
-  <div className='timings'>
+  <div className="timings">
     <Timings__Date date={date}/>
     <Timings__Activities>
       {activities.map(timing => {

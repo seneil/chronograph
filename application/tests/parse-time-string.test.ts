@@ -20,7 +20,7 @@ describe('Проверка парсинга времени', () => {
     const now: Date = new Date();
 
     expect(toLocal(parseTimeString('-10'))).toBe(toLocal(
-      new Date(now.getTime() - 10 * 1000 * 60)
+      new Date(now.getTime() - (10 * 1000 * 60))
     ));
   });
 
@@ -28,7 +28,7 @@ describe('Проверка парсинга времени', () => {
     const now: Date = new Date();
 
     expect(toLocal(parseTimeString('-120'))).toBe(toLocal(
-      new Date(now.getTime() - 120 * 1000 * 60)
+      new Date(now.getTime() - (120 * 1000 * 60))
     ));
   });
 });

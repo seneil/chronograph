@@ -30,6 +30,6 @@ export const calendarizeActivities = (activities: ActivityView[]): ActivityCalen
       total: activity.duration,
       activities: [activity]
     }]
-  }, [])
+  }, <ActivityCalendar[]>[])
     .sort((a, b) => (a.date > b.date) ? -1 : ((a.date < b.date) ? 1 : 0))
 );

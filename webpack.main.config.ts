@@ -1,6 +1,6 @@
 import path from 'path';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires,@typescript-eslint/no-unsafe-assignment
 const relocateLoader = require('@vercel/webpack-asset-relocator-loader');
 
 import { IgnorePlugin } from 'webpack';
@@ -34,6 +34,7 @@ export const mainConfig: Configuration = {
     {
       apply(compiler: Compiler): void  {
         compiler.hooks.compilation.tap('webpack-asset-relocator-loader', (compilation: Compilation) => {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
             relocateLoader.initAssetCache(compilation, 'native_modules');
           },
         );

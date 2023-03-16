@@ -2,22 +2,39 @@
 const path = require('path');
 
 module.exports = {
+  root: true,
   env: {
     browser: true,
     es6: true,
     node: true
   },
   extends: [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:import/recommended",
-    "plugin:import/electron",
-    "plugin:import/typescript",
-    "plugin:react-hooks/recommended",
+    'eslint:recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'plugin:import/recommended',
+    'plugin:import/electron',
+    'plugin:import/typescript',
+    'plugin:react/recommended',
+    'plugin:react/jsx-runtime',
+    'plugin:react-hooks/recommended',
   ],
-  parser: "@typescript-eslint/parser",
-  plugins: ["import"],
+  ignorePatterns: [
+    '/**/node_modules/*',
+    'out/',
+    '.git/',
+    '.github/',
+    '.idea/',
+    '.webpack/',
+    '.coverage/',
+  ],
+  parser: '@typescript-eslint/parser',
+  plugins: ['import'],
+  parserOptions: {
+    tsconfigRootDir: __dirname,
+    project: ['./tsconfig.eslint.json'],
+  },
   settings: {
     'import/resolver': {
       webpack: {
@@ -34,5 +51,16 @@ module.exports = {
         },
       },
     },
+    'react': {
+      version: '18.2',
+    },
+  },
+  rules: {
+    'jsx-quotes': ['error', 'prefer-double'],
+    'no-console': 'error',
+    'no-mixed-operators': 'error',
+    '@typescript-eslint/no-misused-promises': ['error', {
+      'checksVoidReturn': false,
+    }],
   },
 };

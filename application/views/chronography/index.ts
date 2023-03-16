@@ -17,7 +17,7 @@ const chronographyWindow: BrowserWindowConstructorOptions = {
   maximizable: false,
   autoHideMenuBar: true,
   backgroundColor: '#f6f5f4',
-  icon: path.join(__dirname, windowIcon),
+  icon: path.join(__dirname, windowIcon as string),
   webPreferences: {
     preload: CHRONOGRAPHY_PRELOAD_WEBPACK_ENTRY,
   },
@@ -26,7 +26,7 @@ const chronographyWindow: BrowserWindowConstructorOptions = {
 export const getChronographyWindow = (): BrowserWindow => {
   const window: BrowserWindow = new BrowserWindow(chronographyWindow);
 
-  window.loadURL(CHRONOGRAPHY_WEBPACK_ENTRY);
+  void window.loadURL(CHRONOGRAPHY_WEBPACK_ENTRY);
 
   return window;
 };

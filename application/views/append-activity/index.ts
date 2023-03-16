@@ -25,7 +25,7 @@ export const getAppendActivityWindow = (parentWindow: BrowserWindow): BrowserWin
     parent: parentWindow,
   });
 
-  window.loadURL(APPEND_ACTIVITY_WEBPACK_ENTRY);
+  void window.loadURL(APPEND_ACTIVITY_WEBPACK_ENTRY);
 
   return window;
 };

@@ -24,20 +24,20 @@ export const TimingControls = ({ timing, onRepeat, onDelete }: TimingControlsPro
 
   const timingMenu = (
     <Menu>
-      <MenuItem icon='repeat' text='Продолжить' onClick={repeatTiming}/>
+      <MenuItem icon="repeat" text="Продолжить" onClick={repeatTiming}/>
       <MenuDivider/>
-      <MenuItem disabled={true} icon='edit' text='Изменить'/>
-      <MenuItem icon='delete' text='Удалить' onClick={deleteTiming}/>
+      <MenuItem disabled={true} icon="edit" text="Изменить"/>
+      <MenuItem icon="delete" text="Удалить" onClick={deleteTiming}/>
     </Menu>
   );
 
   return (
     <Popover2
-      className='timing-controls'
-      placement='left-start'
+      className="timing-controls"
+      placement="left-start"
       content={timingMenu}
     >
-      <Button icon='more' large={false} minimal={true} title='Управление'/>
+      <Button icon="more" large={false} minimal={true} title="Управление"/>
     </Popover2>
   );
 };
