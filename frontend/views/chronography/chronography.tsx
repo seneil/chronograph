@@ -28,7 +28,7 @@ import { Chronography } from '@frontend/components/chronography';
 import { ChronographySummary } from '@frontend/components/chronography-summary';
 import { TimingInfo } from '@frontend/components/timing-info';
 
-import { ActivityCalendar, ActivitySummary, DayRange } from '@frontend/types';
+import { ActivitiesSummary, ActivityCalendar, DayRange } from '@frontend/types';
 import { CurrentActivityView } from '@application/types';
 import { DateRange } from '@blueprintjs/datetime';
 
@@ -43,7 +43,7 @@ FocusStyleManager.onlyShowFocusOnTabs();
 const ChronographyView = () => {
   const [activities, setActivities] = useState<ActivityCalendar[]>([]);
   const [timingInfo, setTimingInfo] = useState<CurrentActivityView>();
-  const [summary, setSummary] = useState<ActivitySummary[]>([]);
+  const [summary, setSummary] = useState<ActivitiesSummary>();
 
   const [previousDay, setPreviousDay] = useState<string>();
   const [nextDay, setNextDay] = useState<string>();
