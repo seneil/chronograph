@@ -4,7 +4,8 @@ import { menubar, Menubar } from 'menubar';
 
 import { menuBarWindowConstructorOptions } from '@application/views/menubar';
 
-import trayIcon from '@assets/favicons/png/16x16.png';
+import defaultTrayIcon from '@assets/favicons/png/16x16.png';
+import activeTrayIcon from '@assets/favicons/png/16x16-active.png';
 
 declare const MENUBAR_WEBPACK_ENTRY: string;
 
@@ -13,10 +14,15 @@ interface SystemTray {
   trayMenuBar: Menubar;
 }
 
-export const createSystemTray = (): SystemTray => {
-  const icon = nativeImage.createFromPath(path.join(__dirname, trayIcon as string));
+const defaultIcon = nativeImage.createFromPath(path.join(__dirname, defaultTrayIcon as string));
+const activeIcon = nativeImage.createFromPath(path.join(__dirname, activeTrayIcon as string));
 
-  const tray = new Tray(icon);
+export const setTrayIcon = (tray: Tray, status: boolean) => {
+  tray.setImage(status ? activeIcon : defaultIcon);
+};
+
+export const createSystemTray = (): SystemTray => {
+  const tray = new Tray(defaultIcon);
 
   const trayMenuBar = menubar({
     tray,

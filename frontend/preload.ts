@@ -13,6 +13,7 @@ contextBridge.exposeInMainWorld(API_ENTRY.SERVICE, <ElectronGlobalService>{
   openChronographyWindow: () => ipcRenderer.invoke(SERVICE_EVENT.OPEN_CHRONOGRAPHY_WINDOW),
   openActivityAppendWindow: () => ipcRenderer.invoke(SERVICE_EVENT.OPEN_ACTIVITY_APPEND_WINDOW),
   closeActivityAppendWindow: () => ipcRenderer.invoke(SERVICE_EVENT.CLOSE_ACTIVITY_APPEND_WINDOW),
+  refreshMenuBarWindowIcon: (status) => ipcRenderer.invoke(SERVICE_EVENT.REFRESH_MENU_BAR_WINDOW_ICON, status),
   quitApplication: () => ipcRenderer.invoke(SERVICE_EVENT.QUIT_APPLICATION),
 });
 

@@ -1,6 +1,6 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, Tray, ipcMain } from 'electron';
 
-import { createSystemTray } from '@application/tray';
+import { createSystemTray, setTrayIcon } from '@application/tray';
 import { getAppendActivityWindow } from '@application/views/append-activity';
 import { getChronographyWindow } from '@application/views/chronography';
 
@@ -18,6 +18,7 @@ import { FETCHER_EVENT, SERVICE_EVENT } from '@constants';
 let appendActivityWindow: BrowserWindow | null = null;
 let chronographyWindow: BrowserWindow | null = null;
 let menuBarWindow: BrowserWindow | null = null;
+let trayIcon: Tray | null = null;
 
 const refreshActiveTiming = () => {
   sendRefreshTimingMessage([
@@ -66,10 +67,11 @@ export const createChronographyWindow = (): void => {
 };
 
 export const createChronography = (): void => {
-  const { trayMenuBar } = createSystemTray();
+  const { tray, trayMenuBar } = createSystemTray();
 
   trayMenuBar.on('ready', () => {
     menuBarWindow = trayMenuBar.window;
+    trayIcon = tray;
 
     createChronographyWindow();
   });
@@ -89,6 +91,10 @@ ipcMain.handle(SERVICE_EVENT.OPEN_ACTIVITY_APPEND_WINDOW, async () => {
 
 ipcMain.handle(SERVICE_EVENT.CLOSE_ACTIVITY_APPEND_WINDOW, () => {
   if (appendActivityWindow) appendActivityWindow.close();
+});
+
+ipcMain.handle(SERVICE_EVENT.REFRESH_MENU_BAR_WINDOW_ICON, (event, status: boolean) => {
+  setTrayIcon(trayIcon, status);
 });
 
 ipcMain.handle(SERVICE_EVENT.QUIT_APPLICATION, () => (
