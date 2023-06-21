@@ -13,7 +13,7 @@ import { rendererConfig } from './webpack.renderer.config';
 import { author, version } from './package.json';
 
 const getIconPath = (fileName: string) => (
-  path.join(__dirname, 'assets/favicons', fileName)
+  path.join(__dirname, 'assets/favicons/default/icons', fileName)
 );
 
 const getIconType = (): string => {

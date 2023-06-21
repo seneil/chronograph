@@ -4,8 +4,8 @@ import { menubar, Menubar } from 'menubar';
 
 import { menuBarWindowConstructorOptions } from '@application/views/menubar';
 
-import defaultTrayIcon from '@assets/favicons/png/16x16.png';
-import activeTrayIcon from '@assets/favicons/png/16x16-active.png';
+import defaultTrayIcon from '@assets/favicons/default/icons/png/32x32.png';
+import activeTrayIcon from '@assets/favicons/active/icons/png/32x32.png';
 
 declare const MENUBAR_WEBPACK_ENTRY: string;
 

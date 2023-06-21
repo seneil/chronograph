@@ -20,7 +20,9 @@
     "rebuild": "electron-rebuild -f -w sqlite3",
     "start": "electron-forge start",
     "start:inspect": "electron-forge start --inspect-electron",
-    "test": "jest --collect-coverage"
+    "test": "jest --collect-coverage",
+    "icon:default": "electron-icon-maker --input=./assets/favicons/default-icon-template.png --output=./assets/favicons/default",
+    "icon:active": "electron-icon-maker --input=./assets/favicons/active-icon-template.png --output=./assets/favicons/active"
   },
   "dependencies": {
     "better-sqlite3": "^8.0.0",
@@ -46,6 +48,7 @@
     "@vercel/webpack-asset-relocator-loader": "^1.7.3",
     "css-loader": "^6.7.1",
     "electron": "^22.0.0",
+    "electron-icon-maker": "0.0.5",
     "eslint": "^8.28.0",
     "eslint-import-resolver-webpack": "^0.13.2",
     "eslint-plugin-import": "^2.26.0",
