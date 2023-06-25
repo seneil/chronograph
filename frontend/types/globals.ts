@@ -15,6 +15,7 @@ export interface ElectronGlobalService {
   openChronographyWindow: () => Promise<void>;
   openActivityAppendWindow: () => Promise<void>;
   closeActivityAppendWindow: () => void;
+  refreshMenuBarWindowIcon: (active: boolean) => void;
   quitApplication: () => void;
 }
 

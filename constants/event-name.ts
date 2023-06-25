@@ -12,6 +12,7 @@ export const SERVICE_EVENT = {
   OPEN_CHRONOGRAPHY_WINDOW: 'openChronographyWindow',
   OPEN_ACTIVITY_APPEND_WINDOW: 'openActivityAppendWindow',
   CLOSE_ACTIVITY_APPEND_WINDOW: 'closeActivityAppendWindow',
+  REFRESH_MENU_BAR_WINDOW_ICON: 'refreshMenuBarWindowIcon',
   QUIT_APPLICATION: 'quitApplication',
 } as const;
 

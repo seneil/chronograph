@@ -10,7 +10,12 @@ import { ButtonsGroup } from '@frontend/components/buttons-group';
 import { TimingEmpty } from '@frontend/components/timing-empty';
 
 import { fetchActiveTiming, stopTiming, subscribeTimerRefreshEvent } from '@frontend/controller/chronography';
-import { openActivityAppendWindow, openChronographyWindow, quitApplication } from '@frontend/controller/services';
+import {
+  openActivityAppendWindow,
+  openChronographyWindow,
+  quitApplication,
+  refreshMenuBarWindowIcon,
+} from '@frontend/controller/services';
 
 import { CurrentActivityView } from '@application/types';
 
@@ -24,10 +29,10 @@ const MenuBarView = () => {
 
   useMount(async () => {
     try {
-      await getActiveTiming();
+      await prepareActiveTiming();
 
       subscribeTimerRefreshEvent(async () => {
-        await getActiveTiming();
+        await prepareActiveTiming();
       });
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -35,12 +40,19 @@ const MenuBarView = () => {
     }
   });
 
+  const prepareActiveTiming = async () => {
+    const timing = await getActiveTiming();
+
+    refreshMenuBarWindowIcon(!!timing);
+  };
+
   const getActiveTiming = async () => {
     const timing = await fetchActiveTiming();
 
     setTimingInfo(timing);
-  };
 
+    return timing;
+  };
 
   const createActivityAppendWindow = async () => {
     await openActivityAppendWindow();

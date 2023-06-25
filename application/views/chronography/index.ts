@@ -3,7 +3,7 @@ import path from 'path';
 import { BrowserWindow } from 'electron';
 import type { BrowserWindowConstructorOptions } from 'electron';
 
-import windowIcon from '@assets/favicons/png/128x128.png';
+import windowIcon from '@assets/favicons/default/icons/png/128x128.png';
 
 declare const CHRONOGRAPHY_WEBPACK_ENTRY: string;
 declare const CHRONOGRAPHY_PRELOAD_WEBPACK_ENTRY: string;
