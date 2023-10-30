@@ -1,6 +1,6 @@
 {
   "name": "chronograph-app",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "description": "Chronograph Electron Application",
   "keywords": [],
@@ -32,13 +32,13 @@
     "menubar": "^9.3.0"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.0",
-    "@electron-forge/maker-deb": "^6.0.0",
-    "@electron-forge/maker-rpm": "^6.0.0",
-    "@electron-forge/maker-squirrel": "^6.0.0",
-    "@electron-forge/maker-zip": "^6.0.0",
-    "@electron-forge/plugin-webpack": "^6.0.0",
-    "@electron/rebuild": "^3.2.10",
+    "@electron-forge/cli": "^6.4.2",
+    "@electron-forge/maker-deb": "^6.4.2",
+    "@electron-forge/maker-rpm": "^6.4.2",
+    "@electron-forge/maker-squirrel": "^6.4.2",
+    "@electron-forge/maker-zip": "^6.4.2",
+    "@electron-forge/plugin-webpack": "^6.4.2",
+    "@electron/rebuild": "^3.3.0",
     "@funboxteam/scss-vars-loader": "^2.2.0",
     "@types/jest": "^29.2.4",
     "@types/node": "^18.11.9",
@@ -66,8 +66,8 @@
     "typescript": "^4.5.5"
   },
   "engines": {
-    "node": "14.18.0",
-    "npm": ">=6.14.15-fb <7.0.0"
+    "node": "18.16.1",
+    "npm": "9.5.1"
   },
   "productName": "chronograph-app"
 }
