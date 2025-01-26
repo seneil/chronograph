@@ -1,3 +1,11 @@
-.#{$b}__description {
+@import '@blueprintjs/core/lib/scss/variables';
+
+.#{$b}__title {
   flex-grow: 1;
+}
+
+.#{$b}__description {
+  color: $gray1;
+  font-size: $pt-font-size-small;
+  margin: 3px 0 5px;
 }

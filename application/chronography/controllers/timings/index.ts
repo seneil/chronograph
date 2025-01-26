@@ -6,7 +6,7 @@ import { activeTimingStart, ActivityDay, CurrentActivityView, TimingTable } from
 
 const fetchTiming = async (timingId: number) => (
   await knex<TimingTable>('timings')
-    .select('activity_id')
+    .select('activity_id', 'description')
     .where({ id: timingId })
 );
 
@@ -16,9 +16,9 @@ export const completeActiveTiming = async (startTime: string) => (
     .update({ end_at: startTime })
 );
 
-export const insertTiming = async (activityId: number, startTime: string, endTime: string | null) => (
+export const insertTiming = async (activityId: number, description: string, startTime: string, endTime: string | null) => (
   await knex<TimingTable>('timings')
-    .insert({ activity_id: activityId, start_at: startTime, end_at: endTime })
+    .insert({ activity_id: activityId, description, start_at: startTime, end_at: endTime })
 );
 
 export const fetchActiveTiming = async (): Promise<CurrentActivityView | null> => {
@@ -74,7 +74,7 @@ export const repeatTiming = async (timingId: number) => {
   const [timing] = await fetchTiming(timingId);
 
   await completeActiveTiming(currentTime);
-  await insertTiming(timing.activity_id, currentTime, null);
+  await insertTiming(timing.activity_id, timing.description, currentTime, null);
 };
 
 export const deleteTiming = async (timingId: number) => (

@@ -6,6 +6,7 @@ export const getActivity = (friendlyString: string): ActivityData => {
     activity: friendlyString,
     category: null,
     endTime: null,
+    description: null,
     startTime: null,
   };
 
