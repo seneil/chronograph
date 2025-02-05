@@ -46,8 +46,8 @@ export const fetchActiveTiming = async (): Promise<CurrentActivityView | null> =
         (strftime('%s', timings.end_at) - strftime('%s', timings.start_at)) / 60 as duration
     from
         main.timings
-    left join main.activities on timings.activity_id = activities.id
-    left join main.categories on activities.category_id = categories.id
+    inner join main.activities on timings.activity_id = activities.id
+    inner join main.categories on activities.category_id = categories.id
     where
         date(timings.start_at) = ?`, [activeTimingDate.start_date_at]);
 
