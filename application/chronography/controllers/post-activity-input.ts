@@ -5,7 +5,12 @@ import { completeActiveTiming, insertTiming } from '@application/chronography/co
 import { ActivityData } from '@application/types';
 
 export const postActivityInput = async (activityData: ActivityData): Promise<void> => {
-  const { category: categoryName, activity: activityName, startTime, endTime } = activityData
+  const {
+    category: categoryName,
+    activity: activityName,
+    description: activityDescription,
+    startTime, endTime,
+  } = activityData;
 
   const startTimeString = new Date(startTime).toISOString();
   const endTimeString = endTime ? new Date(endTime).toISOString() : null;
@@ -20,5 +25,5 @@ export const postActivityInput = async (activityData: ActivityData): Promise<voi
     await completeActiveTiming(startTimeString);
   }
 
-  await insertTiming(activity.id, startTimeString, endTimeString);
+  await insertTiming(activity.id, activityDescription, startTimeString, endTimeString);
 };

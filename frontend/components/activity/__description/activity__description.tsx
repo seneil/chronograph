@@ -7,8 +7,13 @@ interface ActivityDescriptionProps {
   isCurrent: boolean;
 }
 
-export const Activity__Description = ({ category, activity, isCurrent }: ActivityDescriptionProps) => (
-  <div className={b('activity__description', {}, { current: isCurrent })}>
+export const Activity__Description = ({ category, activity, description, isCurrent }: ActivityDescriptionProps) => (
+  <div className={b('activity__title', {}, { current: isCurrent })}>
     <div>{activity} <i>{category}</i></div>
+    {description && (
+      <div className={b('activity__description')}>
+        {description}
+      </div>
+    )}
   </div>
 )

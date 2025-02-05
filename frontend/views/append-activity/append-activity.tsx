@@ -5,7 +5,7 @@ import { createRoot } from 'react-dom/client';
 import 'dayjs/locale/ru';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 
-import { FocusStyleManager, FormGroup, InputGroup, Button } from '@blueprintjs/core';
+import { FocusStyleManager, FormGroup, InputGroup, TextArea, Button } from '@blueprintjs/core';
 
 import { Section, Section__Row, Section__Text } from '@frontend/components/section';
 import { Form } from '@frontend/components/form';
@@ -28,12 +28,14 @@ FocusStyleManager.onlyShowFocusOnTabs();
 const defaultActivityData: ActivityData = {
   activity: '',
   category: '',
+  description: '',
   startTime: new Date(),
   endTime: null,
 };
 
 const AppendActivityView = () => {
   const [activityInput, setActivityInput] = useState<string>('');
+  const [activityDescription, setActivityDescription] = useState<string>('');
   const [activityData, setActivityData] = useState<ActivityData>(defaultActivityData);
   const [isLoading, setLoadingStatus] = useState(false);
 
@@ -54,11 +56,17 @@ const AppendActivityView = () => {
     setActivityInput(value);
   };
 
+  const changeActivityDescription = (event: FormEvent<HTMLTextAreaElement>) => {
+    const { value } = event.currentTarget;
+
+    setActivityDescription(value);
+  };
+
   const submitActivityInput = async () => {
     setLoadingStatus(true);
 
     try {
-      await postActivityInput(activityData)
+      await postActivityInput({ ...activityData, description: activityDescription });
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
@@ -90,6 +98,17 @@ const AppendActivityView = () => {
                 disabled={isLoading}
                 onChange={changeActivityInput}
                 onKeyDown={downKeyActivityInput}
+              />
+            </FormGroup>
+          </Section__Row>
+
+          <Section__Row>
+            <FormGroup helperText="Описание активности">
+              <TextArea
+                large={true}
+                fill={true}
+                value={activityDescription}
+                onChange={changeActivityDescription}
               />
             </FormGroup>
           </Section__Row>

@@ -38,8 +38,8 @@ export const fetchChronography = async (dayRange: DayRange) => {
         timings.description as description
     from
         main.timings
-    left join main.activities on timings.activity_id = activities.id
-    left join main.categories on activities.category_id = categories.id
+    inner join main.activities on timings.activity_id = activities.id
+    inner join main.categories on activities.category_id = categories.id
     where date(timings.start_at) between ? and ?
     order by timings.start_at asc;
   `, [activityDayStart, activityDayEnd]);

@@ -4,6 +4,7 @@ export { ActivityView, activeTimingStart, CurrentActivityView } from './views';
 export interface ActivityData {
   activity: string;
   category: string | null;
+  description: string | null;
   startTime: Date;
   endTime: Date | null;
 }
