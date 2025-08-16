@@ -1,0 +1,14 @@
+{
+  "name": "chronograph-frontend",
+  "version": "2.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": {
+    "name": "Dmitry Shvalyov",
+    "email": "dmitry@shvalyov.ru"
+  },
+  "license": "MIT",
+  "description": ""
+}
